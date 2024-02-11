@@ -14,8 +14,24 @@ which are mutated and recombined to evolve towards optimal solutions. They have 
 of engineering problems.
 
 The field of neuroevolution has been researched for over 40 years, hence many different algorithms, benchmarks and applications have been proposed.
+As a matter of fact, neuroevolution encapsulates algorithms with different goals, such as the optimization of the weights of a fixed topology, the evolution of a
+network topology alongside the use of gradient-based methods for optimizing weights, the evolution of both the topology and weights, as well as the evolution
+of hyperparameters or reinforcement learning policies.
+In this thesis, we are interested in approaches relying entirely on neuroevolution, without the need for gradient-based methods, for evolving neural network
+parameters, using evolved or fixed topologies. In addition to these approaches, Various benchmark problems covering different problem classes sch as classification,
+continuous control or game planning, have also have been proposed in the literature for evaluating and comparing the different algorithms.
 
-...
+The focus of this thesis is the development of a framework that implements a selection of neuroevolution algorithms.
+The framework is used to evaluate and compare the algorithms on a selection of benchmarks.
+The framework is implemented in Rust. It allows for the visualization of the problems and the solution process through a graphical user interface.
+The algorithms can be run and tested through a command line interface, in order to allow for the execution of experiments and the collection of results.
+
+Algorithms and benchmarks implemented in the framework were selected from the state-of-the art in the theoretical and applied research in the field of neuroevolution,
+with a particular focus on recent algorithms and becnhmarks proposed in 2023 and 2024 in the neuroevolution theory literature.
+In addition to these proposals, NEAT (NeuroEvolution of Augmenting Topologies), a classic algorithm in the field, and the use of evolution strategies with CMA-ES
+(Covariance Matrix Adaptation Evolution Strategy), achieving state-of-the-art results, were also considered.
+Regarding the benchmarks, in addition to the simple two dimensional binary classification benchmarks from the considered theory litterature, the
+classic double pole balancing problem and the CANCER1 classification problem were also implemented.
 
 \subsection{Overview}
 
