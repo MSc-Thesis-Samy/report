@@ -1,0 +1,47 @@
+\chapter{Literature Review}
+\label{chap:review}
+
+...
+
+\section{Neuroevolution algorithms}
+
+\subsection{(1 + 1) NA}
+
+The (1 + 1) NA algorithm and its variants were introduced in \cite{na}.
+In this work, the authors consider a simple neuroevolution setting where these algorithms are used to optimize the weights and activation function of
+a simple artificial neural network.
+
+\subsubsection{The artificial neural network}
+
+Artificial neurons with $D$ inputs and a binary threshold activation function are considered.
+These neurons have $D$ parameters, the input weights $w_1, \ldots, w_D$ and the threshold $t$.
+Let $x = (x_1, \ldots, x_D) \in \mathds{R}^D$ be the input of the neuron. The neuron outputs $1$ if $\sum_{i=1}^D w_i x_i \geq t$ and $0$
+otherwise.
+This can be interpreted geometrically as the neuron outputting $1$ if the input vector $x$ is above or on the hyperplane with normal vector
+$w = (w_1, \ldots, w_D)$ and bias $t$.
+j
+Furthermore, an alternative representation of the decision hyperplane can be used by considering spherical coordinates.
+The normal vector to the decision hyperplane is described by by $D - 1$ angles and the bias.
+As a matter of fact, for $D = 2$, the normal vector can be represented by its cartesian coordinates $(x_1, x_2)$ or by its polar coordinates
+$(r, \theta)$, where $r$ is the distance from the origin and $\theta$ is the angle with the $x_1$ axis. Similarly, for $D = 3$, the normal vector can
+be represented by its cartesian coordinates $(x_1, x_2, x_3)$ or by its spherical coordinates $(r, \theta, \phi)$, where $r$ is the distance from the
+origin, $\theta$ is the angle with the $x_1$ axis and $\phi$ is the angle with the $x_3$ axis.
+It is easy to convert between these two representations. In addition, the spherical representation uses one less parameter than the cartesian
+representation, and hence, allows for the reduction of the number of inputs to the neurons to $D - 1$.
+
+% TODO coordinates figure
+
+The ANNs which are considered in the study contain two layers, a hidden layer with $N > 1$ neurons and an output layer with a single neuron.
+Each of the hidden neurons are connected to the $D$ inputs and output a binary value. The output neuron is connected to the $N$ hidden neurons and
+computes the Boolean OR function of their outputs.
+This architecture is motivated by the problems which are considered in the study, described in \cref{subsec:na-problems}.
+
+% TODO ANN figure
+
+\subsubsection{The (1 + 1) NA algorithm}
+
+...
+
+\section{Neuroevolution benchmarks}
+
+...
