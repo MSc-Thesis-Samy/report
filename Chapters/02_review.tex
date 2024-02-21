@@ -34,13 +34,26 @@ representation, and hence, allows for the reduction of the number of inputs to t
 The ANNs which are considered in the study contain two layers, a hidden layer with $N > 1$ neurons and an output layer with a single neuron.
 Each of the hidden neurons are connected to the $D$ inputs and output a binary value. The output neuron is connected to the $N$ hidden neurons and
 computes the Boolean OR function of their outputs.
-This architecture is motivated by the problems which are considered in the study, described in \cref{subsec:na-problems}.
+This architecture is motivated by the problems which are considered in the study, described in \Cref{subsec:na-problems}.
 
 % TODO ANN figure
 
 \subsubsection{The (1 + 1) NA algorithm}
 
-...
+Let's consider an ANN with $N$ neurons in the hidden layer and $D$ inputs, with parameters
+$(\phi_{1,1}), \dots, \phi_{1,D-1}, b_1, \dots, \phi_{N,1}, \dots, \phi_{N,D-1}, b_N$.
+In the paper \cite{na}, the search space $[0 , 1]^{N D}$ is considered.
+Let $f : [0 , 1]^{N D} \to [0, 1]$ be the fitness function which measures the performance of the ANN and is to be maximized.
+
+The (1 + 1) NA algorithm is given in \Cref{alg:na}.
+
+\begin{algorithm}
+\caption{(1 + 1) NA}
+\label{alg:na}
+\begin{algorithmic}
+\State ...
+\end{algorithmic}
+\end{algorithm}
 
 \section{Neuroevolution benchmarks}
 
