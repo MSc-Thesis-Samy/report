@@ -35,25 +35,60 @@ The ANNs which are considered in the study contain two layers, a hidden layer wi
 Each of the hidden neurons are connected to the $D$ inputs and output a binary value. The output neuron is connected to the $N$ hidden neurons and
 computes the Boolean OR function of their outputs.
 This architecture is motivated by the problems which are considered in the study, described in \Cref{subsec:na-problems}.
+Geometrically, these ANNs output the union of a number of $N$-dimensional hyperplanes.
 
 % TODO ANN figure
 
 \subsubsection{The (1 + 1) NA algorithm}
 
 Let's consider an ANN with $N$ neurons in the hidden layer and $D$ inputs, with parameters
-$(\phi_{1,1}), \dots, \phi_{1,D-1}, b_1, \dots, \phi_{N,1}, \dots, \phi_{N,D-1}, b_N$.
-In the paper \cite{na}, the search space $[0 , 1]^{N D}$ is considered.
-Let $f : [0 , 1]^{N D} \to [0, 1]$ be the fitness function which measures the performance of the ANN and is to be maximized.
+$(\phi_{1,1}, \dots, \phi_{1,D-1}, b_1, \dots, \phi_{N,1}, \dots, \phi_{N,D-1}, b_N$.
+In the paper \cite{na}, the search space $[0 , \dots, n]^{N D}$ is considered, where $r$ is the resolution of the continuous $[0, 1]$ domain.
+This discretiisation allows for the values $\{0, 1/r, 2/r, \dots, 1\}$. Setting the parameters of ANNs is tipically a continous optimization problem,
+but rigurous runtime analysis is much less developed for continous optimization than for discrete optimization, which motivates this choice.
+Let $f : \{0 , \dots, r\}^{N D} \to [0, 1]$ be the fitness function which measures the performance of the ANN and is to be maximized.
 
 The (1 + 1) NA algorithm is given in \Cref{alg:na}.
+It maintains a single individual and mutates all angles and biases independently, based on a global search operator using the harmonic distribution
+$\text{Harm}(r)$ on $\{1, \dots, r\}$: For $l \sim \text{Harm}(r)$,
+
+\[
+    Prob(l = i) = \frac{1}{H_r} \text{ for } i = 1, \dots, r, \text{ where } H_r = \sum_{i=1}^r \frac{1}{i}.
+\]
 
 \begin{algorithm}
 \caption{(1 + 1) NA}
 \label{alg:na}
 \begin{algorithmic}
-\State ...
+    \State $t \gets 0$
+    \State Select $x_0$ uniformly at random from $\{0, \ldots, r\}^{DN}$.
+    \While{termination criterion not met}
+        \State Let $y = (\varphi_{1,1}, \ldots, \varphi_{1,D-1}, b_1, \ldots, \varphi_{N,1}, \ldots, \varphi_{N,N-1}, b_N) \gets x_t;$
+        \ForAll{$i \in \{1, \ldots, N\}$}
+            \State Mutate $\varphi_i$ and $b_i$ with probability $\frac{1}{DN}$, independently of each other and other indices;
+            \State Mutation chooses $\sigma \in \{-1, 1\}$ uniformly at random and $l \sym \text{Harm}(r)$ and adds $\sigma l$ to the selected component, the
+            result is then taken modulo $r$ for angles and modulo $r + 1$ for biases.
+            \For {$i \in \{1, \ldots, N\}$}
+                \State Set bias $2b_i / r - 1$ for neuron $i$.
+                \For {$j \in \{1, \ldots, D\}$}
+                    \State Set the $j$-th polar angle to $2\pi \varphi_{i,j} / r$ for neuron $i$.
+                \EndFor
+            \EndFor
+            \State Evaluate $f(y)$
+            \If{$f(y) \geq f(x_t)$}
+                \State $x_{t+1} \gets y$
+            \Else
+                \State $x_{t+1} \gets x_t$
+            \EndIf
+        \EndFor
+        \State $t \gets t + 1$
+    \EndWhile
 \end{algorithmic}
 \end{algorithm}
+
+\subsection{Bias-Invariant (1+1) NA (BINA)}
+
+...
 
 \section{Neuroevolution benchmarks}
 

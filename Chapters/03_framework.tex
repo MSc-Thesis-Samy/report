@@ -1,0 +1,31 @@
+\chapter{The framework}
+\label{chap:framework}
+
+...
+
+\section{Requirements}
+
+\subsection{Goals and functional requirements}
+
+The overreaching goal of the framework is to provide a tool for the evaluation of neuroevolution algorithms on benchmark problems.
+Tests are specified through a command line interface, they consist in an algorithm, problem pair and a set of additional parameters.
+The framework collects the results of the tests as well as the passed-in parameters.
+Tests can either be run individually or in batch mode, where the framework runs a set of tests in parallel, and collects statistics on these runs.
+
+Furthermore, the framework allows for the visualization of the problem, solution process and network structure through a graphical user interface.
+In addition, it generates graphs for the tests, showing the performance of the algorithm on the problem over the generation count.
+
+\subsection{Non-functional requirements}
+
+Non-functional requirements are the requirements that specify the quality of the system, rather than the features it should have.
+Apart from the functional requirements that specify the features expected of the framework, a number of non-functional requirements have also been identified.
+
+\begin{itemize}
+    \item Usability and user experience: the framework should be easy to use and provide a good user experience.
+    \item Documentation: The framework should be well documented, providing a clear and concise guide on how to use it.
+    \item Error handling: All errors should be handled gracefully as to not result in runtime errors.
+    \item Performance: The framework should allow for the execution of tests in parallel, making use of multiple CPU cores.
+    \item:Extensibility: The framework should be easily extensible, allowing for the addition of algorithms and benchmarks without any
+    major changes to the existing codebase.
+    \item Support: The framework should be able to run on the three major operating systems: Windows, Linux and MacOS.
+\end{itemize}
