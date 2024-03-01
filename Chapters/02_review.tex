@@ -11,7 +11,7 @@ The (1 + 1) NA algorithm and its variants were introduced in \cite{na}.
 In this work, the authors consider a simple neuroevolution setting where these algorithms are used to optimize the weights and activation function of
 a simple artificial neural network.
 
-\subsubsection{The artificial neural network}
+\subsubsection{The artificial neural network topology}
 
 Artificial neurons with $D$ inputs and a binary threshold activation function are considered.
 These neurons have $D$ parameters, the input weights $w_1, \ldots, w_D$ and the threshold $t$.
@@ -86,9 +86,72 @@ $\text{Harm}(r)$ on $\{1, \dots, r\}$: For $l \sim \text{Harm}(r)$,
 \end{algorithmic}
 \end{algorithm}
 
-\subsection{Bias-Invariant (1+1) NA (BINA)}
+\subsection{Bias-Invariant (1+1) NA (BNA)}
 
-...
+In \cite{bna}, the authors extend upon the analysis in \cite{na} by considering more realistic ANN settings, presenting the Bias-Invariant (1+1) NA (BNA) algorithm.
+The considered ANNs uses Rectified-Linear-Unit (ReLU) activation functions, commonly used in real-world ANNs.
+This allows for the construction of bended hyperplanes, resulting in solutions to the problems described in \Cref{subsec:na-problems} which are invariant
+to the bias.
+
+\subsubsection{The artificial neural network topology}
+
+The considered ANNs contain three layers, in which each of the neurons uses a ReLU activation function i.e they output $\max(0, \sum_{i=1}^k w_i x_i)$ for
+$k$ inputs from the previous layer.
+The weights between the first and second layer and between the second and third layer are fixed. The topology for $D = 2$ in shown in \Cref{fig:bna-ann}.
+The use of ReLU activation functions results in piecewise linear output. Hence, as described in \Cref{fig:bna-ann} for the case $D = 2$, these networks compute a
+V-shaped area of positive classification. Such topologies are considered as a single neuron, refered to as a \textbf{V-neuron}, and which can be part of a
+standard ANN topology.
+
+Therefore, these V-neurons can be described by $D + 1$ parameters:
+
+\begin{itemize}
+    \item The bias $b$
+    \item The $D - 1$ angles $\varphi_1, \ldots, \varphi_{D-1}$.
+    \item The bend angle $\theta$.
+\end{itemize}
+
+The area of positive classification is a (multi-dimensional) cone, all points positively classified correspond to points forming an angle smaller than the bend
+angle $\theta$ with the normal vector to the hyperplane given by the bias $b$ and the $D -1$ angles $\varphi_1, \ldots, \varphi_{D-1}$.
+
+% TODO ANN figure
+% TODO v-neuron classification figure
+
+\subsubsection{The Bias-Invariant (1+1) NA algorithm}
+
+The BNA algorithm is given in \Cref{alg:bna}.
+It is mostly the same as the (1+1) NA algorithm, with the difference that the bend angles are also mutated.
+
+\begin{algorithm}
+    \caption{Bias-Invariant (1 + 1) NA (BNA)}
+\label{alg:bna}
+\begin{algorithmic}
+    \State $t \gets 0$
+    \State Select $x_0$ uniformly at random from $\{0, \ldots, r\}^{DN}$.
+    \While{termination criterion not met}
+        \State Let $y = (\theta_1, \varphi_{1,1}, \ldots, \varphi_{1,D-1}, b_1, \ldots, \theta_N, \varphi_{N,1}, \ldots, \varphi_{N,N-1}, b_N) \gets x_t;$
+        \ForAll{$i \in \{1, \ldots, N\}$}
+            \State Mutate $\varphi_i$ and $b_i$ with probability $\frac{1}{(D+1) N}$, independently of each other and other indices;
+            \State Mutation chooses $\sigma \in \{-1, 1\}$ uniformly at random and $l \sym \text{Harm}(r)$ and adds $\sigma l$ to the selected component, the
+            result is then taken modulo $r$ for angles and modulo $r + 1$ for biases.
+            \For {$i \in \{1, \ldots, N\}$}
+                \State Set bias $2b_i / r - 1$ for neuron $i$.
+                \State Set bend angle $\pi \theta_i / r$ for neuron $i$.
+                \For {$j \in \{1, \ldots, D\}$}
+                    \State Set the $j$-th polar angle to $2\pi \varphi_{i,j} / r$ for neuron $i$.
+                \EndFor
+            \EndFor
+            \State Evaluate $f(y)$
+            \If{$f(y) \geq f(x_t)$}
+                \State $x_{t+1} \gets y$
+            \Else
+                \State $x_{t+1} \gets x_t$
+            \EndIf
+        \EndFor
+        \State $t \gets t + 1$
+    \EndWhile
+\end{algorithmic}
+\end{algorithm}
+
 
 \section{Neuroevolution benchmarks}
 
