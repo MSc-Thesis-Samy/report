@@ -92,4 +92,39 @@ $\text{Harm}(r)$ on $\{1, \dots, r\}$: For $l \sim \text{Harm}(r)$,
 
 \section{Neuroevolution benchmarks}
 
-...
+\subsection{Unit hypersphere sphere classification problems}
+
+%TODO add figures
+
+These problems, which can be thought of as a kind of \textsc{onemax} for the (1 + 1) NA algorithm, were introduced in \cite{na}.
+These problems consist in the binary classification of points in the $D$-dimensional unit hypersphere.
+
+\paragraph{Half}
+The \textsc{half} problem consists of all points with non-negative $x_D$ coordinate on the unit hypersphere:
+
+\[
+    \textsc{half} = \{x \in \mathds{R}^D, \lVert x \rVert_2 = 1 \text{ and } \varphi_{D-1} \in [0, \pi]\}.
+\]
+
+\paragraph{Quarter}
+The \textsc{quarter} problem consists of all points with non-negative $x_{D-1}$ and $x_D$ coordinate on the unit hypersphere:
+
+\[
+    \textsc{quarter} = \{x \in \mathds{R}^D, \lVert x \rVert_2 = 1 \text{ and } \varphi_{D-1} \in [0, \pi / 2]\}.
+\]
+
+\paragraph{TwoQuarters}
+The \textsc{twoquarters} problem consists of all points with either both negative or non-negative $x_{D-1}$ and $x_D$ coordinate on the unit hypersphere:
+
+\[
+    \textsc{twoquarters} = \{x \in \mathds{R}^D, \lVert x \rVert_2 = 1 \text{ and } \varphi_{D-1} \in [0, \pi / 2] \cup [\pi, 3\pi / 2]\}.
+\]
+
+\paragraph{LocalOpt}
+The \textsc{localopt} problem consists of all points with polar angle $\varphi_{D-1}$ between 0 and 60, 120 and 180, 240 and 300 degrees:
+
+\[
+    \textsc{localopt} = \{x \in \mathds{R}^D, \lVert x \rVert_2 = 1 \text{ and } \varphi_{D-1} \in [0, \pi / 3] \cup [2\pi / 3, \pi] \cup [4\pi / 3, 5\pi / 3]\}.
+\]
+
+% Square and cube
