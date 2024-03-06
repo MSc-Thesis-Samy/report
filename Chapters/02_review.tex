@@ -3,6 +3,10 @@
 
 ...
 
+\section{Methodology}
+
+...
+
 \section{Neuroevolution algorithms}
 
 \subsection{(1 + 1) NA}
@@ -21,7 +25,8 @@ This can be interpreted geometrically as the neuron outputting $1$ if the input 
 $w = (w_1, \ldots, w_D)$ and bias $t$.
 j
 Furthermore, an alternative representation of the decision hyperplane can be used by considering spherical coordinates.
-The normal vector to the decision hyperplane is described by by $D - 1$ angles and the bias.
+The normal vector to the decision hyperplane is described by by $D - 1$ angles and the bias, where the bias corresponds to the distance from the origin
+measured in the opposite direction of that of the normal vector.
 As a matter of fact, for $D = 2$, the normal vector can be represented by its cartesian coordinates $(x_1, x_2)$ or by its polar coordinates
 $(r, \theta)$, where $r$ is the distance from the origin and $\theta$ is the angle with the $x_1$ axis. Similarly, for $D = 3$, the normal vector can
 be represented by its cartesian coordinates $(x_1, x_2, x_3)$ or by its spherical coordinates $(r, \theta, \phi)$, where $r$ is the distance from the
@@ -152,6 +157,32 @@ It is mostly the same as the (1+1) NA algorithm, with the difference that the be
 \end{algorithmic}
 \end{algorithm}
 
+\subsection{The CMA-ES Evolutionary Strategy}
+
+CMA-ES, short for \textit{Covariance Matrix Adaptation Evolution Strategy}, is a kind of evolution strategy (ES). An ES is an optimization technique based on evolution, and
+belonging to the class of evolutionary algorithms (EA).
+This kind of blax-box optimization algorithms aim at optimizing a function $f : \mathds{R}^n \to \mathds{R}$, for which the analytic form is not known,
+but for which evaluations of the function are possible. As it ts the case for CMA-ES, These algorithms are typically stochastic and are used for the optimization of
+non-linear or non-convex continuous optimization problems.
+
+ES algorithms maintain a population of candidate solutions. These candidate solutions are sampled from a multivariate normal distribution. Parameters of the distribution
+are updated at each generation based on the performance of the candidate solutions. As a matter of fact, a simple greedy ES algorithm could consist in updating the
+mean of the distribution, and using a fixed standard deviation. The mean is updated to the best solution after the evaluation of the fitness of each of the candidate
+solutions. The next generation is then sampled around this mean. However, this kind of simple greedy algorithms is particularly prone to getting stuck at local optima because
+of the lack of exploration.
+
+In order to allow for more exploration, rather than exclusively relying on the single best solution, genetic algorithm maintain a proportion of the best solutions from
+the current generation, and generate the next one trough recombinations and mutations. However, this approach is also prone to getting stuck at local optima, as in
+practice, candidates solutions end up converging to a local optimum.
+
+CMA-ES addresses these issues and allows for the adaption of the search space when needed, reducing it when the confidence in current solutions is high, for fine-tuning, or
+increasing it when the confidence is low, in order to allow for more exploration. This is done by adapting the covariance matrix of the multivariate normal distribution,
+which stores pairwise dependencies between the parameters for the sample distribution. This makes CMA-ES a powerful and widely used optimization algorithm. The main drawback
+of this algorithm is its computational cost, induced by the use of the covariance matrix, which makes it less suitable for high-dimensional problems.
+
+...
+
+% TODO CMA-ES figure
 
 \section{Neuroevolution benchmarks}
 

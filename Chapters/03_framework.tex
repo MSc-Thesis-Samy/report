@@ -7,13 +7,14 @@
 
 \subsection{Goals and functional requirements}
 
-The overreaching goal of the framework is to provide a tool for the evaluation of neuroevolution algorithms on benchmark problems.
-Tests are specified through a command line interface, they consist in an algorithm, problem pair and a set of additional parameters.
-The framework collects the results of the tests as well as the passed-in parameters.
-Tests can either be run individually or in batch mode, where the framework runs a set of tests in parallel, and collects statistics on these runs.
+The overreaching goal of the framework is to provide a tool for the evaluation of neuroevolution algorithms on benchmark problems, based on the selection
+presented in \Cref{chap:review}.
+Tests are specified through a command line interface, they consist in an algorithm and problem pair, along with a set of additional parameters.
+The framework collects the results of the tests as well as the list of passed-in parameters, algorithm and problem.
+These tests can either be run individually or in batch mode, where the framework runs a set of tests in parallel, and collects statistics on these runs.
 
-Furthermore, the framework allows for the visualization of the problem, solution process and network structure through a graphical user interface.
-In addition, it generates graphs for the tests, showing the performance of the algorithm on the problem over the generation count.
+Furthermore, the framework also allows for the visualization of the problem, solution process and network structure through a graphical user interface.
+In addition, it generates graphs for visualizing the test results, plotting the performance of the algorithm on the benchmark problem over the generation count.
 
 \subsection{Non-functional requirements}
 
@@ -29,3 +30,36 @@ Apart from the functional requirements that specify the features expected of the
     major changes to the existing codebase.
     \item Support: The framework should be able to run on the three major operating systems: Windows, Linux and MacOS.
 \end{itemize}
+
+\section{Architecture}
+
+The framework is implemented in Rust. This general-purpose programming language, originally intended to serve as an alternative for system languages such as C and
+C++, offers a good balance between performance provided by such low-level languages and the safety and ease of use of higher-level languages such as Python.
+Furthermore, various libraries (referred to as Rust crates) which could be used when implementing aspects of the framework, such as designing the command-line interfaces
+and graphical-user interfaces, or running CMA\_ES are available in Rust.
+Lastly, the language can target a range of platforms, including Windows, Linux and MacOS.
+
+The framework is divided into three main components:
+
+\begin{itemize}
+    \item The core: This component is responsible for the execution of the tests, the collection of the results and the generation of the graphs. It contains
+        the algorithms and benchmark implementations.
+    \item The command-line interface: This component allows the user to specify the tests to be run, as well as the parameters for these tests.
+    \item The graphical user interface: This component allows the user to visualize the problem, solution process and network structure, as well as the test results.
+\end{itemize}
+
+The dependency graph of the framework is shown in \Cref{fig:dependency_graph}.
+
+% TODO add dependency graph
+
+\subsection{Core}
+
+...
+
+\subsection{Command-line interface}
+
+...
+
+\subsection{Graphical user interface}
+
+...
