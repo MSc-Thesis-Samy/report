@@ -1,7 +1,7 @@
 \chapter{Literature Review}
 \label{chap:review}
 
-This section covers the first task of this thesis project, which is the review of the literature on neuroevolution algorithms and benchmarks.
+This chapter covers the first task of this thesis project, which is the review of the literature on neuroevolution algorithms and benchmarks.
 The first goal of this review is to identify the state of the art algorithms and benchmarks which were proposed in the neuroevolution literature, with a particular
 focus on the recent theory literature from 2023 and 2024. Following this, a selection of algorithms and benchmarks from the ones which were identified is made.
 This selection consists in the algorithms and benchmarks which are presented in detail in this section and which are implemented in the framework.
@@ -43,7 +43,8 @@ The following inclusion criteria were applied to the abstracts:
 
 \begin{itemize}
     \item \textbf{IC1:} The paper is published after 2002.
-    \item \textbf{IC2:} It is clear that the work is proposing a new neuroevolution algorithm or performing an evaluation of existing algorithms.
+    \item \textbf{IC2:} It is clear that the work is proposing a new noeuroevolution algorithm or performing an evaluation of existing algorithms.
+    \item \textbf{IC3:} The considered algorithm(s) rely solely on evolutionary algorithms
 \end{itemize}
 
 And the following exclusion criteria were used:
@@ -58,6 +59,21 @@ The cut-off date of 2002 is motivated by the release year of the \cite{..} paper
 is still the subject of many studies today.
 
 \section{Neuroevolution algorithms}
+
+A variety of neuroevolution algorithms have been proposed in the literature.
+These algorithms can be classified into different categories based on their main characteristics.
+The following three main distinctions have been identified during the review:
+
+\begin{itemize}
+    \item \textbf{Conventional neuroevolution algorithms vs. TWEANNs} Conventional neuroevolution algorithms are those which only evolve the connection weights,
+        considering a fixed topology, while TWEANNs (Topology and Weight Evolving Artificial Neural Networks) are those which also evolve the topology of the
+        neural network.
+    \item \textbf{The category of the evolutionary algorithm} such as genetic algorithms, evolutionary strategies, genetic programming, etc.
+    \item \textbf{The encoding strategy} This refers to the way the neural network is encoded as a genotype, which is then evolved by the algorithm.
+        The most common encoding strategies are direct encoding, indirect encoding and generative encoding.
+\end{itemize}
+
+% TODO algorithm table with categories
 
 \subsection{(1 + 1) NA}
 
