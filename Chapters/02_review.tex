@@ -75,6 +75,27 @@ The following three main distinctions have been identified during the review:
 
 % TODO algorithm table with categories
 
+\subsection{Algorithms selection}
+
+The following algorithms were selected for the implementation in the framework:
+
+\begin{itemize}
+    \item The (1 + 1) NA algorithm and its variants
+    \item The Bias-Invariant (1+1) NA (BNA) algorithm
+    \item The CMA-ES Evolutionary Strategy
+    \item The NEAT algorithm
+\end{itemize}
+
+Given the duration of the project, the choice was made to limit the number of algorithms to four, in order to allow for a thorough implementation and evaluation of
+each of them, thus various criteria were used for the selection of the algorithm, to allow for a good coverage of the different categories of algorithms and
+interesting comparisons between them.
+
+Therfore, the (1 + 1) NA and bias-invariant (1+1) NA algorithms were selected as the two theory paper proposals this thesis is particularly interested in.
+The CMA-ES algorithm, which is the representative of the evolutionary strategies category was selected because of its popularity in the modern neuroevolution literature
+and applications, and because of its status as a state-of-the-art algorithm for continuous optimization problems.
+Finally, the NEAT algorithm, the representative of the TWEANN category, was selected because of its status as the most well-known neuroevolution algorithm, making
+it a subject of most comparison studies in the literature.
+
 \subsection{(1 + 1) NA}
 
 The (1 + 1) NA algorithm and its variants were introduced in \cite{na}.
