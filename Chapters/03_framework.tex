@@ -49,8 +49,7 @@ Lastly, the language can target a range of platforms, including Windows, Linux a
 The framework is divided into three main components:
 
 \begin{itemize}
-    \item The core: This component is responsible for the execution of the tests, the collection of the results and the generation of the graphs. It contains
-        the algorithms and benchmark implementations.
+    \item The core: This component is responsible for the execution of the tests and the collection of results. It contains the algorithms and benchmark implementations.
     \item The command-line interface: This component allows the user to specify the tests to be run, as well as the parameters for these tests.
     \item The graphical user interface: This component allows the user to visualize the problem, solution process and network structure, as well as the test results.
 \end{itemize}
@@ -58,6 +57,29 @@ The framework is divided into three main components:
 The dependency graph of the framework is shown in \Cref{fig:dependency_graph}.
 
 % TODO add dependency graph
+
+\subsection{Background on Rust features}
+
+This section provides a brief overview of the features of the Rust programming language before going into the details of the framework's implementation.
+
+\subsubsection{Object-oriented capabilities}
+
+Nowadays, object-oriented languages are considered the norm for the development of large-scale software systems in the industry.
+Rust is inspired by various programming paradigms, such as functional programming and object-oriented programming.
+Although there is no consensus on the list of features which define an object-oriented programming language, Rust can be considered object-oriented.
+Indeed, it allows for the definition of structs and enums which can store data and methods using implementation blocks.
+It also allows for encapsulation through the use of the \texttt{pub} keyword, which specifies the visibility of objects, thus defining the public API for interacting
+with them. When not using the \texttt{pub} keyword, the object is private and can only be accessed by the module it is defined in.
+Modules are used to organize code and define the visibility of objects, and can be nested to form a hierarchy.
+However, a major difference with other object-oriented languages such as Java or C\# is that Rust does not have a class-based inheritance system.
+Instead, it takes a different approach which consists in polymorphism, which is a more general system referring to code that can work with multiple types.
+In practice, this is achieved through the use of generics in method and object definitions, and the use of traits, which are similar to interfaces in other languages.
+In fact, traits allow for the definition of a default implementation for a set of methods, which can be overridden by the implementing type.
+
+\subsubsection{Library management}
+
+Cargo is Rust's build system and package manager. Most projects are managed using this tool which handles the download and building of the dependencies of projects.
+In Rust, packages are referred to as crates.
 
 \subsection{Core}
 
