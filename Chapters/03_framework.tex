@@ -145,4 +145,28 @@ Options:
 
 \subsection{Graphical user interface}
 
+The UI is implemented using the \texttt{ggez} crate, which is intended to be a simple 2D game framework.
+In particular, it provides a simple interface for creating windows, drawing geometrical shapes and handling user input.
+This crate relies on the definition of a \texttt{State} struct, which holds the parameters of the game state, and which implements the \texttt{EventHandler} trait.
+This trait defines two methods: \texttt{update}, which is used for updating the state, and \texttt{draw} which is used for rendering the state.
+These two methods are called by the game loop, which is triggered in the \texttt{bin/main.rs} file if the \texttt{gui} flag is set.
+
+This game abstraction is particularly suited for the implementation of visualization in the framework.
+The \texttt{State} struct defined in \texttt{gui.rs} holds an \texttt{algorithm}, a \texttt{problem}, and two additioal members keeping track of the number of iterations.
+An instance of this struct is created in the \texttt{bin/main.rs} file using the arguments passed in the command line interface.
+The \texttt{update} method updates the \texttt{algorithm} by running an optimization step, and the \texttt{draw} renders the different visualizations, based on
+the \texttt{problem} and \texttt{algorithm} members.
+
+The number of iterations and the best fitness value are shown in the top left corner of the window.
+
+...
+
+\subsubsection{Sphere classification problems}
+
+For the sphere classification problem, the unit-sphere is shown, along with its points which are labeled as \texttt{true}, which are shown in green, and its points
+labeled as \texttt{false} which are shown in red. When running the (1 + 1) NA algorithm, the decision line and normal vector are shown. In the case of the BNA algorithm,
+the normal vector and decision cones are shown.
+
+% TODO figure
+
 ...

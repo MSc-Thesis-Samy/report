@@ -13,3 +13,4 @@
 * [ ] CMA-ES figure
 * [ ] Algorithms and categories comparison table
 * [ ] update cli listing
+* [ ] GUI sphere figure
