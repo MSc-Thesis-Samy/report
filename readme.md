@@ -12,3 +12,4 @@
 * [ ] dependency graph
 * [ ] CMA-ES figure
 * [ ] Algorithms and categories comparison table
+* [ ] update cli listing

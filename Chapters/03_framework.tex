@@ -54,6 +54,10 @@ The framework is divided into three main components:
     \item The graphical user interface: This component allows the user to visualize the problem, solution process and network structure, as well as the test results.
 \end{itemize}
 
+% TODO check this
+The core is used by both the command line interface and the graphical user interface. And the graphical user interface is used by the command line interface.
+Indeed, the UI allows for the visualization of the solution process, but interaction with the framework is done when invoking it through the command line interface.
+
 The dependency graph of the framework is shown in \Cref{fig:dependency_graph}.
 
 % TODO add dependency graph
@@ -81,13 +85,63 @@ In fact, traits allow for the definition of a default implementation for a set o
 Cargo is Rust's build system and package manager. Most projects are managed using this tool which handles the download and building of the dependencies of projects.
 In Rust, packages are referred to as crates.
 
+\subsubsection{Attributes}
+
+Attributes are metadata applied to some module, crate or object. They are, for example, used to enable compiler features or mark functions as unit tests.
+or to define the behavior of the code. They are defined using the \texttt{\#} symbol and are placed before the object they are associated with.
+
 \subsection{Core}
 
 ...
 
 \subsection{Command-line interface}
 
-...
+The command lien interface is implemented using the \texttt{clap} crate, which is a widely used command line argument parser in Rust.
+It allows for the execution of tests, by providing the algorithm, the problem and additional parameters. These additional parameters are optional and have
+default values, they are used to specify parameters for the algorithms, such as the number of neurons, parameters for the optimization, such as the number of
+iterations, and toggling the visualization of the solution process and network structure.
+
+Arguments can be of three different types:
+
+\begin{itemize}
+    \item \textbf{Positional}: These are required arguments which are specified in the order they are defined in the command line interface.
+    \item \textbf{Named}: These are optional arguments which are specified by their name and a value.
+    \item \textbf{Flags}: These are optional arguments which are specified by their name and are either present or not.
+\end{itemize}
+
+The \texttt{Cli} struct is defined in the \texttt{cli.rs} file, it contains members for each of the command line arguments and derives the \texttt{Parser} trait.
+The argument name is set to the member name, a short name,help message, default value and the argument type are specifies in an attribute on the member.
+
+The arguments are parsed in the \texttt{bin/main.rs} file, which is the entry point of the program.
+
+In order to ensure that the passed-in arguments are valid, the rust type system is leveraged, specifying appropriate data types for each of the argument.
+For example, the iteration number is set to an unsigned integer \texttt{u32}, while the algoithm and benchmarks are set to two enums, \texttt{AlgorithmType} and
+\texttt{Problem}, with variants for each possible option.
+
+The command line interface is shown in \ref{verb:cli}.
+
+% TODO update
+\begin{document}
+\begin{lstlisting}[label=verb:cli,caption=Command line interface,float,frame=tb]
+Neuroevolution framework for testing algorithms on benchmark problems.
+
+Usage: main [OPTIONS] <ALGORITHM> <PROBLEM>
+
+Arguments:
+  <ALGORITHM>  The algorithm to test [possible values: oneplusonena, bna]
+  <PROBLEM>    the benchmark problem [possible values: half, quarter, two-quarters]
+
+Options:
+  -r, --resolution <RESOLUTION>  Resolution, when applicable [default: 1000]
+  -i, --iterations <ITERATIONS>  Number of iterations [default: 5000]
+  -c, --continuous               Use the continuous version of the algorithm, when applicable
+  -e, --es                       Optimize using cma-es
+  -n, --neurons <NEURONS>        Number of neurons, when applicable [default: 1]
+  -g, --gui                      Display visualization
+  -h, --help                     Print help
+  -V, --version                  Print version
+\end{lstlisting}
+
 
 \subsection{Graphical user interface}
 
