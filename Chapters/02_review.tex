@@ -271,6 +271,63 @@ of this algorithm is its computational cost, induced by the use of the covarianc
 
 % TODO CMA-ES figure
 
+\subsection{Neuroevolution of Augmenting Topologies (NEAT)}
+
+The NEAT algorithm was introduced in \cite{neat}. It is a TWANN (Topology and Weight Evolving Artificial Neural Network) algorithm, which evolves, simultaneously,  both
+the topology and weights of neural networks. The main idea behind this algorithm is to start from a minimal topology, incrementally adding new neurons and connections to,
+the networks, which allows for the evolution of complex neural networks while keeping the computational cost low and justifying each new addition to the network topology.
+The following sections describe the main components of the algorithm.
+
+\subsubsection{Genetic Encoding}
+
+NEAT uses a direct encoding of the neural networks. The goal of the encoding strategy is to allow crossover among different network topologies.
+Each genome contains two sets of genes, which specify nodes and connections in the network:
+
+\begin{itemize}
+    \item \textbf{Node genes} Each node gene contains an identifier and layer (input, hidden or output).
+    \item \textbf{Connection genes} Each connection gene specifies an input node identifier, an output node identifier, a weight, whether the connection is enabled or
+        disabled, and an innovation number.
+\end{itemize}
+
+% TODO NEAT encoding figure
+
+Where node identifiers are shared between the individuals in the population, the enabled flag specifies whether or not the connection is expressed in the phenotype (i.e
+the network) and the innovation number is used to track the historical origin of the gene.
+
+\subsubsection{Mutations}
+
+NEAT uses two types of mutations: weight mutations and structural mutations. Weight mutations are used to perturb the weights of the connections in the network,while
+structural mutations are used to modify the topology of the network. There are two types of structural mutations:
+
+\begin{itemize}
+    \item \textbf{Add connection} This mutation adds a new connection between two unconnected nodes in the network. The connection is assigned a random weight.
+    \item \textbf{Add node} This mutation adds a new node in the network, splitting an existing connection into two. The old connection is disabled and two new
+        connections are added to the new node. The connection leading into the new node is assigned a weight of 1, while the connection leading out from the new node is
+        assigned the weight of the old connection. This allows for the minimization of the initial effort of the mutation, as the activation of the output layer
+        node remains the same and the weights of the new connections can be optimized in future generations.
+\end{itemize}
+
+Because of these two types of mutations, inserting new nodes and connection genes, genomes can only grow larger over time, resulting in the evolution of increasingly
+complex networks.
+
+\subsubsection{Crossover}
+
+One of the challenges of evolving neural networks is the crossover operator, because of the different topologies of the networks. NEAT addresses this issue by making
+use of the innovation numbers in connection genes, which allows for the tracking of the historical origin of each gene. This allows for the matching of genes between
+individuals. Genes are assigned increasing innovation numbers as they appear in the population and innovation numbers are inherited. Hence, the matching of genes is done
+by comparing the innovation numbers. Thus, the crossover operator consists in inheriting matching genes from one parent at random, and adding the remaining disjoint
+and excess genes from the fittest parent. This strategy is particularly cost-effective as it requires no topological analysis of the networks.
+
+% TODO NEAT crossover figure
+
+\subsubsection{Speciation}
+
+An issue with the current strategy is that the population is unable to protect topological innovation, because of smaller topologies optimizing faster and the
+addition of new connections usually resulting in an initial drop in fitness. To address this issue, NEAT uses speciation, which groups individuals into species based
+on their genetic similarity.
+
+...
+
 \section{Neuroevolution benchmarks}
 
 \subsection{Unit hypersphere sphere classification problems}

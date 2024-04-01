@@ -90,8 +90,38 @@ In Rust, packages are referred to as crates.
 Attributes are metadata applied to some module, crate or object. They are, for example, used to enable compiler features or mark functions as unit tests.
 or to define the behavior of the code. They are defined using the \texttt{\#} symbol and are placed before the object they are associated with.
 
+\subsubsection{testing}
+
+...
+
 \subsection{Core}
 
+This component contains the core functionality of the framework
+Various constants and utility functions are defined in the \texttt{utils.rs} and \texttt{constants.rs} files.
+
+\subsubsection{Algorithms}
+
+The algorithms are implemented as structs and are variants of an \texttt{algorithm} enum, which lists all the implemented algorithms.
+The algorithm structs and the \texttt{Algorithm} enum implement the \texttt{NeuroevolutionAlgorithm} trait, which defines the methods that an algorithm must implement.
+These methods are \texttt{optimization\_step}, \texttt{optimize\_cmaes}, \texttt{evaluate} and \textt{optimize}, which is implemented as a default method in the trait.
+The \texttt{Algorithm} enum and the \texttt{NeuroevolutionAlgorithm} trait are defined in the \texttt{neuroevolution\_algorithm.rs} file.
+Each of the different algorithm structs are defined in their own file, such as \texttt{vneuron.rs}
+
+\subsubsection{Benchmarks}
+
+The problems are also implemented as structs and are defined in the \texttt{becnhmarks.rs} file.
+
+\paragraph{Sphere classification problems} These benchmarks implement the \texttt{ClassificationProblem} trait, which defines the \texttt{evaluate} and
+\texttt{get\_points} methods, which is used for the visualization of the problem. The \texttt{evaluate} method takes an instance of \texttt{Algorithm}
+and returns the proportion of correctly classified points. % formula?
+For the sphere classification problems, the number of points to consider on the unit-sphere is stored as a parameter in the enum variants.
+
+...
+
+\subsubsection{Testing}
+
+% unit tests
+% github workflow
 ...
 
 \subsection{Command-line interface}

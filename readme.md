@@ -14,3 +14,5 @@
 * [ ] Algorithms and categories comparison table
 * [ ] update cli listing
 * [ ] GUI sphere figure
+* [ ] NEAT encoding figure
+* [ ] NEAT crossover figure
