@@ -16,3 +16,5 @@
 * [ ] GUI sphere figure
 * [ ] NEAT encoding figure
 * [ ] NEAT crossover figure
+* [ ] Pole Balancing figure
+* [ ] Pole Balancing equations

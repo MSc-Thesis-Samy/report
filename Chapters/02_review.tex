@@ -271,6 +271,8 @@ of this algorithm is its computational cost, induced by the use of the covarianc
 
 % TODO CMA-ES figure
 
+This algorithm can be used for the evolution of fixed-topology neural networks, by considering the weights of the connections as the parameters of the optimization problem.
+
 \subsection{Neuroevolution of Augmenting Topologies (NEAT)}
 
 The NEAT algorithm was introduced in \cite{neat}. It is a TWANN (Topology and Weight Evolving Artificial Neural Network) algorithm, which evolves, simultaneously,  both
@@ -284,7 +286,7 @@ NEAT uses a direct encoding of the neural networks. The goal of the encoding str
 Each genome contains two sets of genes, which specify nodes and connections in the network:
 
 \begin{itemize}
-    \item \textbf{Node genes} Each node gene contains an identifier and layer (input, hidden or output).
+    \item \textbf{Node genes} Each node gene contains an identifier and layer (input, hidden, output or bias, which is an input that is always set to $1.0$.
     \item \textbf{Connection genes} Each connection gene specifies an input node identifier, an output node identifier, a weight, whether the connection is enabled or
         disabled, and an innovation number.
 \end{itemize}
@@ -325,12 +327,15 @@ and excess genes from the fittest parent. This strategy is particularly cost-eff
 An issue with the current strategy is that the population is unable to protect topological innovation, because of smaller topologies optimizing faster and the
 addition of new connections usually resulting in an initial drop in fitness. To address this issue, NEAT uses speciation, which groups individuals into species based
 on their genetic similarity. This strategy allows for the protection of topological innovation by having individuals compete within their specie, rather than the entire population.
+In addition, as it is the case with the crossover operator, historical matching allows for an efficient solution.
 
 The similarity between two individuals is computed as a weighted sum of the number of excess genes, the number of disjoint genes and the average weight difference
 of matching genes. At each generation, individuals are sequentially assigned to a specie based on the similarity with the representative of the specie, which is
 a randomly selected individual from the previous generation which was part of the specie, and a similarity threshold. If no specie is found, a new specie is created.
-The fitness of each individual is then adjusted based on the size of the specie, in order to encourage diversity.
 
+...
+
+% TODO offsprings split and adjusted fitness
 % TODO NEAT similarity formula
 
 \section{Neuroevolution benchmarks}
@@ -371,3 +376,37 @@ The \textsc{localopt} problem consists of all points with polar angle $\varphi_{
 \]
 
 % Square and cube
+
+\subsection{XOR}
+
+This classic benchmark problem is a binary classification problem, which consists in the classification of the four points $(0, 0)$, $(0, 1)$, $(1, 0)$ and $(1, 1)$, according to the XOR function.
+The points $(0, 0)$ and $(1, 1)$ are of class $0$, while the points $(0, 1)$ and $(1, 0)$ are of class $1$.
+The popularity of this simple problem comes from its non-linear nature, which makes it impossible to solve with a single-layer perceptro.
+
+\subsection{Pole Balancing}
+
+The pole balancing problem, introduced in \cite{...}, is a classical benchmark in control theory, reinforcement learning and neuroevolution literature.
+It consists in controlling a cart with one degree of freedom, which moves along a one-dimensional track, by applying a horizontal force to it, in order to balance a pole attached to it.
+Some of the reasons for the popularity of this benchmark problem are its simplicity, its relevance to real-world control problems and its unstable and non-linear dynamics.
+
+% TODO pole balancing figure
+
+The difficulty of the problem can be adjusted by changing the number of poles. Indeed, if the poles have different lengths, they will react differently to the forces applied to the cart.
+As the single pole variant has become too easy for current techniques, we consider the widely used case of double pole balancing, where two poles are attached to the cart.
+
+The state of the system is described by the cart position $x$, the cart velocity $\dot{x}$, the pole angles $\theta_1$ and $\theta_2$ and the angular velocities $\dot{\theta}_1$ and $\dot{\theta}_2$.
+This task is Markovian, as the state contains all the information needed to determine the future evolution of the system.
+A more challenging variant of the problem consists in removing the velocity informations from the state, which requires the use of recurrent connections, which were not considered
+in this project.
+
+The dynamics of the system are described by the following equations:
+
+... % TODO equations
+
+The equations for motion are integrated using the Euler method:
+
+... % TODO equations
+
+The fitness function is defined as the sum of the time steps during which the poles are balanced and the cart is within the allowed bounds, over $1000$ time steps.
+A pole is considered balanced if its angle is within $30$ degrees of the vertical position.
+The evaluated algorithms outputs are mapped to the magnitude of the force $F \in [-10, 10]$N to be applied to the car at each time step.
