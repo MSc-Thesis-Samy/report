@@ -271,7 +271,8 @@ of this algorithm is its computational cost, induced by the use of the covarianc
 
 % TODO CMA-ES figure
 
-This algorithm can be used for the evolution of fixed-topology neural networks, by considering the weights of the connections as the parameters of the optimization problem.
+CMA-ES can be used for the evolution of fixed-topology neural networks, by considering the weights of the connections as the parameters of the optimization problem,
+and converting between a vector representation of the network, for the optimization input, and the standard graph representation, for the evaluation.
 
 \subsection{Neuroevolution of Augmenting Topologies (NEAT)}
 
@@ -341,6 +342,7 @@ a randomly selected individual from the previous generation which was part of th
 \section{Neuroevolution benchmarks}
 
 \subsection{Unit hypersphere sphere classification problems}
+\label{subsection:sphere_classification}
 
 %TODO add figures
 
@@ -382,6 +384,23 @@ The \textsc{localopt} problem consists of all points with polar angle $\varphi_{
 This classic benchmark problem is a binary classification problem, which consists in the classification of the four points $(0, 0)$, $(0, 1)$, $(1, 0)$ and $(1, 1)$, according to the XOR function.
 The points $(0, 0)$ and $(1, 1)$ are of class $0$, while the points $(0, 1)$ and $(1, 0)$ are of class $1$.
 The popularity of this simple problem comes from its non-linear nature, which makes it impossible to solve with a single-layer perceptro.
+
+\subsection{Dataset Classification Problems}
+
+Classification using datasets is a classical use-case for neural networks. It consists in training a network on labeled data and using it to
+predict the label of unseen data. Hence, the hypersphere classification problems, presented in \Cref{subsection:sphere_classification}, from the
+theory studies, differ from this kind of task, by having algorithms trained and tested on the same data.
+
+Although these problems are not common use-cases for neuroevolution because of the use of labeled data,
+they are particularly interesting for this study, by allowing to show how neuroevolution can be applied to these common tasks, testing
+the algorithms on larger state spaces, and potentially observing whether common behaviors which occur when training ANNs using gradient-based methods,
+such as over-fitting or under-fitting, also apply to neuroevolution.
+
+The proben1 benchmark, presented in \cite{...}, introduces various standard benchmark datasets, including the \texit{cancer} dataset, which
+contains $699$ entries, consisting in cell descriptors gathered by microscopic for tumors being benign or malignant.
+Each dataset entry contains $9$ input features, and a binary output,
+
+The algorithms are evolved using the first $90\%$ of the data, and are tested on the remaining $10\%$.
 
 \subsection{Pole Balancing}
 

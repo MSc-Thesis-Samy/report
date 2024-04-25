@@ -90,39 +90,64 @@ In Rust, packages are referred to as crates.
 Attributes are metadata applied to some module, crate or object. They are, for example, used to enable compiler features or mark functions as unit tests.
 or to define the behavior of the code. They are defined using the \texttt{\#} symbol and are placed before the object they are associated with.
 
-\subsubsection{testing}
+\subsubsection{Testing}
 
-...
+In Rust, unit-testing is usually done by defining a test module (with a test attribute) at the end of the file containing the functionalities to be
+tested. Test functions correspond to functions defined in such modules, which are marked with a specific test attribute. Tests can be run
+with \texttt{cargo test}. They fail when a \textit{panics} occur, and utility macros such as \texttt{asserteq} or \texttt{assert} can be used to panic
+when conditions are not met.
 
 \subsection{Core}
 
 This component contains the core functionality of the framework
-Various constants and utility functions are defined in the \texttt{utils.rs} and \texttt{constants.rs} files.
+Various constants and utility functions, used across the project, are defined in the \texttt{utils.rs} and \texttt{constants.rs} files.
 
 \subsubsection{Algorithms}
 
-The algorithms are implemented as structs and are variants of an \texttt{algorithm} enum, which lists all the implemented algorithms.
+The algorithms are implemented as structs and are accessed as variants of an \texttt{Algorithm} enum, which lists all the implemented algorithms.
 The algorithm structs and the \texttt{Algorithm} enum implement the \texttt{NeuroevolutionAlgorithm} trait, which defines the methods that an algorithm must implement.
 These methods are \texttt{optimization\_step}, \texttt{optimize\_cmaes}, \texttt{evaluate} and \textt{optimize}, which is implemented as a default method in the trait.
 The \texttt{Algorithm} enum and the \texttt{NeuroevolutionAlgorithm} trait are defined in the \texttt{neuroevolution\_algorithm.rs} file.
-Each of the different algorithm structs are defined in their own file, such as \texttt{vneuron.rs}
+Each of the different algorithm structs are defined in their own file, such as \texttt{vneuron.rs} or \texttt{neat.rs}.
 
 \subsubsection{Benchmarks}
 
-The problems are also implemented as structs and are defined in the \texttt{becnhmarks.rs} file.
+The problems are implemented as variants of a \texttt{Benchmark} enum, and are defined in the \texttt{becnhmarks.rs} file.
+This enum contains three variant, for each of the implemented benchmark types: \texttt{PoleBalancing}, \texttt{Classification} and \texttt{SphereClassification}.
+The two classification enums hold an instance of the \texttt{LabeledPoints} type, storing the labeled data. The file contains functions to generate the
+data for each of the classification problems, i.e, parsing it from a text file for the \textit{cancer} problem and generating and iterating other
+angle values for the sphere classification problems. In particular, the \texttt{Benchmark} enum defines a \texttt{evaluate} method, taking as input an
+algorithm (an instance of the \texttt{Algorithm} enum) and which returns the fitness of the algorithm on the task.
 
-\paragraph{Sphere classification problems} These benchmarks implement the \texttt{ClassificationProblem} trait, which defines the \texttt{evaluate} and
-\texttt{get\_points} methods, which is used for the visualization of the problem. The \texttt{evaluate} method takes an instance of \texttt{Algorithm}
-and returns the proportion of correctly classified points. % formula?
-For the sphere classification problems, the number of points to consider on the unit-sphere is stored as a parameter in the enum variants.
+\paragraph{Classification problems} For the sphere classification and dataset classification tasks, the fitness is computed using the \texttt{classification}
+function from the \texttt{benchmarks.rs} file, which computes the $MAE$ (Mean Absolute Error). For the bna and (1 + 1) NA algorithm, which output boolean
+values, this is equivalent to computing the accuracy (i.e, the number of correct predictions divided by the number of total predictions), while also
+allowing for the evaluation of the CMA-ES and NEAT method, outputting probables when using the sigmoid activation on the output neuron.
 
-...
+\paragraph{Pole Balancing} The logic for the pole balancing simulation is implemented in the \texttt{pole\_balancing.rs} file, where the state is defined, along with methods
+responsible for updating it based on the equations and the Euler method. The \texttt{pole\_balancing} function in the \texttt{benchmarks.rs} file simply
+updates the state, using the algorithm output as the applied force, and checking whether or not the success conditions for the task are still met.
 
 \subsubsection{Testing}
 
-% unit tests
-% github workflow
-...
+Unit-tests were implemented across the core component to test the behavior of the algorithms and benchmarks.
+These tests were implemented in parallel with the functionalities to avoid and identify potential bugs early in the development process before
+building up with more functionalities. In addition, they were ran at each new push to github using a workflow responsible for compiling the project
+and running all the tests. This is to ensure that new changes do not break any past working functionality.
+
+In fact, the bna and $(1 + 1)$ NA problems were tested using the sphere classification problems, where optimal solutions are known. These tests
+consist in checking whether one of these algorithms, with parameters corresponding to an optimal solution, does indeed lead to a maximum fitness value
+of $1.0$. These tests are defined in the \texttt{benchmarks.rs} file. For example, the \texttt{test\_half\_network} function checks that a decision line
+corresponding to the x-axis for the continuous $(1 + 1)$ NA algorithm gives a fitness of $1.0$. For the BNA algorithm, where there are infinitely many
+solutions to the sphere classification problems, different solutions were checked.
+
+Furthermore, two additional tests in the \texttt{benchmarks.rs} file are responsible for checking that the data is loaded properly from the \textit{cancer}
+text file. Tests in the \texttt{pole\_balancing.rs} file test the physics of the simulation implementation, for example verifying that a pole at the lowest
+position, with no external force, does not lead to any movement of the cart or the pole.
+
+Lastly, regarding the CMA-ES and NEAT algorithms, the behavior of their core functions was tested. Test functions in the \texttt{neat.rs} test the
+behavior of functions such as the crossover or initialization, using examples from the original paper \cite{...} when available. The functions in
+\texttt{neural\_network.rs} test the output of the feed-forward method and activation functions.
 
 \subsection{Command-line interface}
 
