@@ -106,7 +106,7 @@ Various constants and utility functions, used across the project, are defined in
 
 The algorithms are implemented as structs and are accessed as variants of an \texttt{Algorithm} enum, which lists all the implemented algorithms.
 The algorithm structs and the \texttt{Algorithm} enum implement the \texttt{NeuroevolutionAlgorithm} trait, which defines the methods that an algorithm must implement.
-These methods are \texttt{optimization\_step}, \texttt{optimize\_cmaes}, \texttt{evaluate} and \textt{optimize}, which is implemented as a default method in the trait.
+These methods are \texttt{optimization\_step}, \texttt{optimize\_cmaes}, \texttt{evaluate} and \texttt{optimize}, which is implemented as a default method in the trait.
 The \texttt{Algorithm} enum and the \texttt{NeuroevolutionAlgorithm} trait are defined in the \texttt{neuroevolution\_algorithm.rs} file.
 Each of the different algorithm structs are defined in their own file, such as \texttt{vneuron.rs} or \texttt{neat.rs}.
 
@@ -146,7 +146,7 @@ text file. Tests in the \texttt{pole\_balancing.rs} file test the physics of the
 position, with no external force, does not lead to any movement of the cart or the pole.
 
 Lastly, regarding the CMA-ES and NEAT algorithms, the behavior of their core functions was tested. Test functions in the \texttt{neat.rs} test the
-behavior of functions such as the crossover or initialization, using examples from the original paper \cite{...} when available. The functions in
+behavior of functions such as the crossover or initialization, using examples from the original paper \cite{neat} when available. The functions in
 \texttt{neural\_network.rs} test the output of the feed-forward method and activation functions.
 
 \subsection{Command-line interface}
@@ -177,7 +177,6 @@ The command line interface is shown in \ref{verb:cli}. Parameters for the BNA an
 parameters can be specified, the path to \texttt{.toml} configuration files are passed-in instead.
 
 % TODO update
-\begin{document}
 \begin{lstlisting}[label=verb:cli,caption=Command line interface,float,frame=tb]
 Neuroevolution framework for testing algorithms on benchmark problems.
 
@@ -197,7 +196,6 @@ Options:
   -h, --help                     Print help
   -V, --version                  Print version
 \end{lstlisting}
-
 
 \subsection{Graphical user interface}
 
