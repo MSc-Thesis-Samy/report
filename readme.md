@@ -18,3 +18,4 @@
 * [ ] NEAT crossover figure
 * [ ] Pole Balancing figure
 * [ ] Pole Balancing equations
+* [ ] Pole balancing gui figure
