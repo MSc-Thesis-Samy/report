@@ -18,6 +18,6 @@
 * [ ] NEAT crossover figure
 * [X] NEAT similarity equation
 * [ ] Pole Balancing figure
-* [ ] Pole Balancing equations
+* [X] Pole Balancing equations
 * [ ] Pole balancing gui figure
 * [ ] Trigonometry equations for (1 + 1) NA and BNA

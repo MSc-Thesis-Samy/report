@@ -413,7 +413,7 @@ The algorithms are evolved using the first $90\%$ of the data, and are tested on
 \subsection{Pole Balancing}
 
 The pole balancing problem, introduced in \cite{...}, is a classical benchmark in control theory, reinforcement learning and neuroevolution literature.
-It consists in controlling a cart with one degree of freedom, which moves along a one-dimensional track, by applying a horizontal force to it, in order to balance a pole attached to it.
+It consists in controlling a cart with one degree of freedom, which moves along a one-dimensional track, by applying a horizontal force to it, in order to balance a pole attached to it using a hinge.
 Some of the reasons for the popularity of this benchmark problem are its simplicity, its relevance to real-world control problems and its unstable and non-linear dynamics.
 
 % TODO pole balancing figure
@@ -428,11 +428,38 @@ in this project.
 
 The dynamics of the system are described by the following equations:
 
-... % TODO equations
+\[
+    \begin{aligned}
+        \ddot{x} &= \frac{F - \mu_c \text{sgn}(\dot{x}) + \sum_{i = 1}^N \tilde{F_i}}{M + \sum_{i = 1}^N \tilde{m_i}} \\
+        \forall i \in \{1, N\}, \ddot{\theta_i} &= - \frac{3}{4 l_i} (\ddot{x} \cos \theta_i + g \sin \theta_i + \frac{\mu_{pi} \dot{\theta_i}}{m_i l_i})\\
+        \forall i \in \{1, N\}, \tilde{F_i} &= m_i l_i \dot{\theta_i}^2 \sin \theta_i + \frac{3}{4} m_i \cos \theta_i (\frac{\mu_{pi} \dot{\theta_i}}{m_i l_i} + g \sin \theta_i) \\
+        \tilde{m_i} &= \m_i (1 - \frac{3}{4} \cos^2 \theta_i). \\
+    \end{aligned}
+\]
 
-The equations for motion are integrated using the Euler method:
+Where:
 
-... % TODO equations
+\begin{itemize}
+    \item $F$ is the magnitude of the force applied to the cart
+    \item $\mu_c$ is the cart friction coefficient
+    \item $M$ is the cart mass
+    \item $N$ is the number of poles
+    \item $l_i$ is the length of the $i$-th pole
+    \item $\mu_{pi}$ is the pole friction coefficient
+    \item $m_i$ is the mass of the $i$-th pole
+    \item $g$ is the gravity constant
+\end{itemize}
+
+The equations for motion are integrated using the Euler method. For a time step $\Delta t$:
+
+\[
+    \begin{aligned}
+        x_{t+1} &= x_t + \dot{x}_t \Delta t \\
+        \dot{x}_{t+1} &= \dot{x}_t + \ddot{x}_t \Delta t \\
+        \theta_{i, t+1} &= \theta_{i, t} + \dot{\theta}_{i, t} \Delta t \\
+        \dot{\theta}_{i, t+1} &= \dot{\theta}_{i, t} + \ddot{\theta}_{i, t} \Delta t. \\
+    \end{aligned}
+\]
 
 The fitness function is defined as the sum of the time steps during which the poles are balanced and the cart is within the allowed bounds, over $1000$ time steps.
 A pole is considered balanced if its angle is within $30$ degrees of the vertical position.
