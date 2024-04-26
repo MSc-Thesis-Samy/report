@@ -330,14 +330,22 @@ addition of new connections usually resulting in an initial drop in fitness. To 
 on their genetic similarity. This strategy allows for the protection of topological innovation by having individuals compete within their specie, rather than the entire population.
 In addition, as it is the case with the crossover operator, historical matching allows for an efficient solution.
 
-The similarity between two individuals is computed as a weighted sum of the number of excess genes, the number of disjoint genes and the average weight difference
-of matching genes. At each generation, individuals are sequentially assigned to a specie based on the similarity with the representative of the specie, which is
+The similarity between two individuals is computed as a weighted sum of the number of excess $E$ genes, the number of disjoint $D$ genes and the average weight difference $\bar{W}$
+of matching genes:
+
+\[
+    \delta = c_1 \frac{E}{N} + c_2 \frac{D}{N} + c_3 \bar{W}
+\]
+
+Where $c_1$, $c_2$ and $c_3$ are coefficients which control the importance of each term, and $N$ is the number of genes in the larger genome.
+
+At each generation, individuals are sequentially assigned to a specie based on the similarity with the representative of the specie, which is
 a randomly selected individual from the previous generation which was part of the specie, and a similarity threshold. If no specie is found, a new specie is created.
 
-...
-
-% TODO offsprings split and adjusted fitness
-% TODO NEAT similarity formula
+Each species is given a number of offspring in proportion to the sum of the adjusted fitness of its members. Where the adjusted fitness $f_i'$ of an individual $i$ is
+given by $f_i' = f_i / n_i$, where $f_i$ is the fitness of the individual and $n_i$ is the number of individuals in the specie. This is done to prevent large species
+from dominating the population. The offspring are generated using the crossover and mutation operators, on members of the species, after the selection of the fittest
+individuals. At each generation, the population is replaced by the offspring.
 
 \section{Neuroevolution benchmarks}
 

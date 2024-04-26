@@ -2,8 +2,8 @@
 
 ## TODO
 
-* [ ] update abstract with results
-* [ ] cite examples in intro
+* [ ] Update abstract with results
+* [ ] Cite examples in intro
 * [ ] coordinates figure in (1 + 1) NA section
 * [ ] ANN figure in (1 + 1) NA section
 * [ ] add figure in hypershpere problems section
@@ -16,6 +16,8 @@
 * [ ] GUI sphere figure
 * [ ] NEAT encoding figure
 * [ ] NEAT crossover figure
+* [X] NEAT similarity equation
 * [ ] Pole Balancing figure
 * [ ] Pole Balancing equations
 * [ ] Pole balancing gui figure
+* [ ] Trigonometry equations for (1 + 1) NA and BNA
