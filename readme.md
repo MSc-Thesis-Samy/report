@@ -21,3 +21,4 @@
 * [X] Pole Balancing equations
 * [ ] Pole balancing gui figure
 * [ ] Trigonometry equations for (1 + 1) NA and BNA
+* [ ] Optional? Add figures for (1 + 1) NA and BNA evaluation details
