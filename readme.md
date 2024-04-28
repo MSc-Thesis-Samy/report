@@ -22,3 +22,5 @@
 * [ ] Pole balancing gui figure
 * [ ] Trigonometry equations for (1 + 1) NA and BNA
 * [ ] Optional? Add figures for (1 + 1) NA and BNA evaluation details
+* [ ] ANN figure for background section
+* [ ] Optional? Discuss the different kinds of EAs in the background section

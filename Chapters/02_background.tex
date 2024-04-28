@@ -1,0 +1,53 @@
+\chapter{Background}
+\label{chap:background}
+
+\section{Artificial Neural Networks}
+
+Artificial neural networks (ANNs) are a class of machine learning models, which are inspired by biological neural networks. ANNs are composed of interconnected
+neurons, which are organized in layers. The first layer of an ANN is referred to as the input layer, the last layer is the output layer, and the layers
+in between are hidden layers. In feed-forward ANNs, nodes in a layer are connected to nodes from the immediately preceding and succeeding layers. The connections between nodes
+are associated weights.  Signal travels from the input layer to the output layer and the output of a node is computed by applying a non-linear activation function
+to the weighted sum of the inputs. The weights of the connections are typically learned using gradient-based optimization algorithms, such as backpropagation.
+The performance of an ANN is evaluated using a loss function, which measures the difference between the predicted output and the true output.
+
+% TODO figure + equation
+
+Any function can be approximated by ANNs. Over the years, these models have been applied to a wide range of problems, including classification and reinforcement
+learning tasks. The process of applying ANNs consists in the design of its architecture, the choice of parameters such as the loss function or parameters for the
+weigh optimization algorithm, and the optimization of its weight, in order to maximize its performance on a given task.
+
+Many challenges are associated with the use of ANNs, such as the choice of the network architecture and hyperparameters, which can have an significant
+impact on the performace of the model. Furthermore, the optimization of the network weights using gradient=based algorithms can result in various issues, such
+as overfitting, which arises when the model performs well on the training data but poorly on unseen data, suboptimal local minima, and vanishing and
+exploding gradients, when using deep networks.
+
+\section{Evolutionary Algorithms}
+
+Evolutionary algorithms (EAs) are a class of optimization algorithms, which are inspired by the process of natural selection. EAs are based on the idea of
+evolving a population of candidate solutions to a problem, in order to find the best solution. The process of evolution consists in the selection of the
+fittest individuals, which are then recombined to produce offspring, which are then mutated. The fitness of the offspring is evaluated and the process is
+repeated for a number of generations until a stopping criterion is met, such as a maximum number of generations or a desired level of performance.
+At each generation, the population is updated by replacing the worst-performing individuals with the offspring.
+
+Individuals are represented by genotypes, which are encoded in a way that allows the application of genetic operators, such as crossover and mutation, and
+by phenotypes, which are the actual interpretation of the genotype used as solutions to the problem. The fitness of an individual is evaluated using a
+fitness function, which measures the quality of the solution.
+
+Mutations are used to introduce diversity in the population, which is important to avoid premature convergence to suboptimal solutions. During mutations,
+parts of the genotype are modified while other parts remain unchanged, with the goal of performing a local search around the current genotype.
+The individuals reproduce using crossover, which combines the genotypes of two parents to produce offspring. The offspring inherit parts of the genotypes
+of the parents. The idea is that combining two good solutions can produce an even better solution.
+
+%B TODO Discuss the different kinds of EAs?
+
+An issue which can arise when using EAs is the stagnation of the population, which occurs when the population converges to a suboptimal solution and
+no further improvement is made. In addition, the choice of multiple parameters, such as the mutation rate, the crossover rate, and the population size
+can have a significant impact on the performance of the algorithm. Lastly, there is no guarantee that EAs will find the optimal solution to a problem and
+not be stuck in a local optima.
+
+\section{NeuroEvolution}
+
+Neuroevolution is a subfield of machine learning, which combines evolutionary algorithms and artificial neural networks. The idea is to evolve the weights,
+and potentially, the architecture or hyperparameters of ANNs using an EA instead of traditional gradient-based methods.
+
+...

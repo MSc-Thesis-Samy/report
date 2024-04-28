@@ -183,8 +183,8 @@ $\text{Harm}(r)$ on $\{1, \dots, r\}$: For $l \sim \text{Harm}(r)$,
 The ANNs which are evolved using the (1 + 1) NA algorithm output the union of $N$-dimensional hyperplanes. To check whether or not the input is above the
 hyperplane described by one of the neurons, the normal vector $\overrightarrow{n}$ to the hyperplane is computed using the angles and a norm of $1$.
 For an input vector $\overrightarrow{x}$, the dot product $(\overrightarrow{x} - \lvert b \rvert \overrightarrow{n}) \cdot \overrightarrow{n}$ is computed, where
-$b$ is the bias of the neuron. If $b \geq 0$, the output of the neuron is \textit{True} if the dot product is positive and \textit{False} otherwise. If $b < 0$,
-the output of the neuron is \textit{True} if the dot product is negative and \textit{False} otherwise.
+$b$ is the bias of the neuron. If $b \geq 0$, the output of the neuron is $1$ if the dot product is positive and $0$ otherwise. If $b < 0$,
+the output of the neuron is $1$ if the dot product is negative and $0$ otherwise.
 
 \subsection{Bias-Invariant (1+1) NA (BNA)}
 
@@ -258,8 +258,8 @@ V-neurons output whether or not the input is in the cone described by the neuron
 and a norm of $1$. Given an input vector $\overrightarrow{x}$, the dot product $(\overrightarrow{x} - \lvert b \rvert \overrightarrow{\varphi}) \cdot \overrightarrow{\varphi}$ is computed.
 The angle $\alpha$ between the input vector and the normal vector can then be computed as
 $\alpha = \cos^{-1}(\frac{(\overrightarrow{x} - \lvert b \rvert \overrightarrow{\varphi}) \cdot \overrightarrow{\varphi})}{\lVert \overrightarrow{x} - \lvert b \rvert \overrightarrow{\varphi} \rVert
-\lVert \overrightarrow{\varphi} \rVert})$. If $b \geq 0$, the output of the neuron is \textit{True} if $\alpha \leq \theta$ and \textit{False} otherwise. If $b < 0$, the output of the neuron is
-\textit{True} if $\pi - \alpha \leq \theta$ and \textit{False} otherwise.
+\lVert \overrightarrow{\varphi} \rVert})$. If $b \geq 0$, the output of the neuron is $1$ if $\alpha \leq \theta$ and $0$ otherwise. If $b < 0$, the output of the neuron is
+$1$ if $\pi - \alpha \leq \theta$ and $0$ otherwise.
 
 \subsection{The CMA-ES Evolutionary Strategy}
 
