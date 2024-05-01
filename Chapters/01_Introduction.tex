@@ -4,46 +4,49 @@ Neuroevolution is a subfield of artificial intelligence which consists in the ev
 ANNs are traditionally trained using gradient-based methods, such as stochastic gradient descent.
 Over the years, these methods have been successfully applied to a variety of problems, such as image classification, speech recognition and natural language processing.
 Such problems allow for supervised learning, where ANNs are trained on a dataset of input-output pairs.
-However, there is a class of problems for which supervised learning is not applicable, where instead of input-output pairs, only a measure of performance is available.
-In addition, the performance of ANNs is also heavily impacted by their architectures. The design of ANNs architecture is a complex and time-consuming task, which is
-topically done by hand, based on experience.
+However, there is a class of problems for which supervised learning is not applicable, where instead of input-output pairs, only a measure of performance is available, and
+where such approaches are not applicable.
+In addition, the performance of ANNs is also heavily impacted by their architectures. However, the design of ANNs architecture is a complex and time-consuming task, which is
+topically done by hand, based on experience and trial-and-error.
 
 Neuroevolution, on the other hand, as a more general approach, can in particular be applied to this other class of problems, as well as to the design of ANNs architectures.
-This method is based on evolutionary algorithms, which are inspired by the process of natural selection. These algorithms maintain a population of individuals,
+This method is based on the use of evolutionary algorithms, which are inspired by the process of natural selection. These algorithms maintain a population of individuals,
 which are mutated and recombined to evolve towards optimal solutions. They have shown success for black-box problems and have successfully been applied to a wide range
-of engineering problems.
+of engineering problems over the years.
 
 The field of neuroevolution has been researched for over 40 years, hence many different algorithms, benchmarks and applications have been proposed.
 As a matter of fact, neuroevolution encapsulates algorithms with different goals, such as the optimization of the weights of a fixed topology, the evolution of a
 network topology alongside the use of gradient-based methods for optimizing weights, the evolution of both the topology and weights, as well as the evolution
 of hyperparameters or reinforcement learning policies.
-In this thesis, we are interested in approaches relying entirely on neuroevolution, without the need for gradient-based methods, for evolving neural network
+However, in this thesis, we are interested in approaches relying entirely on neuroevolution, without the need for gradient-based methods, for evolving neural network
 parameters, using evolved or fixed topologies. In addition to these approaches, Various benchmark problems covering different problem classes sch as classification,
-continuous control or game planning, have also have been proposed in the literature for evaluating and comparing the different algorithms.
+continuous control or game planning, have also have been proposed in the applied and theoretical literature for evaluating and comparing the different algorithms.
 
 The focus of this thesis is the development of a framework that implements a selection of neuroevolution algorithms.
 The framework is used to evaluate and compare the algorithms on a selection of benchmarks.
 The framework is implemented in Rust. It allows for the visualization of the problems and the solution process through a graphical user interface.
-The algorithms can be run and tested through a command line interface, in order to allow for the execution of experiments and the collection of results.
+The algorithms can be run and tested through a command line interface, in order to allow for the execution of experiments and the collection of results,
+based on passed-in parameters and configurations.
 
 Algorithms and benchmarks implemented in the framework were selected from the state-of-the art in the theoretical and applied research in the field of neuroevolution,
-with a particular focus on recent algorithms and becnhmarks proposed in 2023 and 2024 in the neuroevolution theory literature.
+with a particular focus on recent algorithms and becnhmarks proposed in $2023$ and $2024$ in the neuroevolution theory literature.
 In addition to these proposals, NEAT (NeuroEvolution of Augmenting Topologies), a classic algorithm in the field, and the use of evolution strategies with CMA-ES
-(Covariance Matrix Adaptation Evolution Strategy), achieving state-of-the-art results, were also considered.
-Regarding the benchmarks, in addition to the simple two dimensional binary classification benchmarks from the considered theory litterature, the
-classic double pole balancing problem and the CANCER1 classification problem were also implemented.
+(Covariance Matrix Adaptation Evolution Strategy) for the evolution of weights, achieving state-of-the-art results, were also considered.
+Regarding the benchmarks, in addition to the simple two-dimensional binary classification benchmarks from the considered theory litterature and the XOR problem, the
+classic double pole balancing problem and the \textit{cancer1} classification problem were also implemented.
 
 \subsection{Overview}
 
 The ordering of chapters in this report follows the chronological order of work performed for this project.
+The report is structured as follows:
 
-\Cref{chap:background} provides an overview of the background and context of the project. It introduces the notion of neural networks, evolutionary algorithms
-and neuroevolution.
+\Cref{chap:background} provides an overview of the background and context of the project. It introduces the notion of artificial neural networks, the main probme classes,
+evolutionary algorithms and neuroevolution.
 
 \Cref{chap:review} gives the results of a literature review conducted on neuroevolution algorithms and benchmarks. It presents the state-of-the-art in the field,
 with a particular focus on recent algorithms and benchmarks proposed in the neuroevolution theory literature from 2023 and 2024.
 Moreover, it also presents the selection of algorithms and benchmarks that were considered in this thesis and implemented in the framework, motivating the choices and
-discussing the selected algorithms and benchmarks in further detail.
+discussing these selected algorithms and benchmarks in further detail.
 
 Furthermore, \Cref{chap:framework} describes the process of designing and implementing the framework for running neuroevolution algorithms on benchmark problems,
 gathering statistics on these runs, and allowing for a visualization of the problems and solution process through a graphical user interface. This is done by first
