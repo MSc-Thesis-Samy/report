@@ -24,3 +24,6 @@
 * [ ] Optional? Add figures for (1 + 1) NA and BNA evaluation details
 * [ ] ANN figure for background section
 * [ ] Optional? Discuss the different kinds of EAs in the background section
+* [ ] Optional? EAs pseudocode in the background section
+* [ ] Optional? Defining RL in the background section
+* [ ] Make motivations, objectives and contributions more clear in the introduction

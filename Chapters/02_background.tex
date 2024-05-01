@@ -39,15 +39,37 @@ The individuals reproduce using crossover, which combines the genotypes of two p
 of the parents. The idea is that combining two good solutions can produce an even better solution.
 
 %B TODO Discuss the different kinds of EAs?
+% TODO EAs pseudocode?
 
 An issue which can arise when using EAs is the stagnation of the population, which occurs when the population converges to a suboptimal solution and
 no further improvement is made. In addition, the choice of multiple parameters, such as the mutation rate, the crossover rate, and the population size
 can have a significant impact on the performance of the algorithm. Lastly, there is no guarantee that EAs will find the optimal solution to a problem and
 not be stuck in a local optima.
 
-\section{NeuroEvolution}
+\section{Neuroevolution}
 
 Neuroevolution is a subfield of machine learning, which combines evolutionary algorithms and artificial neural networks. The idea is to evolve the weights,
-and potentially, the architecture or hyperparameters of ANNs using an EA instead of traditional gradient-based methods.
+and potentially, the architecture or hyperparameters of ANNs using an EA instead of traditional gradient-based methods. Hence, this approach aims to
+offer an alternative to the manual trial-and-error process of designing suited architectures and choosing hyperparameters. Furthermore, this approach,
+being more general than traditional gradient-based methods, can be applied to a wider range of problems, such as reinforcement learning tasks, offering an
+alternative to the traditional reinforcement learning methods, which do not scale well for problems with large state space or partial observability,
+or other problems where no training data is available to perform supervised learning.
 
-...
+However, neuroevolution comes with a major limitation which its computational cost, making it not suitable for the evolution of networks with more than
+tens of thousands of parameters, while gradient-based methods have successfully been applied to networks with billions of parameters. It is still particularly
+interesting for problems where smaller networks can be used or where other methods are not applicable.
+
+From the perspective of the EA, neural networks serve as the phenotype, one of the main challenges is to define an encoding strategy into genotypes, which
+allows for the conduction of genetic operations. For example, it is not trivial to define a crossover operation for neural networks when topologies are also
+being evolved. For this reason, neuroevolution has traditionally  been used to evolve the weights of a fixed topology network. Genetic encoding strategies
+for neural networks can be divided into two main categories:
+
+\begin{itemize}
+    \item \textbf{Direct encoding:} Genomes contain the information for all nodes and connections in the network, and are directly translated into a network. This
+    is the strategy which is employed by most neuroevolution algorithms.
+    \item \textbf{Indirect encoding:} Genomes contain a set of rules or instructions to generate the network, which is then constructed from these rules.
+\end{itemize}
+
+Neuroevolution algorithms evolving both the weights and the topology of the network are referred to as TWEANNs (Topology and Weight Evolving Artificial Neural Networks).
+Lastly, neuroevolution can also be used in combination with traditional training methods to optimize the hyperparameters of a network, such as the learning rate or the
+activation function, or the topology of the network, while the weights are learned using gradient-based methods.
