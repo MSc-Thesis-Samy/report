@@ -26,3 +26,4 @@
 * [ ] Optional? Discuss the different kinds of EAs in the background section
 * [ ] Optional? EAs pseudocode in the background section
 * [ ] Make motivations, objectives and contributions more clear in the introduction
+* [ ] Activation functions figure in the background section

@@ -11,7 +11,16 @@ to the weighted sum of the inputs. The weights of the connections are typically 
 The performance of an ANN is evaluated using a loss function, which measures the difference between the predicted output and the true output.
 
 % TODO figure + equation
-% TODO activation functions
+
+Activation functions are used to introduce non-linearity in the model, which is important to enable the model to learn complex patterns in the data. Without
+non-linear activation functions, the model would be limited to learning linear functions, which are not sufficient to model complex relationships in the data.
+Two commonly used activation functions are the \textbf{sigmoid} function and the \textbf{rectified linear unit} (ReLU) function. The sigmoid function is defined as
+$\sigma(x) = \frac{1}{1 + e^{-x}}$, it maps the input to the range $[0, 1]$, making it useful for binary classification tasks. The ReLU function is defined as
+$f(x) = \max(0, x)$, which is a piecewise linear function that maps negative inputs to zero and positive inputs to the input itself. The ReLU function is
+commonly used in deep learning models, as it has been shown to improve the convergence of the optimization algorithm in deep architectures, by addressing the
+vanishing gradient problem.
+
+% TODO activation functions figure
 
 Any function can be approximated by ANNs. Over the years, these models have been applied to a wide range of problems, including classification and reinforcement
 learning tasks. The process of applying ANNs consists in the design of its architecture, the choice of parameters such as the loss function or parameters for the
@@ -22,9 +31,38 @@ impact on the performace of the model. Furthermore, the optimization of the netw
 as overfitting, which arises when the model performs well on the training data but poorly on unseen data, suboptimal local minima, and vanishing and
 exploding gradients, when using deep networks.
 
-\section{Problem classes}
+\section{Problem classes and learning paradigms}
 
-...
+ANNs can be used to solve a wide range of problems, making use of different learning paradigms. This section provides a brief overview of the main classes of
+problems and learning paradigms in machine learning.
+
+\subsection{Supervised Learning}
+
+Supervised learning is a class of machine learning tasks, where the goal is to learn a mapping from input data to output data, given a dataset of labeled
+examples. The dataset consists of pairs of input-output data, and the goal is to learn a function which maps the input to the output. The function is typically
+learned by minimizing a loss function, which depends on the problem at hand, and which measures the difference between the predicted output and the true output.
+The performance of the model is evaluated using a test set, which is separate from the training set. Supervised learning is used for tasks such as \textbf{classification}
+and \textbf{regression} problems. For classification tasks, the output is a discrete class label, while for regression tasks, the output is a continuous value.
+Famous examples of classification tasks include image classification, where the goal is to classify images into different categories or spam detection, where
+the goal is to classify emails as spam or not spam. When two classes are involved, the task is referred to as \textbf{binary classification}.
+Different metrics can be used to evaluate the performance of ANNs on classification tasks, such as the accuracy which measures the proportion of correctly
+classified examples. For regression tasks, metrics such as the mean squared error can be used.
+
+\subsection{Unsupervised Learning}
+
+Unsupervised learning is a machine learning task where the goal is to learn patterns in the data without the use of labeled examples.
+In other words, no ground-truth is provided from the (training) data and the goal is to learn the underlying structure of the data, such as clusters or a latent
+representation space. Unsupervised learning is used for tasks such as clustering, which consists in grouping similar examples together, or dimensionality reduction,
+which consists in reducing the number of features in the data while preserving as much information as possible.
+
+\subsection{Reinforcement Learning}
+
+Reinforcement learning problems can be compared to trial-and-error learning. These problems are composed of three main components: an agent, an environment, and a reward
+signal. The agent interacts with the environment by taking actions, and is provided with a reward signal which measures how well it is performing.. The agent interacts with
+the environment by observing the current environment state, and taking actions. It receives a reward signal from the environment, the state is updated and the process is repeated.
+As the agent interacts with the environment it learns a strategy mapping states to actions, which is referred to as a policy, with the goal of maximizing its cumulative reward.
+Reinforcement learning is used for dynamic tasks such as game playing or \textbf{control tasks}.
+There is no labeled data in reinforcement learning, and the agent must learn from its own experience, by exploring the environment and learning from the feedback it receives.
 
 \section{Evolutionary Algorithms}
 
@@ -75,6 +113,6 @@ for neural networks can be divided into two main categories:
     \item \textbf{Indirect encoding:} Genomes contain a set of rules or instructions to generate the network, which is then constructed from these rules.
 \end{itemize}
 
-Neuroevolution algorithms evolving both the weights and the topology of the network are referred to as TWEANNs (Topology and Weight Evolving Artificial Neural Networks).
+Neuroevolution algorithms evolving both the weights and the topology of the network are referred to as \textbf{TWEANNs} (Topology and Weight Evolving Artificial Neural Networks).
 Lastly, neuroevolution can also be used in combination with traditional training methods to optimize the hyperparameters of a network, such as the learning rate or the
 activation function, or the topology of the network, while the weights are learned using gradient-based methods.
