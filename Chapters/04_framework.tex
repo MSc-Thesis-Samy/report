@@ -97,6 +97,35 @@ tested. Test functions correspond to functions defined in such modules, which ar
 with \texttt{cargo test}. They fail when a \textit{panics} occur, and utility macros such as \texttt{asserteq} or \texttt{assert} can be used to panic
 when conditions are not met.
 
+\subsubsection{Concurrency}
+
+Concurent programming refers to different parts of a program executing independently of each other, while parallel programming refers to different parts
+of a program executing in parallel, at the same time. For simplicity, in this section, "concurrency" should be understood as "concurrency and/or parallelism".
+These concepts have become particularly important in the context of modern computing, where multi-core processors are the norm. However, writing concurrent
+programs can be difficult, as it can be error-prone, hard to debug and reason about. Rust aims at addressing these issues by making it use of its main feature:
+the borrowing and ownership system, which allows many concurrency issues to be caught at compile time, rather than at runtime, as it is the case in other languages.
+In Rust, concurrency is achieved through the use of threads, which are lightweight processes that can run concurrently. The standard library provides
+various methods for creating and managing threads. However, in this project, the \texttt{rayon} crate is used instead. It is a data parallelism library
+which allows for a particularly easy way to parallelize code, by providing parallel iterators and parallel maps, and abstracting away the details of
+thread creation and management, guaranteeing data-race free execution and benefiting from parallelism when possible.
+
+For example, \Cref{lst:sum_of_squares} shows how a function \texttt{sum\_of\_squares}, which computes the sum of the squares of the elements of an array.
+By simply using the \texttt{par\_iter} method from the \texttt{rayon} crate, instead of the \texttt{iter} method, the function can be parallelized, as demonstrated
+by the \texttt{sum\_of\_squares\_parallel} function.
+
+\begin{lstlisting}[label=lst:sum_of_squares,caption=Sum of squares,float,frame=tb]
+use rayon::prelude::*;
+
+fn sum_of_squares(input: &[i32]) -> i32 {
+    input.iter().map(|x| x * x).sum()
+}
+
+fn sum_of_squares_parallel(input: &[i32]) -> i32 {
+    input.par_iter().map(|x| x * x).sum()
+}
+\end{lstlisting}
+
+
 \subsection{Core}
 
 This component contains the core functionality of the framework
