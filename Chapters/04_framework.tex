@@ -203,7 +203,45 @@ For example, the iteration number is set to an unsigned integer \texttt{u32}, wh
 \texttt{Problem}, with variants for each possible option.
 
 The command line interface is shown in \ref{verb:cli}. Parameters for the BNA and $(1 + 1)$ NA algorithms are passed in as named arguments. For NEAT and CMA-ES, where more
-parameters can be specified, the path to \texttt{.toml} configuration files are passed-in instead.
+parameters can be specified, the path to \texttt{.toml} configuration files are passed-in instead. Examples of such configuration files are shown in \ref{verb:cmaes_config}
+and \ref{verb:neat_config}.
+
+\begin{lstlisting}[label=verb:cmaes_config,caption=Example of configuration File for CMAE-ES,float,frame=tb]
+input_ids = [1, 2]
+output_ids = [5]
+bias_id = 3
+
+[[neurons]]
+id = 4
+inputs = [1, 2, 3]
+activation = "sigmoid"
+
+[[neurons]]
+id = 5
+inputs = [1, 2, 3, 4]
+activation = "sigmoid"
+\end{lstlisting}
+
+\begin{lstlisting}[label=verb:neat_config,caption=Example of configuration File for NEAT,float,frame=tb]
+population_size = 150
+n_inputs = 2
+n_outputs = 1
+weights_mean = 0.0
+weights_stddev = 0.8
+perturbation_stddev = 0.2
+new_weight_probability = 0.1
+enable_probability = 0.25
+survival_threshold = 0.25
+connection_mutation_rate = 0.3
+node_mutation_rate = 0.03
+weight_mutation_rate = 0.8
+similarity_threshold = 15.0
+excess_weight = 1.0
+disjoint_weight = 1.0
+matching_weight = 0.3
+champion_copy_threshold = 5
+stagnation_threshold = 1500
+\end{lstlisting}
 
 % TODO update
 \begin{lstlisting}[label=verb:cli,caption=Command line interface,float,frame=tb]

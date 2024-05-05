@@ -158,13 +158,39 @@ parts of the genotype are modified while other parts remain unchanged, with the 
 The individuals reproduce using crossover, which combines the genotypes of two parents to produce offspring. The offspring inherit parts of the genotypes
 of the parents. The idea is that combining two good solutions can produce an even better solution.
 
-%B TODO Discuss the different kinds of EAs?
-% TODO EAs pseudocode?
+The general structure of an evolutionary algorithm is shown in \Cref{alg:ea}.
 
-An issue which can arise when using EAs is the stagnation of the population, which occurs when the population converges to a suboptimal solution and
-no further improvement is made. In addition, the choice of multiple parameters, such as the mutation rate, the crossover rate, and the population size
-can have a significant impact on the performance of the algorithm. Lastly, there is no guarantee that EAs will find the optimal solution to a problem and
-not be stuck in a local optima.
+\begin{algorithm}[H]
+    \caption{General structure of an evolutionary algorithm.}
+    \label{alg:ea}
+    \begin{algorithmic}
+        \State Initialize population
+        \State Evaluate population
+        \While{termination criterion not met}
+            \State Select parents
+            \State Recombine parents
+            \State Mutate offspring
+            \State Evaluate offspring
+            \State Select survivors
+        \EndWhile
+        \State \textbf{return} best individual
+    \end{algorithmic}
+\end{algorithm}
+
+It should be noted that evolutionary algorithms often have a variety of parameters that need to be tuned, such as the population size, the mutation rate,
+the crossover rate, and the selection mechanism. The performance of the algorithm can be sensitive to the choice of these parameters, and finding the
+right combination of parameters can be a challenging task.
+
+Evolutionary algorithms can be organized into different categories, including:
+
+\begin{itemize}
+    \item \textbf{Genetic algorithms (GAs):} Genetic Algorithms are generally applied to optimization problems and follow the principles described above.
+    \item \textbf{Genetic programming (GP):} Genetic programming is a variant of genetic algorithms where the individuals are computer programs, which are evolved to solve a problem.
+        Programs are traditionally represented as trees.
+    \item \textbf{Evolution strategies (ES):} Evolution strategies are black-box optimization algorithms, which are used to optimize continuous real-valued functions.
+        Unlike other classes of EAs, evolution strategies do not maintain an explit population of individuals, but instead, a parametrized probability distribution
+        used to sample the individuals.
+\end{itemize}
 
 \section{Neuroevolution}
 
