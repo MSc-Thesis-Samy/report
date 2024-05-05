@@ -68,8 +68,8 @@ purple,         fill=purple         \\%
 % If you wish to use the pdflatex compiler, sans-serif Helvetica can be used as a replacement for Arial. In this way you will be able to use the microtype package. Remember to add \usepackage[utf8]{inputenc} and disable the fontspec package.
 \newcommand\TitleFont[1]{{\bfseries #1}}
 \newcommand\titlefont[1]{{#1}}
-\fontfamily{qhv}\selectfont
-\renewcommand{\familydefault}{\sfdefault}
+% \fontfamily{qhv}\selectfont
+% \renewcommand{\familydefault}{\sfdefault}
 
 
 % Watermark for confidential or draft (or anything else)
@@ -131,19 +131,19 @@ purple,         fill=purple         \\%
 
 
 % Setup for diagrams and graphs (tikz pictures)
-\usetikzlibrary{spy}    % For magnifying anything within a tikzpicture, see the line graph
-\usepgfplotslibrary{statistics} % Package for the boxplot
-\pgfplotsset{ % Setup for diagrams
-compat=newest,
-major x grid style={line width=0.5pt,draw=grey},
-major y grid style={line width=0.5pt,draw=grey},
-legend style={at={(0.5,-0.1)}, anchor=north,fill=none,draw=none,legend columns=-1,/tikz/every even column/.append style={column sep=10pt}},
-axis line style={draw=none},
-tick style={draw=none},
-every axis/.append style={ultra thick},
-tick label style={/pgf/number format/assume math mode}, % To apply main font to tick labels (numbers on the axis)
-}
-\tikzset{every mark/.append style={scale=1.5}}
+% \usetikzlibrary{spy}    % For magnifying anything within a tikzpicture, see the line graph
+% \usepgfplotslibrary{statistics} % Package for the boxplot
+% \pgfplotsset{ % Setup for diagrams
+% compat=newest,
+% major x grid style={line width=0.5pt,draw=grey},
+% major y grid style={line width=0.5pt,draw=grey},
+% legend style={at={(0.5,-0.1)}, anchor=north,fill=none,draw=none,legend columns=-1,/tikz/every even column/.append style={column sep=10pt}},
+% axis line style={draw=none},
+% tick style={draw=none},
+% every axis/.append style={ultra thick},
+% tick label style={/pgf/number format/assume math mode}, % To apply main font to tick labels (numbers on the axis)
+% }
+% \tikzset{every mark/.append style={scale=1.5}}
 
 
 % Hypersetup

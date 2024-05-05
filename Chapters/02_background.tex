@@ -8,9 +8,62 @@ neurons, which are organized in layers. The first layer of an ANN is referred to
 in between are hidden layers. In feed-forward ANNs, nodes in a layer are connected to nodes from the immediately preceding and succeeding layers. The connections between nodes
 are associated weights.  Signal travels from the input layer to the output layer and the output of a node is computed by applying a non-linear activation function
 to the weighted sum of the inputs. The weights of the connections are typically learned using gradient-based optimization algorithms, such as backpropagation.
-The performance of an ANN is evaluated using a loss function, which measures the difference between the predicted output and the true output.
+Given a neuron with inputs $x_1, x_2, \ldots, x_n$ and weights $w_1, w_2, \ldots, w_n$, the output $y$ of the neuron is computed as
 
-% TODO figure + equation
+\[
+    y = f(\sum_{i=1}^{n} w_i x_i)
+\]
+
+where $f$ is the neuron's activation function.
+
+An example of a feed-forward neural network is shown in \Cref{fig:ann}. This network consists of an input layer with four nodes, a hidden layer with five nodes,
+and an output layer with one node. The connections between nodes are represented by arrows, and the weights of the connections are not shown.
+
+\def\layersep{2.5cm}
+
+\begin{figure}[h]
+    \begin{center}
+        \begin{tikzpicture}[shorten >=1pt,->,draw=black!50, node distance=\layersep]
+            \tikzstyle{every pin edge}=[<-,shorten <=1pt]
+            \tikzstyle{neuron}=[circle,fill=black!25,minimum size=17pt,inner sep=0pt]
+            \tikzstyle{input neuron}=[neuron, fill=green!50];
+            \tikzstyle{output neuron}=[neuron, fill=red!50];
+            \tikzstyle{hidden neuron}=[neuron, fill=blue!50];
+            \tikzstyle{annot} = [text width=4em, text centered]
+
+            % Draw the input layer nodes
+            \foreach \name / \y in {1,...,4}
+            % This is the same as writing \foreach \name / \y in {1/1,2/2,3/3,4/4}
+                % \node[input neuron, pin=left:Input \#\y] (I-\name) at (0,-\y) {};
+                \node[input neuron] (I-\name) at (0,-\y) {};
+
+            % Draw the hidden layer nodes
+            \foreach \name / \y in {1,...,5}
+                \path[yshift=0.5cm]
+                    node[hidden neuron] (H-\name) at (\layersep,-\y cm) {};
+
+            % Draw the output layer node
+            \node[output neuron, right of=H-3] (O) {};
+
+            % Connect every node in the input layer with every node in the
+            % hidden layer.
+            \foreach \source in {1,...,4}
+                \foreach \dest in {1,...,5}
+                    \path (I-\source) edge (H-\dest);
+
+            % Connect every node in the hidden layer with the output layer
+            \foreach \source in {1,...,5}
+                \path (H-\source) edge (O);
+
+            % Annotate the layers
+            \node[annot,above of=H-1, node distance=1cm] (hl) {Hidden layer};
+            \node[annot,left of=hl] {Input layer};
+            \node[annot,right of=hl] {Output layer};
+        \end{tikzpicture}
+        \caption{Graph representation of an ANN with one hidden layer.}
+        \label{fig:ann}
+    \end{center}
+\end{figure}
 
 Activation functions are used to introduce non-linearity in the model, which is important to enable the model to learn complex patterns in the data. Without
 non-linear activation functions, the model would be limited to learning linear functions, which are not sufficient to model complex relationships in the data.
@@ -18,9 +71,33 @@ Two commonly used activation functions are the \textbf{sigmoid} function and the
 $\sigma(x) = \frac{1}{1 + e^{-x}}$, it maps the input to the range $[0, 1]$, making it useful for binary classification tasks. The ReLU function is defined as
 $f(x) = \max(0, x)$, which is a piecewise linear function that maps negative inputs to zero and positive inputs to the input itself. The ReLU function is
 commonly used in deep learning models, as it has been shown to improve the convergence of the optimization algorithm in deep architectures, by addressing the
-vanishing gradient problem.
+vanishing gradient problem. The graphs of the sigmoid and ReLU activation functions are shown in \Cref{fig:activation_functions}.
 
-% TODO activation functions figure
+\begin{figure}[h]
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis}[
+                axis lines=middle,
+                width=12cm,
+                height=7cm,
+                tick align=outside,
+                legend pos=north west,
+                xmin=-1,
+                xmax= 1,
+                ymin= -0.1,
+                ymax= 1,
+                xlabel=x,
+                ylabel=y]
+                \addplot[domain=-1:1, red, ultra thick, samples=100] {1/(1+exp(-5*x))};
+                \addplot[domain=-1:1, blue, ultra thick, samples=100] {max(0, x)};
+                \addlegendentry{$\sigma(x) = \frac{1}{1 + e^{-5x}}$}
+                \addlegendentry{$f(x) = \max(0, x)$}
+            \end{axis}
+        \end{tikzpicture}
+        \caption{Graphs of the sigmoid and ReLU activation functions.}
+        \label{fig:activation_functions}
+    \end{center}
+\end{figure}
 
 Any function can be approximated by ANNs. Over the years, these models have been applied to a wide range of problems, including classification and reinforcement
 learning tasks. The process of applying ANNs consists in the design of its architecture, the choice of parameters such as the loss function or parameters for the

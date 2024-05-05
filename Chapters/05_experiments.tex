@@ -41,7 +41,10 @@ In the case of this thesis, the following performance measures are considered:
 \subsubsection{Testing workflows in practice}
 
 Given the high computational cost induced by the high number of experiments to run, the experiments were run on the high-performance computing cluster (HPC) of DTU.
+This will make it possible to benefit from the high number of cores available in the cluster, because of the parallel nature of the implemented testing logic.
 More precisely, the central DTU HPC cluster (LSF 10) was used \footnote{\url{https://www.hpc.dtu.dk/?page_id=2520}}.
 It contains nodes with 10, 12, 16 or 24 cores. Applications are run on the cluster by mean of job scripts, with the resource manager
 parsing the scripts and handling the usage of the available resources. Job scripts contain speciation for the resources requirements, job constraints, a specific queue to use and commands to setup the environment
 and run the application. Queues are used to order jobs which are not run immediately.
+
+In addition to running the unit-tests, by having the target set to linux, it also allows to verify that the project should be able to compile on the HPC.

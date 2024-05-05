@@ -153,7 +153,7 @@ function from the \texttt{benchmarks.rs} file, which computes the $MAE$ (Mean Ab
 values, this is equivalent to computing the accuracy (i.e, the number of correct predictions divided by the number of total predictions), while also
 allowing for the evaluation of the CMA-ES and NEAT method, outputting probables when using the sigmoid activation on the output neuron.
 
-\paragraph{Pole Balancing} The logic for the pole balancing simulation is implemented in the \texttt{pole\_balancing.rs} file, where the state is defined, along with methods
+\paragraph{Pole Balancing} The logic for the pole balancing simulation is implemented in the  \\ \texttt{pole\_balancing.rs} file, where the state is defined, along with methods
 responsible for updating it based on the equations and the Euler method. The \texttt{pole\_balancing} function in the \texttt{benchmarks.rs} file simply
 updates the state, using the algorithm output as the applied force, and checking whether or not the success conditions for the task are still met.
 
@@ -161,8 +161,8 @@ updates the state, using the algorithm output as the applied force, and checking
 
 Unit-tests were implemented across the core component to test the behavior of the algorithms and benchmarks.
 These tests were implemented in parallel with the functionalities to avoid and identify potential bugs early in the development process before
-building up with more functionalities. In addition, they were ran at each new push to github using a workflow responsible for compiling the project
-and running all the tests. This is to ensure that new changes do not break any past working functionality.
+building up with more functionalities. In addition, they were ran at each new push to github using a workflow responsible for compiling the project,
+targeting linux, and running all the tests. This is to ensure that new changes do not break any past working functionality.
 
 In fact, the bna and $(1 + 1)$ NA problems were tested using the sphere classification problems, where optimal solutions are known. These tests
 consist in checking whether one of these algorithms, with parameters corresponding to an optimal solution, does indeed lead to a maximum fitness value
@@ -212,16 +212,19 @@ Neuroevolution framework for testing algorithms on benchmark problems.
 Usage: main [OPTIONS] <ALGORITHM> <PROBLEM>
 
 Arguments:
-  <ALGORITHM>  The algorithm to test [possible values: oneplusonena, bna]
-  <PROBLEM>    the benchmark problem [possible values: half, quarter, two-quarters]
+  <ALGORITHM>  The algorithm to test [possible values: oneplusonena, bna, neat, neural-network]
+  <PROBLEM>    the benchmark problem [possible values: half, quarter, two-quarters, square, cube, xor, pole-balancing, proben1-train, proben1-test]
 
 Options:
   -r, --resolution <RESOLUTION>  Resolution, when applicable [default: 1000]
-  -i, --iterations <ITERATIONS>  Number of iterations [default: 5000]
+  -i, --iterations <ITERATIONS>  Number of iterations [default: 500]
   -c, --continuous               Use the continuous version of the algorithm, when applicable
   -e, --es                       Optimize using cma-es
   -n, --neurons <NEURONS>        Number of neurons, when applicable [default: 1]
   -g, --gui                      Display visualization
+  -f, --file <FILE>              Configuration file
+  -o, --output <OUTPUT>          Results output file
+  -t, --test-runs <TEST_RUNS>    Number of runs
   -h, --help                     Print help
   -V, --version                  Print version
 \end{lstlisting}

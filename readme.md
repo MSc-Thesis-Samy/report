@@ -22,8 +22,8 @@
 * [ ] Pole balancing gui figure
 * [ ] Trigonometry equations for (1 + 1) NA and BNA
 * [ ] Optional? Add figures for (1 + 1) NA and BNA evaluation details
-* [ ] ANN figure for background section
+* [X] ANN figure for background section
 * [ ] Optional? Discuss the different kinds of EAs in the background section
 * [ ] Optional? EAs pseudocode in the background section
 * [ ] Make motivations, objectives and contributions more clear in the introduction
-* [ ] Activation functions figure in the background section
+* [X] Activation functions figure in the background section
