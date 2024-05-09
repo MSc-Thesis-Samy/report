@@ -28,3 +28,7 @@
 * [X] EAs pseudocode in the background section
 * [X] Activation functions figure in the background section
 * [ ] Optional? EA example story with figures in background section
+* [ ] Discuss continuous versions of th theory algs in the review section
+* [ ] Update framework section with the dyn stuff and early stopping
+* [ ] Optional? Add sample HPC job script in the experiments section
+* [ ] Diwscus python script in experiments workflow section

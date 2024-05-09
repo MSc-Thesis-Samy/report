@@ -48,3 +48,79 @@ parsing the scripts and handling the usage of the available resources. Job scrip
 and run the application. Queues are used to order jobs which are not run immediately.
 
 In addition to running the unit-tests, by having the target set to linux, it also allows to verify that the project should be able to compile on the HPC.
+An example of a job script is shown in Listing \ref{lst:job_script}, it runs the $(1 + 1)$ NA algorithm on the \textit{Half} benchmark with a resolution of 100 to 1000, and 1000 runs
+for each resolution, and saves the results in CSV files. The configuration of the job script is done using the LSF directives, which are comments starting with \texttt{\#BSUB}.
+
+\begin{lstlisting}[language=bash, caption=Example of a job script, label=lst:job_script]
+#!/bin/sh
+
+#### General options
+### -- specify queue --
+#BSUB -q hpc
+### -- set the job Name --
+#BSUB -J Bench
+### -- ask for number of cores (default: 1) --
+#BSUB -n 10
+### -- specify that the cores must be on the same host --
+#BSUB -R "span[hosts=1]"
+### -- specify that we need 4GB of memory per core/slot --
+#BSUB -R "rusage[mem=4GB]"
+### -- specify that we want the job to get killed if it exceeds 5 GB per core/slot --
+#BSUB -M 5GB
+### -- set walltime limit: hh:mm --
+#BSUB -W 24:00
+### -- set the email address --
+# please uncomment the following line and put in your e-mail address,
+# if you want to receive e-mail notifications on a non-default address
+#BSUB -u s222887@dtu.dk
+### -- send notification at start --
+#BSUB -B
+### -- send notification at completion --
+#BSUB -N
+### -- Specify the output and error file. %J is the job-id --
+### -- -o and -e mean append, -oo and -eo mean overwrite --
+#BSUB -o ~/Output_%J.out
+#BSUB -e ~/Output_%J.err
+
+n_runs=1000
+
+cd ~/code-master
+
+for resolution in $(seq 100 100 1000)
+do
+      ./target/release/main oneplusonena half -i 500 -n 1 -r $resolution -t $n_runs -o ~/output/oneplusone_na_half_$resolution.csv
+done
+\end{lstlisting}
+
+\section{Results}
+
+\begin{figure}[h]
+    \begin{center}
+        \begin{tikzpicture}
+        \begin{axis}[
+            % width=12cm,
+            % height=7cm,
+            title={Fitness over resolution},
+            xlabel={Resolution},
+            ylabel={Average fitness},
+            xmin=100, xmax=1000,
+            ymin=0, ymax=1,
+            ytick={0,0.2,...,1},
+            legend pos=north west,
+            xticklabel shift={.1cm},
+            yticklabel shift={.1cm} ]
+        ]
+
+        \addplot[
+            color=blue,
+            mark=square,
+            ]
+            coordinates {
+            (100,0.99)(200,0.99)(300,0.99)(400,0.98)(500,0.99)(600,0.99)(700,0.98)(800,0.98)(900,0.98)(1000,0.99)
+            };
+            % \addlegendentry{Some fancy legend}
+        \end{axis}
+        \end{tikzpicture}
+    \end{center}
+    \caption{Some fancy caption}
+\end{figure}

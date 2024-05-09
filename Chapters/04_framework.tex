@@ -72,6 +72,7 @@ Nowadays, object-oriented languages are considered the norm for the development 
 Rust is inspired by various programming paradigms, such as functional programming and object-oriented programming.
 Although there is no consensus on the list of features which define an object-oriented programming language, Rust can be considered object-oriented.
 Indeed, it allows for the definition of structs and enums which can store data and methods using implementation blocks.
+
 It also allows for encapsulation through the use of the \texttt{pub} keyword, which specifies the visibility of objects, thus defining the public API for interacting
 with them. When not using the \texttt{pub} keyword, the object is private and can only be accessed by the module it is defined in.
 Modules are used to organize code and define the visibility of objects, and can be nested to form a hierarchy.
@@ -79,6 +80,11 @@ However, a major difference with other object-oriented languages such as Java or
 Instead, it takes a different approach which consists in polymorphism, which is a more general system referring to code that can work with multiple types.
 In practice, this is achieved through the use of generics in method and object definitions, and the use of traits, which are similar to interfaces in other languages.
 In fact, traits allow for the definition of a default implementation for a set of methods, which can be overridden by the implementing type.
+
+\subsubsection{Enums}
+
+% TODO discuss pattern matching and how enums are used in the framework
+...
 
 \subsubsection{Library management}
 
@@ -204,7 +210,8 @@ For example, the iteration number is set to an unsigned integer \texttt{u32}, wh
 
 The command line interface is shown in \ref{verb:cli}. Parameters for the BNA and $(1 + 1)$ NA algorithms are passed in as named arguments. For NEAT and CMA-ES, where more
 parameters can be specified, the path to \texttt{.toml} configuration files are passed-in instead. Examples of such configuration files are shown in \ref{verb:cmaes_config}
-and \ref{verb:neat_config}.
+and \ref{verb:neat_config}. The CMA-ES configuration file is used to specify the fixed network topology and activation functions, while the NEAT configuration file
+is used to specify the various parameters of the algorithm.
 
 \begin{lstlisting}[label=verb:cmaes_config,caption=Example of configuration File for CMAE-ES,float,frame=tb]
 input_ids = [1, 2]

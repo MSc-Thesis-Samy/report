@@ -1,0 +1,118 @@
+#!/usr/bin/env python3
+
+import os
+import sys
+import csv
+import re
+import numpy as np
+
+
+def calculate_statistics(csv_file):
+    with open(csv_file, 'r') as file:
+        reader = csv.DictReader(file)
+        data = [row for row in reader]
+
+    fitness = np.array([float(row['Fitness']) for row in data])
+    iterations = np.array([int(row['Iterations']) for row in data])
+    elapsed_time = np.array([float(row['Elapsed time']) for row in data])
+
+    mean_fitness = np.mean(fitness)
+    std_fitness = np.std(fitness)
+    median_fitness = np.median(fitness)
+
+    mean_iterations = np.mean(iterations)
+    std_iterations = np.std(iterations)
+    median_iterations = np.median(iterations)
+
+    mean_elapsed_time = np.mean(elapsed_time)
+    std_elapsed_time = np.std(elapsed_time)
+    median_elapsed_time = np.median(elapsed_time)
+
+    return {
+        "Fitness": {
+            "mean": mean_fitness,
+            "std": std_fitness,
+            "median": median_fitness
+        },
+        "Iterations": {
+            "mean": mean_iterations,
+            "std": std_iterations,
+            "median": median_iterations
+        },
+        "Elapsed Time": {
+            "mean": mean_elapsed_time,
+            "std": std_elapsed_time,
+            "median": median_elapsed_time
+        }
+    }
+
+
+def print_statistics(stats):
+    print("Fitness:")
+    print("Mean:", "{:.2f}".format(stats["Fitness"]["mean"]))
+    print("Standard Deviation:", "{:.2f}".format(stats["Fitness"]["std"]))
+    print("Median:", "{:.2f}".format(stats["Fitness"]["median"]))
+    print()
+
+    print("Iterations:")
+    print("Mean:", "{:.2f}".format(stats["Iterations"]["mean"]))
+    print("Standard Deviation:", "{:.2f}".format(stats["Iterations"]["std"]))
+    print("Median:", "{:.2f}".format(stats["Iterations"]["median"]))
+    print()
+
+    print("Elapsed Time:")
+    print("Mean:", "{:.2f}".format(stats["Elapsed Time"]["mean"]))
+    print("Standard Deviation:", "{:.2f}".format(stats["Elapsed Time"]["std"]))
+    print("Median:", "{:.2f}".format(stats["Elapsed Time"]["median"]))
+
+
+def write_runs_result(csv_folder, output_path):
+    with open(output_path, 'w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(["Param", "Fitness", "Iterations", "Elapsed time"])
+
+        csv_files = [f for f in os.listdir(csv_folder) if f.endswith(".csv")]
+        sorted_csv_files = sorted(csv_files, key=lambda x: int(re.search(r'\d+', x).group()))
+
+        for csv_file in sorted_csv_files:
+            stats = calculate_statistics(os.path.join(csv_folder, csv_file))
+            param = re.search(r'\d+', csv_file).group()
+            writer.writerow([
+                param,
+                "{:.2f}".format(stats["Fitness"]["mean"]),
+                "{:.2f}".format(stats["Iterations"]["mean"]),
+                "{:.2f}".format(stats["Elapsed Time"]["mean"])
+            ])
+
+
+def extract_row_values(csv_file, column_name):
+    with open(csv_file, 'r') as file:
+        reader = csv.DictReader(file)
+        data = [row for row in reader]
+
+    values = [f"({row['Param']},{row[column_name]})" for row in data]
+    print("".join(values))
+
+
+if __name__ == "__main__":
+    if len(sys.argv) == 1:
+        sys.exit(1)
+
+    if sys.argv[1] == "stats":
+        if len(sys.argv) != 3:
+            sys.exit(1)
+
+        stats = calculate_statistics(sys.argv[2])
+        print_statistics(stats)
+    elif sys.argv[1] == "merge":
+        if len(sys.argv) != 4:
+            sys.exit(1)
+
+        write_runs_result(sys.argv[2], sys.argv[3])
+    elif sys.argv[1] == "extract":
+        if len(sys.argv) != 4:
+            sys.exit(1)
+
+        extract_row_values(sys.argv[2], sys.argv[3])
+    else:
+        sys.exit(1)
