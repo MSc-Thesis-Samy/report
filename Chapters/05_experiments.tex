@@ -7,6 +7,10 @@ This section presents the methodology and results of the empirical performance t
 The goal of this phase is to design and run experiments to evaluate the performance of the algorithms on the benchmarks, and based on the empirical results, backup-up by statistical tests, formulate hypotheses on
 the relative performance of the algorithms given the problem class, and suggest guidelines for the choice of algorithms and parameters for these algorithms.
 
+In the following sections, results are presented for each algorithm on the selected benchmark problems they can be applied to, in chronological order of the experiments.
+This allows for a detailed analysis of the performance of each of the algorithms and experimentation with various configurations, before comparing them on the same problems, as well as
+motivating the different experiments which were conducted.
+
 \subsection{Methodology}
 
 As it is the case with the literature review, it is important to define a clear and systematic methodology for the empirical performance testing phase. This will ensure the reproducibility of the experiments,
@@ -48,7 +52,7 @@ parsing the scripts and handling the usage of the available resources. Job scrip
 and run the application. Queues are used to order jobs which are not run immediately.
 
 In addition to running the unit-tests, by having the target set to linux, it also allows to verify that the project should be able to compile on the HPC.
-An example of a job script is shown in Listing \ref{lst:job_script}, it runs the $(1 + 1)$ NA algorithm on the \textit{Half} benchmark with a resolution of 100 to 1000, and 1000 runs
+An example of a job script is shown in Listing \ref{lst:job_script}, it runs the $(1 + 1)$ NA algorithm on the \textit{Quarter} benchmark with a resolution of 50 to 1000, and 1000 runs
 for each resolution, and saves the results in CSV files. The configuration of the job script is done using the LSF directives, which are comments starting with \texttt{\#BSUB}.
 
 \begin{lstlisting}[language=bash, caption=Example of a job script, label=lst:job_script]
@@ -83,30 +87,89 @@ for each resolution, and saves the results in CSV files. The configuration of th
 #BSUB -e ~/Output_%J.err
 
 n_runs=1000
+problem=quarter
+algorithm=oneplusonena
 
 cd ~/code-master
 
-for resolution in $(seq 100 100 1000)
+for resolution in $(seq 50 50 1500)
 do
-      ./target/release/main oneplusonena half -i 500 -n 1 -r $resolution -t $n_runs -o ~/output/oneplusone_na_half_$resolution.csv
+    ./target/release/main $algorithm $problem -i 200 -n 1 \\
+    -r $resolution -t $n_runs \\
+    -o ~/output/$algorithm/$problem/$algorithm_$problem_$resolution.csv
 done
 \end{lstlisting}
 
+A python script was written to merge the results of the different runs in a single CPU file, extract the relevant metrics and statistics, and output data which directly be used
+in the \textt{pgfplots} plots of this report.
+
 \section{Results}
+
+\subsection{Results of the $(1 + 1)$ NA algorithm}
+
+The $(1 + 1)$ NA algorithm can be applied to binary classification problems. Results are thus presented for the unit-sphere classification problems, the \textit{XOR} problem, and
+the \texit{Cancer1} classification problem.
+The parameters which can be tuned for this algorithm are the resolution and the number of neurons.
+
+\subsubsection{Unit-sphere classification problems}
+
+The unit-sphere classification problems \cite{na} were introduced to evaluate the $(1 + 1)$ NA algorithm. For these simple problems, optimal solutions are known. In particular, these
+problems can be used to observe some of the properties of the algorithm.
+
+The first experiment consisted in running the algorithm with different configurations on the simple \texttt{Half} and \texttt{Quarter} benchmarks.
+Results for these benchmarks are shown in \Cref{fig:na_maxiter}. The maximum number of iteration was set to $200$, and the evolution stopped when the fitness
+was $2\%$ away from the maximal fitness of $1.0$. Since these tasks can be solved with a single neuron, the number of neurons was set to $1$ and different resolutions ranging
+from $2$ to $1500$ were tested. The results show that, for small resolutions, the algorithm is unable to solve the problems, and thus stops after $200$ iterations. This is
+because such low resolutions do not allow to set the parameters to values which are close enough to the optimal ones. On the other hand,
+for resolutions allowing for a finer discretization of the space, the algorithm is always able to find the optimal solutions, and the number of iteration it takes to do so
+does not vary with the resolution over the tested range. Lastly, these results also show, that as expected, the CPU time is proportional to the number of iterations,
+as the same steps are performed by the algorithm at each generation.
+Based on these general observations, which would also apply to other problems, the CPU time results are not presented for the other plots.
+
+Because of the lack of a stagnation criteria in the previous experiment, the algorithm would only stop when it reached a fitness close enough to the optimal on, or when
+the maximum number of iterations was reached. As it can be seen with the results for the lower resolutions, this is far from ideal, as the algorithm continues to run even
+though no progress can be made.
+
+\Cref{fig:na_half_stagnation} and \Cref{fig:na_quarter_stagnation} show the results of the $(1 + 1)$ NA algorithm on the \textit{Half} and \textit{Quarter} benchmarks, with a single neuron, over
+resolutions ranging from $2$ to $1500$, but with different values of maximum stagnation iterations. The maximum number of iterations was kept at $200$, and the evolution stopped when the fitness
+was $2\%$ away from the maximal fitness of $1.0$. Five different values of maximum stagnation iterations were tested, ranging from only $5$ generations to $80$ generations, which is close to
+the number of iterations it takes solve the problems, as it can be seen in \Cref{fig:na_maxiter}.
+
+This time, the algorithm is not always solving the problem, even for high-enough resolutions. Higher number of stagnant iterations allow the algorithm to reach a higher fitness, but at the
+expanse of more iterations (and thus, more CPU time). As a matter of fact, for the \textit{Half} problem and a resolution of $800$, the algorithm reaches, on average, a fitness of
+$0.84$ and stops after $15$ iterations with $5$ stagnant iterations, while it reaches a fitness of $0.98$ after $69$ iterations with $80$ stagnant iterations.
+In addition, this stagnation criteria allows to stop the algorithm for the small resolutions of $2$ and $5$, while still letting the algorithm reach the maximal possible fitnesses in these
+two cases. Lastly, an interesting phenomenon can be observed on both problems, for stagnant iterations values of $60$ and $80$ arond resolutions of a $100$, where the number of iterations
+is at its highest. This can also be observed in the results of the previous experiment, when ignoring the lower resolutions, and could be explained by these resolutions being hgh enough
+to allow for setting the parameters to set the parameters to values which are close enough to the optimal ones, but not high enough to make drawing these values as liely as for higher resolutions.
+% TODO check and detail
+
+The \textit{TwoQuarters} problem requires two neurons to be solved. With a single neuron, the best fitness that can be achieved is $0.75$, because at least a quarter of the unit sphere
+cannot be classified correctly with a single decision line. Figure \Cref{fig:na_twoquarters} shows the results of the $(1 + 1)$ NA algorithm on the \textit{TwoQuarters} benchmark, with two neurons,
+a fixed resolution of $400$, and values of maximum iterations ranging from $50$ to $2500$. The evolution stopped when the fitness was $2\%$ away from the maximal fitness of $1.0$ or
+the maximum number of iterations was reached. The resolution of $400$ was chosen based on the results of the previous experiments, where it could be seen that this value was sufficient for
+solving the problems.
+
+... % TODO Analyze the results
+
+In \Cref{na_twoquarters_stag}, the results on the \texttt{TwoQuarters} problem are shown with different values of maximum stagnation iterations. The other parameters were kept the same as in the previous
+experiment, and the number of stagnant iterations was varied from $5$ to $1000$ with a step size of $20$.
+
+... % TODO Analyze the results
 
 \begin{figure}[h]
     \begin{center}
         \begin{tikzpicture}
         \begin{axis}[
-            % width=12cm,
-            % height=7cm,
+            width=12cm,
+            height=6cm,
             title={Fitness over resolution},
             xlabel={Resolution},
             ylabel={Average fitness},
-            xmin=100, xmax=1000,
+            enlargelimits=false,
+            xmin=0,
             ymin=0, ymax=1,
             ytick={0,0.2,...,1},
-            legend pos=north west,
             xticklabel shift={.1cm},
             yticklabel shift={.1cm} ]
         ]
@@ -116,11 +179,329 @@ done
             mark=square,
             ]
             coordinates {
-            (100,0.99)(200,0.99)(300,0.99)(400,0.98)(500,0.99)(600,0.99)(700,0.98)(800,0.98)(900,0.98)(1000,0.99)
+                (2,0.50)(5,0.90)(10,0.90)(50,0.98)(100,0.99)(150,0.99)(200,0.99)(250,0.99)(300,0.99)(350,0.99)(400,0.98)(450,0.98)(500,0.99)(550,0.99)(600,0.99)(650,0.99)(700,0.99)(750,0.98)(800,0.98)(850,0.98)(900,0.98)(950,0.98)(1000,0.99)(1050,0.98)(1100,0.98)(1150,0.98)(1200,0.98)(1250,0.98)(1300,0.98)(1350,0.98)(1400,0.98)(1450,0.98)(1500,0.98)
             };
-            % \addlegendentry{Some fancy legend}
+            \addlegendentry{Half}
+        \addplot[
+            color=red,
+            mark=square,
+            ]
+            coordinates {
+                (2,0.75)(5,0.85)(10,0.95)(50,0.98)(100,0.99)(150,0.99)(200,0.99)(250,0.99)(300,0.99)(350,0.99)(400,0.98)(450,0.98)(500,0.99)(550,0.98)(600,0.98)(650,0.98)(700,0.98)(750,0.98)(800,0.98)(850,0.98)(900,0.98)(950,0.98)(1000,0.99)(1050,0.98)(1100,0.98)(1150,0.98)(1200,0.98)(1250,0.98)(1300,0.98)(1350,0.98)(1400,0.98)(1450,0.98)(1500,0.98)
+            };
+            \addlegendentry{Quarter}
+        \end{axis}
+        \end{tikzpicture}
+        \begin{tikzpicture}
+        \begin{axis}[
+            width=12cm,
+            height=6cm,
+            title={Iterations over resolution},
+            xlabel={Resolution},
+            ylabel={Average iterations},
+            xmin=0,
+            ymin=0,
+            enlargelimits=false,
+            xticklabel shift={.1cm},
+            yticklabel shift={.1cm} ]
+        ]
+
+        \addplot[
+            color=blue,
+            mark=square,
+            ]
+            coordinates {
+                (2,200.00)(5,200.00)(10,200.00)(50,173.75)(100,109.39)(150,89.55)(200,79.81)(250,75.03)(300,74.03)(350,69.72)(400,73.08)(450,69.26)(500,71.27)(550,68.19)(600,70.51)(650,68.69)(700,71.07)(750,70.74)(800,68.57)(850,71.13)(900,69.16)(950,69.63)(1000,70.95)(1050,69.54)(1100,69.62)(1150,69.92)(1200,68.36)(1250,68.52)(1300,69.78)(1350,68.57)(1400,70.38)(1450,68.86)(1500,71.47)
+            };
+            \addlegendentry{Half}
+        \addplot[
+            color=red,
+            mark=square,
+            ]
+            coordinates {
+                (2,200.00)(5,200.00)(10,200.00)(50,128.58)(100,85.14)(150,71.56)(200,77.29)(250,67.54)(300,68.72)(350,68.57)(400,71.26)(450,70.78)(500,70.92)(550,72.64)(600,73.26)(650,69.66)(700,70.31)(750,74.80)(800,73.12)(850,71.89)(900,70.59)(950,72.19)(1000,74.49)(1050,73.20)(1100,73.56)(1150,77.10)(1200,75.52)(1250,76.44)(1300,76.69)(1350,75.07)(1400,76.75)(1450,77.77)(1500,75.14)
+            };
+            \addlegendentry{Quarter}
+        \end{axis}
+        \end{tikzpicture}
+        \begin{tikzpicture}
+        \begin{axis}[
+            width=12cm,
+            height=6cm,
+            title={CPU time over resolution},
+            xlabel={Resolution},
+            ylabel={Average CPU time (s)},
+            xmin=0,
+            ymin=0,
+            enlargelimits=false,
+            xticklabel shift={.1cm},
+            yticklabel shift={.1cm} ]
+        ]
+
+        \addplot[
+            color=blue,
+            mark=square,
+            ]
+            coordinates {
+                (2,0.90)(5,0.86)(10,0.90)(50,0.87)(100,0.56)(150,0.45)(200,0.41)(250,0.38)(300,0.38)(350,0.36)(400,0.38)(450,0.37)(500,0.36)(550,0.34)(600,0.36)(650,0.35)(700,0.37)(750,0.36)(800,0.34)(850,0.38)(900,0.35)(950,0.36)(1000,0.37)(1050,0.35)(1100,0.36)(1150,0.36)(1200,0.36)(1250,0.35)(1300,0.36)(1350,0.35)(1400,0.36)(1450,0.35)(1500,0.36)
+            };
+            \addlegendentry{Half}
+        \addplot[
+            color=red,
+            mark=square,
+            ]
+            coordinates {
+                (2,0.89)(5,0.92)(10,0.90)(50,0.83)(100,0.50)(150,0.43)(200,0.46)(250,0.39)(300,0.41)(350,0.44)(400,0.45)(450,0.41)(500,0.41)(550,0.47)(600,0.44)(650,0.45)(700,0.42)(750,0.46)(800,0.41)(850,0.42)(900,0.37)(950,0.41)(1000,0.45)(1050,0.42)(1100,0.44)(1150,0.42)(1200,0.45)(1250,0.42)(1300,0.39)(1350,0.43)(1400,0.46)(1450,0.43)(1500,0.42)
+            };
+            \addlegendentry{Quarter}
         \end{axis}
         \end{tikzpicture}
     \end{center}
-    \caption{Some fancy caption}
+    \caption{Performance metrics of the $(1 + 1)$ NA algorithm on the \textit{Half} and \texit{Quarter} benchmarks, with a single neuron, over different resolutions.
+    The evolution stopped when the fitness was $2\%$ away from the maximal fitness of $1.0$. The maximum number of iterations was set to $200$.}
+    \label{fig:na_maxiter}
+\end{figure}
+
+\begin{figure}[h]
+    \begin{center}
+        \begin{tikzpicture}
+        \begin{axis}[
+            width=12cm,
+            height=8cm,
+            title={Fitness over resolution},
+            xlabel={Resolution},
+            ylabel={Average fitness},
+            enlargelimits=false,
+            legend pos=south east,
+            xmin=0,
+            ymin=0, ymax=1,
+            ytick={0,0.2,...,1},
+            xticklabel shift={.1cm},
+            yticklabel shift={.1cm} ]
+        ]
+
+        \addplot[
+            color=blue,
+            mark=square,
+            ]
+            coordinates {
+                (2,0.50)(5,0.80)(10,0.82)(50,0.85)(100,0.85)(150,0.85)(200,0.85)(250,0.85)(300,0.85)(350,0.85)(400,0.85)(450,0.85)(500,0.85)(550,0.85)(600,0.85)(650,0.85)(700,0.84)(750,0.85)(800,0.84)(850,0.86)(900,0.85)(950,0.85)(1000,0.85)(1050,0.85)(1100,0.85)(1150,0.85)(1200,0.85)(1250,0.84)(1300,0.86)(1350,0.85)(1400,0.85)(1450,0.85)(1500,0.85)
+            };
+            \addlegendentry{5 stagnation iterations}
+        \addplot[
+            color=red,
+            mark=square,
+            ]
+            coordinates {
+                (2,0.50)(5,0.87)(10,0.88)(50,0.93)(100,0.94)(150,0.95)(200,0.96)(250,0.96)(300,0.96)(350,0.96)(400,0.96)(450,0.96)(500,0.96)(550,0.96)(600,0.96)(650,0.96)(700,0.96)(750,0.96)(800,0.97)(850,0.97)(900,0.96)(950,0.96)(1000,0.96)(1050,0.97)(1100,0.96)(1150,0.96)(1200,0.96)(1250,0.96)(1300,0.96)(1350,0.97)(1400,0.96)(1450,0.97)(1500,0.96)
+            };
+            \addlegendentry{15 stagnation iterations}
+        \addplot[
+            color=green,
+            mark=square,
+            ]
+            coordinates {
+                (2,0.50)(5,0.89)(10,0.90)(50,0.96)(100,0.97)(150,0.98)(200,0.98)(250,0.98)(300,0.98)(350,0.98)(400,0.98)(450,0.98)(500,0.98)(550,0.98)(600,0.98)(650,0.98)(700,0.98)(750,0.98)(800,0.98)(850,0.98)(900,0.98)(950,0.98)(1000,0.98)(1050,0.98)(1100,0.98)(1150,0.98)(1200,0.98)(1250,0.98)(1300,0.98)(1350,0.98)(1400,0.98)(1450,0.98)(1500,0.98)
+            };
+            \addlegendentry{30 stagnation iterations}
+        \addplot[
+            color=orange,
+            mark=square,
+            ]
+            coordinates {
+                (2,0.50)(5,0.90)(10,0.90)(50,0.98)(100,0.98)(150,0.99)(200,0.99)(250,0.99)(300,0.99)(350,0.99)(400,0.98)(450,0.98)(500,0.99)(550,0.98)(600,0.99)(650,0.98)(700,0.98)(750,0.98)(800,0.98)(850,0.98)(900,0.98)(950,0.98)(1000,0.99)(1050,0.98)(1100,0.98)(1150,0.98)(1200,0.98)(1250,0.98)(1300,0.98)(1350,0.98)(1400,0.98)(1450,0.98)(1500,0.98)
+            };
+            \addlegendentry{60 stagnation iterations}
+        \addplot[
+            color=purple,
+            mark=square,
+            ]
+            coordinates {
+                (2,0.50)(5,0.90)(10,0.90)(50,0.98)(100,0.99)(150,0.99)(200,0.99)(250,0.99)(300,0.99)(350,0.99)(400,0.98)(450,0.98)(500,0.99)(550,0.98)(600,0.99)(650,0.99)(700,0.98)(750,0.98)(800,0.98)(850,0.98)(900,0.98)(950,0.98)(1000,0.99)(1050,0.98)(1100,0.98)(1150,0.98)(1200,0.98)(1250,0.98)(1300,0.98)(1350,0.98)(1400,0.98)(1450,0.98)(1500,0.98)
+            };
+            \addlegendentry{80 stagnation iterations}
+        \end{axis}
+        \end{tikzpicture}
+        \begin{tikzpicture}
+        \begin{axis}[
+            width=12cm,
+            height=8cm,
+            title={Iterations over resolution},
+            xlabel={Resolution},
+            ylabel={Average iterations},
+            xmin=0,
+            ymin=0,
+            enlargelimits=false,
+            xticklabel shift={.1cm},
+            yticklabel shift={.1cm} ]
+        ]
+
+        \addplot[
+            color=blue,
+            mark=square,
+            ]
+            coordinates {
+                (2,7.06)(5,8.15)(10,8.65)(50,10.72)(100,11.65)(150,12.57)(200,12.89)(250,13.06)(300,13.38)(350,13.72)(400,13.80)(450,13.81)(500,14.15)(550,14.30)(600,14.49)(650,14.58)(700,14.63)(750,14.35)(800,14.94)(850,15.25)(900,15.08)(950,15.18)(1000,14.61)(1050,15.27)(1100,15.20)(1150,15.56)(1200,15.02)(1250,15.01)(1300,15.45)(1350,15.45)(1400,15.31)(1450,15.51)(1500,15.00)
+            };
+            \addlegendentry{5 stagnation iterations}
+        \addplot[
+            color=red,
+            mark=square,
+            ]
+            coordinates {
+                (2,18.86)(5,22.58)(10,24.90)(50,33.10)(100,36.98)(150,39.49)(200,41.44)(250,42.84)(300,44.72)(350,45.16)(400,45.71)(450,46.94)(500,44.84)(550,47.25)(600,48.95)(650,48.73)(700,49.45)(750,47.33)(800,49.64)(850,50.15)(900,49.92)(950,48.57)(1000,46.62)(1050,48.85)(1100,49.23)(1150,49.12)(1200,50.68)(1250,51.53)(1300,50.28)(1350,50.78)(1400,50.57)(1450,52.00)(1500,50.78)
+            };
+            \addlegendentry{5 stagnation iterations}
+        \addplot[
+            color=green,
+            mark=square,
+            ]
+            coordinates {
+                (2,35.10)(5,41.03)(10,46.80)(50,62.83)(100,63.83)(150,62.44)(200,62.17)(250,63.89)(300,65.73)(350,63.62)(400,66.33)(450,63.57)(500,65.26)(550,63.81)(600,65.11)(650,66.23)(700,64.89)(750,66.62)(800,65.70)(850,65.10)(900,65.46)(950,64.84)(1000,64.09)(1050,65.99)(1100,66.01)(1150,66.06)(1200,67.40)(1250,66.88)(1300,66.21)(1350,67.29)(1400,67.55)(1450,67.16)(1500,67.93)
+            };
+            \addlegendentry{30 stagnation iterations}
+        \addplot[
+            color=orange,
+            mark=square,
+            ]
+            coordinates {
+                (2,64.93)(5,74.80)(10,87.27)(50,107.34)(100,89.86)(150,81.76)(200,75.90)(250,75.99)(300,73.82)(350,71.99)(400,70.11)(450,68.57)(500,71.20)(550,70.18)(600,68.02)(650,71.22)(700,69.00)(750,68.39)(800,70.63)(850,69.81)(900,69.11)(950,69.37)(1000,69.60)(1050,69.10)(1100,66.48)(1150,69.54)(1200,67.90)(1250,70.99)(1300,69.18)(1350,67.92)(1400,68.34)(1450,69.57)(1500,70.84)
+            };
+            \addlegendentry{30 stagnation iterations}
+        \addplot[
+            color=purple,
+            mark=square,
+            ]
+            coordinates {
+                (2,85.50)(5,95.21)(10,112.23)(50,131.20)(100,99.42)(150,85.34)(200,77.51)(250,74.66)(300,76.65)(350,69.58)(400,71.80)(450,70.48)(500,73.29)(550,69.04)(600,70.22)(650,69.33)(700,69.05)(750,69.37)(800,68.27)(850,69.25)(900,69.97)(950,69.96)(1000,71.79)(1050,69.17)(1100,68.16)(1150,68.89)(1200,70.40)(1250,70.66)(1300,70.93)(1350,68.44)(1400,70.23)(1450,70.57)(1500,71.35)
+            };
+            \addlegendentry{30 stagnation iterations}
+        \end{axis}
+        \end{tikzpicture}
+    \end{center}
+    \caption{Performance metrics of the $(1 + 1)$ NA algorithm on the \textit{Half} benchmark, with a single neuron, over different resolutions.
+    The evolution stopped when the fitness was $2\%$ away from the maximal fitness of $1.0$ or the maximum number of stagnation iteration was reached.}
+    \label{fig:na_half_stagnation}
+\end{figure}
+
+\begin{figure}[h]
+    \begin{center}
+        \begin{tikzpicture}
+        \begin{axis}[
+            width=12cm,
+            height=8cm,
+            title={Fitness over resolution},
+            xlabel={Resolution},
+            ylabel={Average fitness},
+            enlargelimits=false,
+            legend pos=south east,
+            xmin=0,
+            ymin=0, ymax=1,
+            ytick={0,0.2,...,1},
+            xticklabel shift={.1cm},
+            yticklabel shift={.1cm} ]
+        ]
+
+        \addplot[
+            color=blue,
+            mark=square,
+            ]
+            coordinates {
+                (2,0.75)(5,0.79)(10,0.81)(50,0.81)(100,0.81)(150,0.81)(200,0.80)(250,0.81)(300,0.80)(350,0.80)(400,0.81)(450,0.81)(500,0.80)(550,0.80)(600,0.80)(650,0.80)(700,0.80)(750,0.81)(800,0.80)(850,0.81)(900,0.80)(950,0.80)(1000,0.80)(1050,0.79)(1100,0.80)(1150,0.81)(1200,0.80)(1250,0.80)(1300,0.81)(1350,0.79)(1400,0.79)(1450,0.80)(1500,0.80)
+            };
+            \addlegendentry{5 stagnation iterations}
+        \addplot[
+            color=red,
+            mark=square,
+            ]
+            coordinates {
+                (2,0.75)(5,0.82)(10,0.89)(50,0.92)(100,0.93)(150,0.93)(200,0.93)(250,0.93)(300,0.93)(350,0.94)(400,0.93)(450,0.93)(500,0.93)(550,0.94)(600,0.93)(650,0.94)(700,0.93)(750,0.94)(800,0.93)(850,0.93)(900,0.93)(950,0.94)(1000,0.93)(1050,0.93)(1100,0.93)(1150,0.93)(1200,0.94)(1250,0.93)(1300,0.93)(1350,0.93)(1400,0.93)(1450,0.93)(1500,0.93)
+            };
+            \addlegendentry{15 stagnation iterations}
+        \addplot[
+            color=green,
+            mark=square,
+            ]
+            coordinates {
+                (2,0.75)(5,0.84)(10,0.92)(50,0.96)(100,0.97)(150,0.97)(200,0.97)(250,0.97)(300,0.97)(350,0.97)(400,0.97)(450,0.97)(500,0.97)(550,0.97)(600,0.97)(650,0.97)(700,0.97)(750,0.97)(800,0.97)(850,0.97)(900,0.97)(950,0.97)(1000,0.96)(1050,0.97)(1100,0.97)(1150,0.97)(1200,0.97)(1250,0.97)(1300,0.97)(1350,0.96)(1400,0.97)(1450,0.97)(1500,0.97)
+            };
+            \addlegendentry{30 stagnation iterations}
+        \addplot[
+            color=orange,
+            mark=square,
+            ]
+            coordinates {
+                (2,0.75)(5,0.84)(10,0.94)(50,0.98)(100,0.98)(150,0.98)(200,0.98)(250,0.99)(300,0.98)(350,0.98)(400,0.98)(450,0.98)(500,0.98)(550,0.98)(600,0.98)(650,0.98)(700,0.98)(750,0.98)(800,0.98)(850,0.98)(900,0.98)(950,0.98)(1000,0.98)(1050,0.98)(1100,0.98)(1150,0.98)(1200,0.98)(1250,0.98)(1300,0.98)(1350,0.98)(1400,0.98)(1450,0.98)(1500,0.98)
+            };
+            \addlegendentry{60 stagnation iterations}
+        \addplot[
+            color=purple,
+            mark=square,
+            ]
+            coordinates {
+                (2,0.75)(5,0.85)(10,0.94)(50,0.98)(100,0.99)(150,0.98)(200,0.99)(250,0.99)(300,0.98)(350,0.98)(400,0.98)(450,0.98)(500,0.99)(550,0.98)(600,0.98)(650,0.98)(700,0.98)(750,0.98)(800,0.98)(850,0.98)(900,0.98)(950,0.99)(1000,0.98)(1050,0.98)(1100,0.98)(1150,0.98)(1200,0.98)(1250,0.98)(1300,0.98)(1350,0.98)(1400,0.98)(1450,0.98)(1500,0.98)
+            };
+            \addlegendentry{80 stagnation iterations}
+        \end{axis}
+        \end{tikzpicture}
+        \begin{tikzpicture}
+        \begin{axis}[
+            width=12cm,
+            height=8cm,
+            title={Iterations over resolution},
+            xlabel={Resolution},
+            ylabel={Average iterations},
+            xmin=0,
+            ymin=0,
+            enlargelimits=false,
+            xticklabel shift={.1cm},
+            yticklabel shift={.1cm} ]
+        ]
+
+        \addplot[
+            color=blue,
+            mark=square,
+            ]
+            coordinates {
+                (2,7.32)(5,8.31)(10,8.94)(50,10.73)(100,11.92)(150,12.41)(200,12.93)(250,13.24)(300,13.39)(350,14.01)(400,13.97)(450,13.80)(500,13.80)(550,14.32)(600,14.96)(650,14.57)(700,14.71)(750,15.11)(800,14.87)(850,14.99)(900,15.03)(950,15.16)(1000,14.49)(1050,15.11)(1100,15.05)(1150,15.49)(1200,15.48)(1250,15.40)(1300,15.50)(1350,15.40)(1400,15.28)(1450,15.68)(1500,15.09)
+            };
+            \addlegendentry{5 stagnation iterations}
+        \addplot[
+            color=red,
+            mark=square,
+            ]
+            coordinates {
+                (2,19.01)(5,22.21)(10,25.60)(50,33.56)(100,37.34)(150,39.36)(200,42.29)(250,41.53)(300,44.13)(350,44.97)(400,46.62)(450,44.47)(500,46.25)(550,48.10)(600,48.12)(650,48.34)(700,49.30)(750,48.33)(800,47.99)(850,49.77)(900,49.05)(950,49.90)(1000,46.94)(1050,49.42)(1100,49.66)(1150,49.55)(1200,51.11)(1250,50.51)(1300,51.71)(1350,51.07)(1400,50.72)(1450,52.57)(1500,52.84)
+            };
+            \addlegendentry{5 stagnation iterations}
+        \addplot[
+            color=green,
+            mark=square,
+            ]
+            coordinates {
+                (2,34.90)(5,42.26)(10,46.79)(50,58.65)(100,60.26)(150,59.53)(200,64.44)(250,60.66)(300,61.42)(350,62.94)(400,62.95)(450,64.52)(500,65.74)(550,63.46)(600,65.36)(650,64.13)(700,65.58)(750,64.68)(800,66.25)(850,67.50)(900,65.62)(950,68.56)(1000,65.94)(1050,68.91)(1100,66.88)(1150,65.67)(1200,68.95)(1250,66.30)(1300,67.12)(1350,68.57)(1400,68.28)(1450,67.23)(1500,68.42)
+            };
+            \addlegendentry{30 stagnation iterations}
+        \addplot[
+            color=orange,
+            mark=square,
+            ]
+            coordinates {
+                (2,65.12)(5,81.40)(10,85.35)(50,88.59)(100,76.89)(150,69.67)(200,77.75)(250,68.67)(300,69.81)(350,68.31)(400,70.23)(450,67.69)(500,71.94)(550,69.96)(600,70.36)(650,69.89)(700,72.72)(750,71.60)(800,73.00)(850,72.79)(900,70.43)(950,72.85)(1000,73.94)(1050,73.24)(1100,71.88)(1150,70.81)(1200,73.85)(1250,72.48)(1300,72.25)(1350,72.97)(1400,74.65)(1450,74.62)(1500,74.42)
+            };
+            \addlegendentry{30 stagnation iterations}
+        \addplot[
+            color=purple,
+            mark=square,
+            ]
+            coordinates {
+                (2,85.07)(5,104.87)(10,106.96)(50,100.54)(100,80.65)(150,70.04)(200,76.46)(250,71.45)(300,68.90)(350,68.53)(400,69.31)(450,69.52)(500,70.89)(550,71.75)(600,73.50)(650,70.62)(700,71.50)(750,74.41)(800,72.69)(850,72.92)(900,73.98)(950,70.70)(1000,76.71)(1050,73.13)(1100,73.70)(1150,76.53)(1200,71.96)(1250,75.06)(1300,73.11)(1350,76.36)(1400,77.01)(1450,75.64)(1500,75.78)
+            };
+            \addlegendentry{30 stagnation iterations}
+        \end{axis}
+        \end{tikzpicture}
+    \end{center}
+    \caption{Performance metrics of the $(1 + 1)$ NA algorithm on the \textit{Quarter} benchmark, with a single neuron, over different resolutions.
+    The evolution stopped when the fitness was $2\%$ away from the maximal fitness of $1.0$ or the maximum number of stagnation iteration was reached.}
+    \label{fig:na_quarter_stagnation}
 \end{figure}

@@ -12,9 +12,9 @@ def calculate_statistics(csv_file):
         reader = csv.DictReader(file)
         data = [row for row in reader]
 
-    fitness = np.array([float(row['Fitness']) for row in data])
-    iterations = np.array([int(row['Iterations']) for row in data])
-    elapsed_time = np.array([float(row['Elapsed time']) for row in data])
+    fitness = np.array([float(row['fitness']) for row in data])
+    iterations = np.array([int(row['iterations']) for row in data])
+    elapsed_time = np.array([float(row['cpu']) for row in data])
 
     mean_fitness = np.mean(fitness)
     std_fitness = np.std(fitness)
@@ -29,17 +29,17 @@ def calculate_statistics(csv_file):
     median_elapsed_time = np.median(elapsed_time)
 
     return {
-        "Fitness": {
+        "fitness": {
             "mean": mean_fitness,
             "std": std_fitness,
             "median": median_fitness
         },
-        "Iterations": {
+        "iterations": {
             "mean": mean_iterations,
             "std": std_iterations,
             "median": median_iterations
         },
-        "Elapsed Time": {
+        "cpu": {
             "mean": mean_elapsed_time,
             "std": std_elapsed_time,
             "median": median_elapsed_time
@@ -48,28 +48,28 @@ def calculate_statistics(csv_file):
 
 
 def print_statistics(stats):
-    print("Fitness:")
-    print("Mean:", "{:.2f}".format(stats["Fitness"]["mean"]))
-    print("Standard Deviation:", "{:.2f}".format(stats["Fitness"]["std"]))
-    print("Median:", "{:.2f}".format(stats["Fitness"]["median"]))
+    print("fitness:")
+    print("Mean:", "{:.2f}".format(stats["fitness"]["mean"]))
+    print("Standard Deviation:", "{:.2f}".format(stats["fitness"]["std"]))
+    print("Median:", "{:.2f}".format(stats["fitness"]["median"]))
     print()
 
-    print("Iterations:")
-    print("Mean:", "{:.2f}".format(stats["Iterations"]["mean"]))
-    print("Standard Deviation:", "{:.2f}".format(stats["Iterations"]["std"]))
-    print("Median:", "{:.2f}".format(stats["Iterations"]["median"]))
+    print("iterations:")
+    print("Mean:", "{:.2f}".format(stats["iterations"]["mean"]))
+    print("Standard Deviation:", "{:.2f}".format(stats["iterations"]["std"]))
+    print("Median:", "{:.2f}".format(stats["iterations"]["median"]))
     print()
 
-    print("Elapsed Time:")
-    print("Mean:", "{:.2f}".format(stats["Elapsed Time"]["mean"]))
-    print("Standard Deviation:", "{:.2f}".format(stats["Elapsed Time"]["std"]))
-    print("Median:", "{:.2f}".format(stats["Elapsed Time"]["median"]))
+    print("cpu:")
+    print("Mean:", "{:.2f}".format(stats["cpu"]["mean"]))
+    print("Standard Deviation:", "{:.2f}".format(stats["cpu"]["std"]))
+    print("Median:", "{:.2f}".format(stats["cpu"]["median"]))
 
 
 def write_runs_result(csv_folder, output_path):
     with open(output_path, 'w', newline='') as file:
         writer = csv.writer(file)
-        writer.writerow(["Param", "Fitness", "Iterations", "Elapsed time"])
+        writer.writerow(["Param", "fitness", "iterations", "cpu"])
 
         csv_files = [f for f in os.listdir(csv_folder) if f.endswith(".csv")]
         sorted_csv_files = sorted(csv_files, key=lambda x: int(re.search(r'\d+', x).group()))
@@ -79,9 +79,9 @@ def write_runs_result(csv_folder, output_path):
             param = re.search(r'\d+', csv_file).group()
             writer.writerow([
                 param,
-                "{:.2f}".format(stats["Fitness"]["mean"]),
-                "{:.2f}".format(stats["Iterations"]["mean"]),
-                "{:.2f}".format(stats["Elapsed Time"]["mean"])
+                "{:.2f}".format(stats["fitness"]["mean"]),
+                "{:.2f}".format(stats["iterations"]["mean"]),
+                "{:.2f}".format(stats["cpu"]["mean"])
             ])
 
 
