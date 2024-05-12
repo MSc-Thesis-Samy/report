@@ -124,7 +124,6 @@ because such low resolutions do not allow to set the parameters to values which 
 for resolutions allowing for a finer discretization of the space, the algorithm is always able to find the optimal solutions, and the number of iteration it takes to do so
 does not vary with the resolution over the tested range. Lastly, these results also show, that as expected, the CPU time is proportional to the number of iterations,
 as the same steps are performed by the algorithm at each generation.
-Based on these general observations, which would also apply to other problems, the CPU time results are not presented for the other plots.
 
 Because of the lack of a stagnation criteria in the previous experiment, the algorithm would only stop when it reached a fitness close enough to the optimal on, or when
 the maximum number of iterations was reached. As it can be seen with the results for the lower resolutions, this is far from ideal, as the algorithm continues to run even
@@ -144,18 +143,25 @@ is at its highest. This can also be observed in the results of the previous expe
 to allow for setting the parameters to set the parameters to values which are close enough to the optimal ones, but not high enough to make drawing these values as liely as for higher resolutions.
 % TODO check and detail
 
-The \textit{TwoQuarters} problem requires two neurons to be solved. With a single neuron, the best fitness that can be achieved is $0.75$, because at least a quarter of the unit sphere
-cannot be classified correctly with a single decision line. Figure \Cref{fig:na_twoquarters} shows the results of the $(1 + 1)$ NA algorithm on the \textit{TwoQuarters} benchmark, with two neurons,
+The more complex \textit{TwoQuarters} problem requires two neurons to be solved. With a single neuron, the best fitness that can be achieved is $0.75$, because at least a quarter of the unit sphere
+cannot be classified correctly with a single decision line. \Cref{fig:na_twoquarters} shows the results of the $(1 + 1)$ NA algorithm on the \textit{TwoQuarters} benchmark, with a single or two neurons,
 a fixed resolution of $400$, and values of maximum iterations ranging from $50$ to $2500$. The evolution stopped when the fitness was $2\%$ away from the maximal fitness of $1.0$ or
-the maximum number of iterations was reached. The resolution of $400$ was chosen based on the results of the previous experiments, where it could be seen that this value was sufficient for
-solving the problems.
+the maximum number of iterations was reached. The resolution of $400$ was chosen based on the results of the previous experiments, where it could be seen that this value was in the range of
+resolutions where the problems could be solved and the number of iterations needed to do so was the lowest and not varying.
 
-... % TODO Analyze the results
+As expected, in the case of one neuron, the algorithm is unable to solve the problem, and the maximum fitness of $0.75$ is almost reached at the lowest tested maximum number of iterations of $50$.
+As a consequence, it can also be seen that the number of iterations taken by the algorithm is equal to the maximum number of iterations, since the fitness is never within $2\%$ of the optimal one.
+In the case of two neurons, the algorithm, which can theoretically solve the problem, achieves a higher average fitness, but is unable to find the optimal solutions on all runs and gets stuck
+at a local optima with a fitness of $0.75$. % TODO Detail this?
+Furthermore, the average fitness, iterations and CPU time all seem to grow logarithmically with the maximum number of iterations.
 
-In \Cref{na_twoquarters_stag}, the results on the \texttt{TwoQuarters} problem are shown with different values of maximum stagnation iterations. The other parameters were kept the same as in the previous
-experiment, and the number of stagnant iterations was varied from $5$ to $1000$ with a step size of $20$.
+In \Cref{fig:na_twoquarters_stag}, the results on the \textit{TwoQuarters} problem are shown with different values of maximum stagnation iterations. The other parameters were kept the same as in the previous
+experiment, and the number of stagnant iterations was varied from $5$ to $1000$ with a step size of $20$. On average, the algorithm stops before $1200$ iterations, without always solving the task,
+even when it is allowed to stagnate for $1000$ iterations. This shows how hard it is for the algorithm to leave the local optima it gets stuck in.
 
-... % TODO Analyze the results
+Finally, the \texit{LocalOpt} problem requires three neurons to be solved. \Cref{fig:na_localopt} shows the results of the algorithm on this problem, with a fixed resolution of $400$, one, two
+or three neurons, and maximum number of iterations ranging from $50$ to $2000$. The evolution stopped when the fitness was $2\%$ away from the maximal fitness of $1.0$ or the maximum number of
+iterations was reached.
 
 \begin{figure}[h]
     \begin{center}
@@ -504,4 +510,290 @@ experiment, and the number of stagnant iterations was varied from $5$ to $1000$ 
     \caption{Performance metrics of the $(1 + 1)$ NA algorithm on the \textit{Quarter} benchmark, with a single neuron, over different resolutions.
     The evolution stopped when the fitness was $2\%$ away from the maximal fitness of $1.0$ or the maximum number of stagnation iteration was reached.}
     \label{fig:na_quarter_stagnation}
+\end{figure}
+
+\begin{figure}[h]
+    \begin{center}
+        \begin{tikzpicture}
+        \begin{axis}[
+            width=15cm,
+            height=6cm,
+            title={Fitness over maximum number of iterations},
+            legend pos=south east,
+            xlabel={Maximum number of iterations},
+            ylabel={Average fitness},
+            enlargelimits=false,
+            xmin=0,
+            ymin=0, ymax=1,
+            ytick={0,0.2,...,1},
+            xticklabel shift={.1cm},
+            yticklabel shift={.1cm} ]
+        ]
+
+        \addplot[
+            color=blue,
+            mark=square,
+            ]
+            coordinates {
+                (50,0.76)(100,0.80)(150,0.82)(200,0.84)(250,0.85)(300,0.86)(350,0.86)(400,0.87)(450,0.87)(500,0.88)(550,0.88)(600,0.89)(650,0.89)(700,0.89)(750,0.90)(800,0.90)(850,0.91)(900,0.91)(950,0.90)(1000,0.90)(1050,0.91)(1100,0.91)(1150,0.91)(1200,0.91)(1250,0.91)(1300,0.92)(1350,0.92)(1400,0.91)(1450,0.92)(1500,0.92)(1550,0.92)(1600,0.93)(1650,0.92)(1700,0.93)(1750,0.93)(1800,0.93)(1850,0.94)(1900,0.93)(1950,0.93)(2000,0.93)(2050,0.93)(2100,0.93)(2150,0.93)(2200,0.94)(2250,0.94)(2300,0.94)(2350,0.94)(2400,0.94)(2450,0.93)(2500,0.94)
+            };
+            \addlegendentry{Two neurons}
+        \addplot[
+            color=red,
+            mark=square,
+            ]
+            coordinates {
+                (50,0.73)(100,0.74)(150,0.75)(200,0.75)(250,0.75)(300,0.75)(350,0.75)(400,0.75)(450,0.75)(500,0.75)(550,0.75)(600,0.75)(650,0.75)(700,0.75)(750,0.75)(800,0.75)(850,0.75)(900,0.75)(950,0.75)(1000,0.75)(1050,0.75)(1100,0.75)(1150,0.75)(1200,0.75)(1250,0.75)(1300,0.75)(1350,0.75)(1400,0.75)(1450,0.75)(1500,0.75)
+            };
+            \addlegendentry{Single neuron}
+        \end{axis}
+        \end{tikzpicture}
+        \begin{tikzpicture}
+        \begin{axis}[
+            width=15cm,
+            height=6cm,
+            legend pos=south east,
+            title={Iterations over maximum number of iterations},
+            xlabel={Maximum number of iterations},
+            ylabel={Average iterations},
+            xmin=0,
+            ymin=0,
+            enlargelimits=false,
+            xticklabel shift={.1cm},
+            yticklabel shift={.1cm} ]
+        ]
+
+        \addplot[
+            color=blue,
+            mark=square,
+            ]
+            coordinates {
+                (50,49.97)(100,99.88)(150,149.73)(200,199.47)(250,248.90)(300,296.92)(350,342.93)(400,392.04)(450,436.46)(500,479.91)(550,520.86)(600,560.64)(650,604.99)(700,634.84)(750,679.66)(800,719.92)(850,748.80)(900,789.45)(950,819.47)(1000,848.19)(1050,871.68)(1100,894.90)(1150,934.78)(1200,967.18)(1250,984.16)(1300,979.59)(1350,1016.89)(1400,1055.63)(1450,1058.06)(1500,1078.15)(1550,1121.60)(1600,1111.85)(1650,1178.21)(1700,1142.42)(1750,1185.41)(1800,1182.37)(1850,1184.01)(1900,1178.17)(1950,1251.66)(2000,1263.44)(2050,1241.68)(2100,1269.41)(2150,1298.02)(2200,1306.06)(2250,1332.45)(2300,1353.79)(2350,1325.92)(2400,1372.23)(2450,1417.02)(2500,1400.06)
+            };
+            \addlegendentry{Two neurons}
+        \addplot[
+            color=red,
+            mark=square,
+            ]
+            coordinates {
+                (50,50.00)(100,100.00)(150,150.00)(200,200.00)(250,250.00)(300,300.00)(350,350.00)(400,400.00)(450,450.00)(500,500.00)(550,550.00)(600,600.00)(650,650.00)(700,700.00)(750,750.00)(800,800.00)(850,850.00)(900,900.00)(950,950.00)(1000,1000.00)(1050,1050.00)(1100,1100.00)(1150,1150.00)(1200,1200.00)(1250,1250.00)(1300,1300.00)(1350,1350.00)(1400,1400.00)(1450,1450.00)(1500,1500.00)
+            };
+            \addlegendentry{Single neuron}
+        \end{axis}
+        \end{tikzpicture}
+        \begin{tikzpicture}
+        \begin{axis}[
+            width=15cm,
+            height=6cm,
+            legend pos=south east,
+            title={CPU time over maximum number of iterations},
+            xlabel={Maximum number of iterations},
+            ylabel={Average CPU time (s)},
+            xmin=0,
+            ymin=0,
+            enlargelimits=false,
+            xticklabel shift={.1cm},
+            yticklabel shift={.1cm} ]
+        ]
+
+        \addplot[
+            color=blue,
+            mark=square,
+            ]
+            coordinates {
+                (50,0.54)(100,1.00)(150,1.68)(200,2.24)(250,2.66)(300,3.26)(350,3.76)(400,3.97)(450,4.99)(500,5.14)(550,5.34)(600,5.49)(650,6.17)(700,7.18)(750,6.69)(800,7.70)(850,8.06)(900,8.22)(950,8.58)(1000,9.69)(1050,8.77)(1100,8.94)(1150,9.65)(1200,11.45)(1250,11.39)(1300,9.87)(1350,11.98)(1400,10.67)(1450,11.06)(1500,11.74)(1550,12.68)(1600,10.98)(1650,13.15)(1700,12.38)(1750,11.52)(1800,13.42)(1850,13.53)(1900,12.33)(1950,14.63)(2000,13.48)(2050,14.03)(2100,13.35)(2150,13.38)(2200,13.60)(2250,14.39)(2300,15.01)(2350,14.15)(2400,13.72)(2450,14.88)(2500,14.35)
+            };
+            \addlegendentry{Two neurons}
+        \addplot[
+            color=red,
+            mark=square,
+            ]
+            coordinates {
+                (50,0.30)(100,0.67)(150,0.90)(200,1.28)(250,1.49)(300,1.75)(350,2.21)(400,2.50)(450,2.74)(500,3.00)(550,3.25)(600,3.55)(650,3.98)(700,4.38)(750,4.47)(800,4.82)(850,5.04)(900,5.47)(950,5.81)(1000,6.06)(1050,6.26)(1100,6.68)(1150,7.00)(1200,7.32)(1250,7.63)(1300,8.36)(1350,8.32)(1400,8.69)(1450,9.03)(1500,9.11)
+            };
+            \addlegendentry{Single neurons}
+        \end{axis}
+        \end{tikzpicture}
+    \end{center}
+    \caption{Performance metrics of the $(1 + 1)$ NA algorithm on the \textit{TwoQuarters} benchmark, over different maximum iterations.
+    The evolution stopped when the fitness was $2\%$ away from the maximal fitness of $1.0$ or the maximum number of iterations was reached.}
+    \label{fig:na_twoquarters}
+\end{figure}
+
+\begin{figure}[h]
+    \begin{center}
+        \begin{tikzpicture}
+        \begin{axis}[
+            width=12cm,
+            height=8cm,
+            title={Fitness over maximum number of stagnant iterations},
+            xlabel={Maximum number of stagnant iterations},
+            ylabel={Average fitness},
+            enlargelimits=false,
+            xmin=0,
+            ymin=0, ymax=1,
+            ytick={0,0.2,...,1},
+            xticklabel shift={.1cm},
+            yticklabel shift={.1cm} ]
+        ]
+
+        \addplot[
+            color=blue,
+            mark=square,
+            ]
+            coordinates {
+                (5,0.67)(25,0.78)(45,0.81)(65,0.83)(85,0.84)(105,0.85)(125,0.86)(145,0.86)(165,0.87)(185,0.87)(205,0.88)(225,0.88)(245,0.89)(265,0.89)(285,0.89)(305,0.89)(325,0.90)(345,0.89)(365,0.90)(385,0.90)(405,0.89)(425,0.90)(445,0.90)(465,0.91)(485,0.91)(505,0.90)(525,0.91)(545,0.91)(565,0.91)(585,0.92)(605,0.91)(625,0.91)(645,0.91)(665,0.91)(685,0.92)(705,0.92)(725,0.92)(745,0.91)(765,0.92)(785,0.92)(805,0.92)(825,0.92)(845,0.91)(865,0.92)(885,0.92)(905,0.92)(925,0.93)(945,0.92)(965,0.92)(985,0.92)(1005,0.92)
+            };
+        \end{axis}
+        \end{tikzpicture}
+        \begin{tikzpicture}
+        \begin{axis}[
+            width=12cm,
+            height=8cm,
+            title={Fitness over maximum number of stagnant iterations},
+            xlabel={Maximum number of stagnant iterations},
+            ylabel={Average iterations},
+            xmin=0,
+            ymin=0,
+            enlargelimits=false,
+            xticklabel shift={.1cm},
+            yticklabel shift={.1cm} ]
+        ]
+
+        \addplot[
+            color=blue,
+            mark=square,
+            ]
+            coordinates {
+                (5,11.08)(25,64.92)(45,118.66)(65,176.18)(85,226.47)(105,274.75)(125,322.09)(145,369.60)(165,406.29)(185,444.36)(205,482.35)(225,515.39)(245,550.76)(265,576.87)(285,615.67)(305,630.95)(325,650.39)(345,696.00)(365,700.34)(385,728.06)(405,751.11)(425,787.23)(445,780.55)(465,809.38)(485,851.13)(505,855.51)(525,865.96)(545,879.14)(565,904.62)(585,893.06)(605,915.34)(625,949.31)(645,937.78)(665,967.92)(685,980.22)(705,985.50)(725,1020.09)(745,1015.59)(765,1029.75)(785,1045.41)(805,1037.69)(825,1068.49)(845,1078.37)(865,1082.12)(885,1085.85)(905,1089.08)(925,1088.42)(945,1109.95)(965,1101.04)(985,1156.12)(1005,1170.91)
+            };
+        \end{axis}
+        \end{tikzpicture}
+    \end{center}
+    \caption{Performance metrics of the $(1 + 1)$ NA algorithm on the \textit{TwoQuarters} benchmark with two  neurons, over different numbers of maximum stagnant iterations.
+    The evolution stopped when the fitness was $2\%$ away from the maximal fitness of $1.0$, when $2500$ iterations was reached, or the maximum number of stagnant iterations was reached.}
+    \label{fig:na_twoquarters_stag}
+\end{figure}
+
+\begin{figure}[h]
+    \begin{center}
+        \begin{tikzpicture}
+        \begin{axis}[
+            width=15cm,
+            height=6cm,
+            title={Fitness over maximum number of iterations},
+            legend pos=south east,
+            xlabel={Maximum number of iterations},
+            ylabel={Average fitness},
+            enlargelimits=false,
+            xmin=0,
+            ymin=0, ymax=1,
+            ytick={0,0.2,...,1},
+            xticklabel shift={.1cm},
+            yticklabel shift={.1cm} ]
+        ]
+
+        \addplot[
+            color=blue,
+            mark=square,
+            ]
+            coordinates {
+            };
+            \addlegendentry{Single neurons}
+        \addplot[
+            color=red,
+            mark=square,
+            ]
+            coordinates {
+            };
+            \addlegendentry{Two neuron}
+        \addplot[
+            color=green,
+            mark=square,
+            ]
+            coordinates {
+            };
+            \addlegendentry{Three neuron}
+        \end{axis}
+        \end{tikzpicture}
+        \begin{tikzpicture}
+        \begin{axis}[
+            width=15cm,
+            height=6cm,
+            legend pos=south east,
+            title={Iterations over maximum number of iterations},
+            xlabel={Maximum number of iterations},
+            ylabel={Average iterations},
+            xmin=0,
+            ymin=0,
+            enlargelimits=false,
+            xticklabel shift={.1cm},
+            yticklabel shift={.1cm} ]
+        ]
+
+        \addplot[
+            color=blue,
+            mark=square,
+            ]
+            coordinates {
+            };
+            \addlegendentry{Single neurons}
+        \addplot[
+            color=red,
+            mark=square,
+            ]
+            coordinates {
+            };
+            \addlegendentry{Two neuron}
+        \addplot[
+            color=green,
+            mark=square,
+            ]
+            coordinates {
+            };
+            \addlegendentry{Three neuron}
+        \end{axis}
+        \end{tikzpicture}
+        \begin{tikzpicture}
+        \begin{axis}[
+            width=15cm,
+            height=6cm,
+            legend pos=south east,
+            title={CPU time over maximum number of iterations},
+            xlabel={Maximum number of iterations},
+            ylabel={Average CPU time (s)},
+            xmin=0,
+            ymin=0,
+            enlargelimits=false,
+            xticklabel shift={.1cm},
+            yticklabel shift={.1cm} ]
+        ]
+
+        \addplot[
+            color=blue,
+            mark=square,
+            ]
+            coordinates {
+            };
+            \addlegendentry{Single neurons}
+        \addplot[
+            color=red,
+            mark=square,
+            ]
+            coordinates {
+            };
+            \addlegendentry{Two neuron}
+        \addplot[
+            color=green,
+            mark=square,
+            ]
+            coordinates {
+            };
+            \addlegendentry{Three neuron}
+        \end{axis}
+        \end{tikzpicture}
+    \end{center}
+    \caption{Performance metrics of the $(1 + 1)$ NA algorithm on the \textit{LocalOpt} benchmark, over different maximum iterations.
+    The evolution stopped when the fitness was $2\%$ away from the maximal fitness of $1.0$ or the maximum number of iterations was reached.}
+    \label{fig:na_localopt}
 \end{figure}
