@@ -162,6 +162,8 @@ As expected, in the case of one neuron, the algorithm is unable to solve the pro
 As a consequence, it can also be seen that the number of iterations taken by the algorithm is equal to the maximum number of iterations, since the fitness is never within $2\%$ of the optimal one.
 In the case of two neurons, the algorithm, which can theoretically solve the problem, achieves a higher average fitness, but is unable to find the optimal solutions on all runs and gets stuck
 at a local optima with a fitness of $0.75$. The optimal solution and an example of a local optima are shown in \Cref{fig:na_twoquarters_visual}.
+It can be seen that the number of iterations taken by the algorithm in the case of two neurons is lower than for one neuron. However, the CPU time is higher, because of iterations being more
+computationally expensive, as the algorithm has to evolve two neurons instead of one.
 Furthermore, the average fitness, iterations and CPU time all seem to grow logarithmically with the maximum number of iterations.
 
 \begin{figure}
@@ -180,14 +182,16 @@ Furthermore, the average fitness, iterations and CPU time all seem to grow logar
     \label{fig:na_twoquarters_visual}
 \end{figure}
 
-In \Cref{fig:na_twoquarters_stag}, the results on the \textit{TwoQuarters} problem are shown with different values of maximum stagnation iterations. The other parameters were kept the same as in the previous
-experiment, and the number of stagnant iterations was varied from $5$ to $1000$ with a step size of $20$. On average, the algorithm stops before $1200$ iterations, without always solving the task,
-even when it is allowed to stagnate for $1000$ iterations. This shows how hard it is for the algorithm to leave the local optima it gets stuck in.
+In \Cref{fig:na_twoquarters_stag}, the results of the algorithm, with two neurons, on the \textit{TwoQuarters} problem are shown with different values of maximum stagnation iterations. The other
+parameters were kept the same as in the previous experiment, and the number of stagnant iterations was varied from $5$ to $1000$ with a step size of $20$. On average, the algorithm stops before $1200$
+iterations, without always solving the task, even when it is allowed to stagnate for $1000$ iterations. This shows how hard it is for the algorithm to leave the local optima it gets stuck in.
 
-Finally, the \textit{LocalOpt} problem requires three neurons to be solved. For this problem, there are local optima with fitnesses of $0.75$ and $0.9$
-\Cref{fig:na_localopt} shows the results of the algorithm on this problem, with a fixed resolution of $400$, one, two
-or three neurons, and maximum number of iterations ranging from $50$ to $2000$. The evolution stopped when the fitness was $2\%$ away from the maximal fitness of $1.0$ or the maximum number of
-iterations was reached.
+Finally, the \textit{LocalOpt} problem requires three neurons to be solved. For this problem, there are local optima with fitnesses of $0.75$ and $0.9$, as shown in \Cref{fig:na_localopt_visual}.
+\Cref{fig:na_localopt} shows the results of the algorithm on this problem, with a fixed resolution of $400$, one, two or three neurons, and maximum number of iterations ranging from $50$ to $2000$.
+The evolution stopped when the fitness was $2\%$ away from the maximal fitness of $1.0$ or the maximum number of iterations was reached. For all configurations, the algorithm was unable to solve
+the problem. In the case of one neuron, it reaches the maximum possible fitness of $0.75$ after approximately $200$ iterations. The fitness curve for two and three neurons are almost identical,
+and converge to a fitness of $0.85$. Since the algorithm was unable to find the optimal solution, the maximum number of iterations was always reached, while the CPU time results reflect the
+impact of the number of neurons on the computational cost of the algorithm.
 
 \begin{figure}
     \centering
@@ -205,7 +209,7 @@ iterations was reached.
     \label{fig:na_localopt_visual}
 \end{figure}
 
-% TODO discuss how initialization is more important, greedy nature, lack of exploration, cpu time vs number of neurons, etc.
+% TODO discuss how initialization is more important, greedy nature, lack of exploration, cpu time vs number of neurons, more iterations are for fine-tuning etc.
 % TODO optimal solution frequency tables
 
 \begin{figure}
@@ -852,25 +856,157 @@ iterations was reached.
     \label{fig:na_localopt}
 \end{figure}
 
+\subsubsection{XOR problem}
+
+The \textit{XOR} problem requires two neurons to be solved. The results of the $(1 + 1)$ NA algorithm on this problem are shown in Table \ref{tab:na_xor}. The evolution stopped
+when the fitness was $2\%$ away from the maximal fitness of $1.0$ or the maximum number of $200$ stagnant iterations was reached, and the resolution was set to $400$.
+For one neuron, the maximum reachable fitness is $0.75$, while this value corresponds to a local optima in the case of two neurons. A solution and a local optima are shown in Figure \ref{fig:na_xor_visual}.
+As it was the case with the \textit{LocalOpt} and \textit{TwoQuarters} benchmarks, even though two neurons are enough to solve the problem, the algorithm often gets stuck in a local optima.
+The average fitness is $0.79$ for two neurons, and the number of iterations is $174$, which shows that the algorithm was able to converge to the optimal solution in some cases, but ended up in a local optimla
+in most cases.
+
+\begin{figure}
+    \centering
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=0.9\textwidth]{Pictures/na-xor-localopt}
+       \caption{Local optima}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=0.9\textwidth]{Pictures/na-xor-opt}
+        \caption{Optimal solution}
+    \end{subfigure}
+    \caption{Visualization of two configurations of the $(1 + 1)$ NA algorithm, with two neurons, after evolution on the \textit{XOR} problem.}
+    \label{fig:na_xor_visual}
+\end{figure}
+
+\begin{table}
+    \caption{Results of the $1 + 1$ NA algorithm on the \textit{XOR} problem. The algorithm was tested with a maximum number of stagnant iterations of $200$.}
+    \centering
+    \label{tab:na_xor}
+    \begin{tabular}{ |c|c|c|c| }
+        \hline
+        Number of neurons & Average fitness & Average iterations & Average CPU time (s) \\
+        \hline
+        1 & 0.75 & 200 & 0.01 \\
+        \hline
+        2 & 0.83 & 168 & 0.01 \\
+        \hline\hline
+    \end{tabular}
+\end{table}
+
 \subsubsection{Proben1 classification problem}
 
+The last problem on which the $(1 + 1)$ NA algorithm was tested is the \textit{Proben1 Cancer1} benchmark. This problem differrs from the previous ones in the sense that the data which
+was used to evolve the algorithm is different from the data which was used to evaluate it. In addition, no optimal solution, which would allow us to set the number of neurons, is known in this case,
+and the input space is higher-dimensional, as it contains $9$ features. Hence, an interesting experiment consists in testing the algorithm with different number of neurons.
+The results are shown in Figure \ref{fig:na_proben1}. Fitness for both the train and test sets is shown.
+
 ...
+
+\begin{figure}
+    \begin{center}
+        \begin{tikzpicture}
+        \begin{axis}[
+            width=15cm,
+            height=6cm,
+            title={Fitness over number of neurons},
+            legend pos=south east,
+            xlabel={Maximum number of iterations},
+            ylabel={Average fitness},
+            enlargelimits=false,
+            xmin=1,
+            ymin=0, ymax=1,
+            ytick={0,0.2,...,1},
+            xticklabel shift={.1cm},
+            yticklabel shift={.1cm} ]
+        ]
+
+        \addplot[
+            color=blue,
+            mark=square,
+            ]
+            coordinates {
+            };
+            \addlegendentry{Test set}
+        \addplot[
+            color=red,
+            mark=square,
+            ]
+            coordinates {
+                (1,0.94)(2,0.89)(3,0.79)(4,0.78)(5,0.77)(6,0.75)(7,0.73)(8,0.74)(9,0.73)(10,0.73)
+            };
+            \addlegendentry{Test set}
+        \end{axis}
+        \end{tikzpicture}
+        \begin{tikzpicture}
+        \begin{axis}[
+            width=15cm,
+            height=6cm,
+            legend pos=south east,
+            title={Iterations over number of neurons},
+            xlabel={Maximum number of iterations},
+            ylabel={Average iterations},
+            xmin=1,
+            ymin=0,
+            enlargelimits=false,
+            xticklabel shift={.1cm},
+            yticklabel shift={.1cm} ]
+        ]
+
+        \addplot[
+            color=blue,
+            mark=square,
+            ]
+            coordinates {
+                (1,451.20)(2,428.81)(3,355.22)(4,361.13)(5,353.71)(6,345.58)(7,332.38)(8,326.79)(9,313.57)(10,323.24)
+            };
+        \end{axis}
+        \end{tikzpicture}
+        \begin{tikzpicture}
+        \begin{axis}[
+            width=15cm,
+            height=6cm,
+            legend pos=south east,
+            title={CPU time over number of neurons},
+            xlabel={Maximum number of iterations},
+            ylabel={Average CPU time (s)},
+            xmin=1,
+            ymin=0,
+            enlargelimits=false,
+            xticklabel shift={.1cm},
+            yticklabel shift={.1cm} ]
+        ]
+
+        \addplot[
+            color=blue,
+            mark=square,
+            ]
+            coordinates {
+                (1,2.94)(2,4.91)(3,5.94)(4,7.92)(5,9.64)(6,11.19)(7,12.21)(8,13.68)(9,14.80)(10,16.90)
+            };
+        \end{axis}
+        \end{tikzpicture}
+    \end{center}
+    \caption{Performance metrics of the $(1 + 1)$ NA algorithm on the \textit{Proben1 Cancer1} benchmark, over different number of neurons.
+    The evolution stopped when the fitness was $2\%$ away from the maximal fitness of $1.0$ or the maximum number of $200$ stagnant iterations was reached.}
+    \label{fig:na_proben1}
+\end{figure}
 
 \subsection{Results of the BNA algorithm}
 
 The BNA algorithm can be applied to binary classification problems. As it is the case for the $(1 + 1)$ NA algorithm, the BNA algorithm was tested on the spere classification problems,
 the \textit{XOR} problem and the \textit{Cancer1} classification problem. The parameters which can be tuned for this algorithm are the resolution and the number of V-neurons,
-Varying the resolution would simply highlight the same properties as the ones observed for the $(1 + 1)$ NA algorithm. Thus the focus will be on the number of V-neurons and the parameters
-for the evolution of the algorithm. For the following experiments, the resolution was set to $400$.
+Varying the resolution would simply highlight the same properties as the ones observed for the $(1 + 1)$ NA algorithm. Thus the focus will be on the number of V-neurons and the the termination
+criteria for the algorithm. For the following experiments, the resolution was set to $400$.
 
 \subsubsection{Unit-sphere classification problems}
 
 The first experiment consisted in testing the algorithm on the \textit{Half} and \textit{Quarter} benchmarks. The results are shown in Figure \ref{fig:bna_half_quarter}. The algorithm
 was tested with a maximum number of iterations ranging from $5$ to $300$. The evolution stopped when the fitness was $2\%$ away from the maximal fitness of $1.0$ or the maximum number
-of iterations was reached. It can be seen that the number of iterations taken by the algorithm plateaus around $110$ iterations. Furthermore, as it was the case for the $(1 + 1)$ NA
-algorithm, it can be seen on the graphs how the CPU time is proportional to the number of iterations.
-
-...
+of iterations was reached. For both problems, it can be seen that the fitness converges to $1.0$ and the number of iterations taken by the algorithm plateaus around $110$ iterations. Furthermore,
+as it was the case for the $(1 + 1)$ NA algorithm, the results on the two problems were almost identical, and the CPU time graphs reflect how the CPU time is proportional to the number of iterations.
 
 \begin{figure}
     \begin{center}
@@ -978,6 +1114,49 @@ algorithm, it can be seen on the graphs how the CPU time is proportional to the 
     \caption{Performance metrics of the BNA algorithm on the \textit{Half} and \textit{Quarter} benchmarks, over different maximum iterations.
     The evolution stopped when the fitness was $2\%$ away from the maximal fitness of $1.0$ or the maximum number of iterations was reached.}
     \label{fig:bna_half_quarter}
+\end{figure}
+
+The results for the \textit{TwoQuarters} benchmark are shown in \Cref{fig:bna_twoquarters} and the results for the \textit{LocalOpt} benchmark are shown in \Cref{fig:bna_localopt}.
+For both problems, the same observations can be made as for the $(1 + 1)$ NA algorithm. For the \textit{TwoQuarters} benchmark, with two V-neurons, the fitness converges to approximately $0.85$,
+while the algorithm quickly reaches the maximal fitness of $0.75$ in the case of one V-neuron. Regarding the \texit{LocalOpt} benchmark, it was able to find the optimal solution once and also
+got stcuk in local optima, with an average fitness converging to $0.75$ for all three cases. Examples of local optima and optimal solutions are shown in \Cref{fig:bna_twoquarters_visual}
+and \Cref{fig:bna_localopt_visual}.
+
+\begin{figure}
+    \centering
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=0.9\textwidth]{Pictures/bna-twoquarters-localopt}
+       \caption{Local optima}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=0.9\textwidth]{Pictures/bna-twoquarters-opt}
+        \caption{Optimal solution}
+    \end{subfigure}
+    \caption{Visualization of two configurations of the BNA algorithm, with two V-neurons, after evolution on the \textit{TwoQuarters} problem.}
+    \label{fig:bna_twoquarters_visual}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=0.9\textwidth]{Pictures/bna-localopt-75}
+       \caption{Local optima.}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=0.9\textwidth]{Pictures/bna-localopt-83}
+        \caption{Local optima.}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=0.9\textwidth]{Pictures/bna-localopt-1}
+        \caption{Optimal solution.}
+    \end{subfigure}
+    \caption{Visualization of two configurations of the BNA algorithm, with three V-neurons, after evolution on the \textit{LocalOpt} problem.}
+    \label{fig:bna_localopt_visual}
 \end{figure}
 
 \begin{figure}
@@ -1220,10 +1399,139 @@ algorithm, it can be seen on the graphs how the CPU time is proportional to the 
     \label{fig:bna_localopt}
 \end{figure}
 
+\subsubsection{XOR problem}
+
+...
+
+\begin{table}
+    \caption{Results of the BNA algorithm on the \textit{XOR} problem. The algorithm was tested with a maximum number of stagnant iterations of $200$.}
+    \centering
+    \label{tab:bna_xor}
+    \begin{tabular}{ |c|c|c|c| }
+        \hline
+        Number of neurons & Average fitness & Average iterations & Average CPU time (s) \\
+        \hline
+        1 & 0.75 & 207 & 0.01 \\
+        \hline
+        2 & 0.79 & 174 & 0.01 \\
+        \hline\hline
+    \end{tabular}
+\end{table}
+
+\subsubsection{Proben1 classification problems}
+
+...
+
+\begin{figure}
+    \begin{center}
+        \begin{tikzpicture}
+        \begin{axis}[
+            width=15cm,
+            height=6cm,
+            title={Fitness over number of neurons},
+            legend pos=south east,
+            xlabel={Maximum number of iterations},
+            ylabel={Average fitness},
+            enlargelimits=false,
+            xmin=1,
+            ymin=0, ymax=1,
+            ytick={0,0.2,...,1},
+            xticklabel shift={.1cm},
+            yticklabel shift={.1cm} ]
+        ]
+
+        \addplot[
+            color=blue,
+            mark=square,
+            ]
+            coordinates {
+            (1,0.92)(2,0.84)(3,0.78)(4,0.76)(5,0.76)(6,0.75)(7,0.74)(8,0.74)(9,0.73)(10,0.74)
+        };
+        \addlegendentry{Train set}
+        \addplot[
+            color=red,
+            mark=square,
+            ]
+            coordinates {
+            (1,0.92)(2,0.84)(3,0.78)(4,0.76)(5,0.76)(6,0.75)(7,0.74)(8,0.74)(9,0.73)(10,0.74)
+        };
+        \addlegendentry{Test set}
+        \end{axis}
+        \end{tikzpicture}
+        \begin{tikzpicture}
+        \begin{axis}[
+            width=15cm,
+            height=6cm,
+            legend pos=south east,
+            title={Iterations over number of neurons},
+            xlabel={Maximum number of iterations},
+            ylabel={Average iterations},
+            xmin=1,
+            ymin=0,
+            enlargelimits=false,
+            xticklabel shift={.1cm},
+            yticklabel shift={.1cm} ]
+        ]
+
+        \addplot[
+            color=blue,
+            mark=square,
+            ]
+            coordinates {
+                (1,400.21)(2,367.98)(3,315.58)(4,302.22)(5,316.36)(6,315.69)(7,306.73)(8,312.33)(9,299.29)(10,309.09)
+            };
+        \end{axis}
+        \end{tikzpicture}
+        \begin{tikzpicture}
+        \begin{axis}[
+            width=15cm,
+            height=6cm,
+            legend pos=south east,
+            title={CPU time over number of neurons},
+            xlabel={Maximum number of iterations},
+            ylabel={Average CPU time (s)},
+            xmin=1,
+            ymin=0,
+            enlargelimits=false,
+            xticklabel shift={.1cm},
+            yticklabel shift={.1cm} ]
+        ]
+
+        \addplot[
+            color=blue,
+            mark=square,
+            ]
+            coordinates {
+                (1,5.65)(2,9.88)(3,12.14)(4,15.94)(5,20.44)(6,23.59)(7,26.84)(8,30.38)(9,34.28)(10,38.01)
+            };
+        \end{axis}
+        \end{tikzpicture}
+    \end{center}
+    \caption{Performance metrics of the BNA algorithm on the \textit{Proben1 Cancer1} benchmark, over different number of neurons.
+    The evolution stopped when the fitness was $2\%$ away from the maximal fitness of $1.0$ or the maximum number of $200$ stagnant iterations was reached.}
+    \label{fig:bna_proben1}
+\end{figure}
+
 \subsection{Results of the NEAT algorithm}
 
 ...
 
+\subsubsection{XOR problem}
+
+...
+
+\subsubsection{Double pole balancing problem}
+
+...
+
 \subsection{Results of the CMA-ES algorithm}
+
+...
+
+\subsubsection{XOR problem}
+
+...
+
+\subsubsection{Double pole balancing problem}
 
 ...
