@@ -72,11 +72,11 @@ def write_runs_result(csv_folder, output_path):
         writer.writerow(["Param", "fitness", "iterations", "cpu"])
 
         csv_files = [f for f in os.listdir(csv_folder) if f.endswith(".csv")]
-        sorted_csv_files = sorted(csv_files, key=lambda x: int(re.search(r'\d+', x).group()))
+        sorted_csv_files = sorted(csv_files, key=lambda x: float(re.search(r'\d+\.\d+|\d+', x).group()))
 
         for csv_file in sorted_csv_files:
             stats = calculate_statistics(os.path.join(csv_folder, csv_file))
-            param = re.search(r'\d+', csv_file).group()
+            param = re.search(r'\d+\.\d+|\d+', csv_file).group()
             writer.writerow([
                 param,
                 "{:.2f}".format(stats["fitness"]["mean"]),

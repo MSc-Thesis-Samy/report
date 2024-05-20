@@ -33,3 +33,4 @@
 * [ ] Optional? Add sample HPC job script in the experiments section
 * [ ] Diwscus python script in experiments workflow section
 * [ ] Tables with percentage of optimal solutions found in the experiments section for the (1 + 1) NA algorithm
+* [ ] Example of networks evolved using NEAT in Results section

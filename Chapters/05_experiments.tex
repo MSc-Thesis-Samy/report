@@ -4,12 +4,12 @@
 \section{Empirical performance testing}
 
 This section presents the methodology and results of the empirical performance testing of the selected algorithms on the selected benchmarks, using the framework which was designed and implemented for this thesis.
-The goal of this phase is to design and run experiments to evaluate the performance of the algorithms on the benchmarks, and based on the empirical results, backup-up by statistical tests, formulate hypotheses on
-the relative performance of the algorithms given the problem class, and suggest guidelines for the choice of algorithms and parameters for these algorithms.
+The goal of this phase is to design and run experiments to evaluate the performance of the algorithms on the benchmarks, and based on the empirical results, which are backup-up by statistical tests, formulate
+hypotheses on the relative performance of the algorithms given the problem class, and suggest guidelines for the choice of algorithms, as well as for the choice of parameters for these algorithms.
 
 In the following sections, results are presented for each algorithm on the selected benchmark problems they can be applied to, in chronological order of the experiments.
 This allows for a detailed analysis of the performance of each of the algorithms and experimentation with various configurations, before comparing them on the same problems, as well as
-motivating the different experiments which were conducted.
+motivating the different experiments which were conducted. Then, following the comparison, guidelines for the choice of algorithms and parameters are formulated..
 
 \subsection{Methodology}
 
@@ -103,7 +103,10 @@ done
 A python script was written to merge the results of the different runs in a single CPU file, extract the relevant metrics and statistics, and output data which directly be used
 in the \textt{pgfplots} plots of this report.
 
-\section{Results}
+\section{Results of the experiments}
+
+This section presents the results of the different experiments which were conducted to highlight properties of the algorithms, observe the impact of different parameters on the performance,
+and evaluate the algorithms on the selected benchmarks.
 
 \subsection{Results of the $(1 + 1)$ NA algorithm}
 
@@ -209,8 +212,7 @@ impact of the number of neurons on the computational cost of the algorithm.
     \label{fig:na_localopt_visual}
 \end{figure}
 
-% TODO discuss how initialization is more important, greedy nature, lack of exploration, cpu time vs number of neurons, more iterations are for fine-tuning etc.
-% TODO optimal solution frequency tables
+% TODO discuss how initialization is more important, greedy nature, lack of exploration, cpu time vs number of neurons, more iterations are for fine-tuning, not linearly separable but one neuron is best etc.
 
 \begin{figure}
     \begin{center}
@@ -1574,13 +1576,393 @@ a further increase in the number of iterations impractical.
 
 \subsection{Results of the NEAT algorithm}
 
-...
+The NEAT algorithm can be applied to all of the selected benchmark problems. Experiments are thus conducted on the unit-sphere classification problems, the \textit{XOR}
+problem, the \textit{Proben1 Cancer1} problem and the double pole balancing problem. Many parameters can be tuned for this algorithm, including:
+
+\begin{itemize}
+    \item The population size
+    \item The various mutation probabilities
+    \item The weights for computing the similarity between genomes
+    \item The similarity threshold
+    \item The parameters of the connection weights distribution
+    \item The parameters of the weights perturbation distribution
+    \item{The survival threshold}
+\end{itemize}
 
 \subsubsection{XOR problem}
 
+The NEAT algorithm was first tested on the \textit{XOR} problem, as done in \cite{neat}. In addition to being used for evaluating the performance of the algorithm, different experiments aimed
+at understanding the impact of some of the parameters were conducted on this benchmark. The results are presented and discussed in this section.
+
+Compared to the $(1 + 1)$ NA and BNA algorithms discussed previously, the NEAT algorithm is population-based.
+Thus, the first experiment consisted in testing different population sizes.The algorithm was evolved with a maximum number of $500$ generations. For the other parameters, the same values as in \cite{neat} were used.
+The results are presented in \Cref{fig:neat_xor}. The average fitness increases with the population size, while the number of iterations decreases as a consequence because of the maximum fitness tolerance termination
+criterion. However, the CPU time increases with the population size, because of the increased duration of an iteration. For example, a population of $50$ individuals resulted in a fitness of $0.82$ in $2.3$ seconds
+on average, while a population of $1500$ individuals resulted in a fitness of $0.96$ in $66.6$ seconds on average.
+
+\begin{figure}
+    \begin{center}
+        \begin{tikzpicture}
+        \begin{axis}[
+            width=15cm,
+            height=6cm,
+            title={Fitness over population size},
+            legend pos=south east,
+            xlabel={Population size},
+            ylabel={Average fitness},
+            enlargelimits=false,
+            xmin=0,
+            ymin=0, ymax=1,
+            ytick={0,0.2,...,1},
+            xticklabel shift={.1cm},
+            yticklabel shift={.1cm} ]
+        ]
+
+        \addplot[
+            color=blue,
+            mark=square,
+            ]
+            coordinates {
+                (50,0.82)(100,0.87)(150,0.88)(200,0.88)(250,0.90)(300,0.90)(350,0.90)(400,0.90)(450,0.91)(500,0.91)(550,0.92)(600,0.92)(650,0.93)(700,0.93)(750,0.93)(800,0.93)(850,0.93)(900,0.94)(950,0.94)(1000,0.94)(1050,0.94)(1100,0.94)(1150,0.95)(1200,0.94)(1250,0.95)(1300,0.95)(1350,0.95)(1400,0.95)(1450,0.95)(1500,0.96)
+            };
+        \end{axis}
+        \end{tikzpicture}
+        \begin{tikzpicture}
+        \begin{axis}[
+            width=15cm,
+            height=6cm,
+            legend pos=south east,
+            title={Iterations over population size},
+            xlabel={Population size},
+            ylabel={Average iterations},
+            xmin=0,
+            ymin=0,
+            enlargelimits=false,
+            xticklabel shift={.1cm},
+            yticklabel shift={.1cm} ]
+        ]
+
+        \addplot[
+            color=blue,
+            mark=square,
+            ]
+            coordinates {
+                (50,434.80)(100,371.88)(150,345.18)(200,332.48)(250,309.19)(300,308.54)(350,301.39)(400,299.96)(450,294.33)(500,285.44)(550,284.55)(600,284.78)(650,272.73)(700,275.06)(750,265.25)(800,273.65)(850,254.47)(900,256.28)(950,247.01)(1000,252.89)(1050,257.86)(1100,250.93)(1150,234.51)(1200,248.80)(1250,228.87)(1300,229.88)(1350,232.16)(1400,225.69)(1450,227.02)(1500,208.31)
+            };
+        \end{axis}
+        \end{tikzpicture}
+        \begin{tikzpicture}
+        \begin{axis}[
+            width=15cm,
+            height=6cm,
+            legend pos=south east,
+            title={CPU time over population size},
+            xlabel={Population size},
+            ylabel={Average CPU time (s)},
+            xmin=0,
+            ymin=0,
+            enlargelimits=false,
+            xticklabel shift={.1cm},
+            yticklabel shift={.1cm} ]
+        ]
+
+        \addplot[
+            color=blue,
+            mark=square,
+            ]
+            coordinates {
+                (50,2.37)(100,3.95)(150,6.72)(200,9.08)(250,12.47)(300,15.61)(350,14.16)(400,20.78)(450,25.70)(500,25.70)(550,28.70)(600,32.42)(650,34.08)(700,37.73)(750,38.53)(800,44.27)(850,44.09)(900,48.16)(950,53.98)(1000,52.17)(1050,63.45)(1100,64.66)(1150,55.52)(1200,72.80)(1250,68.96)(1300,63.50)(1350,70.52)(1400,67.90)(1450,76.89)(1500,66.57)
+            };
+        \end{axis}
+        \end{tikzpicture}
+    \end{center}
+    \caption{Performance metrics of the NEAT algorithm on the \textit{XOR} benchmark, over different population sizes.
+    The evolution stopped when the fitness was $2\%$ away from the maximal fitness of $1.0$ or the maximum number of $500$ generations was reached.
+    The other parameters were set to the same values as in \cite{neat}.}
+    \label{fig:neat_xor}
+\end{figure}
+
+One of the main characteristics of the NEAT algorithm is the speciation mechanism, where individuals are separated into species based on their similarity. The second experiment consisted in testing different
+similarity thresholds, which would impact the number of species and the number of individuals in each species. Indeed, a higher similarity threshold would result in fewer species, while a lower similarity threshold
+would result in more species. The results are presented in \Cref{fig:neat_xor_similarity}. The population size was set to $500$ individuals and the maximum number of generations to $500$. It can be observed that
+the highest fitness values are reached in the $2.5$ to $8$ range, where the iterations and CPU time are also the lowest. The fitness was lower for the smaller similarity thresholds, where there were more
+species, but with a lower number of individuals in each species. Starting from thresholds greater than $8$, the performances remain stable, which is because of these values resulting in a single species.
+
+\begin{figure}
+    \begin{center}
+        \begin{tikzpicture}
+        \begin{axis}[
+            width=15cm,
+            height=6cm,
+            title={Fitness over similarity threshold},
+            legend pos=south east,
+            xlabel={Similarity threshold},
+            ylabel={Average fitness},
+            enlargelimits=false,
+            xmin=0,
+            ymin=0, ymax=1,
+            ytick={0,0.2,...,1},
+            xticklabel shift={.1cm},
+            yticklabel shift={.1cm} ]
+        ]
+
+        \addplot[
+            color=blue,
+            mark=square,
+            ]
+            coordinates {
+                (0.0,0.80)(0.5,0.80)(1.0,0.81)(1.5,0.85)(2.0,0.94)(2.5,0.96)(3.0,0.97)(3.5,0.98)(4.0,0.98)(4.5,0.98)(5.0,0.98)(5.5,0.98)(6.0,0.98)(6.5,0.98)(7.0,0.98)(7.5,0.98)(8.0,0.98)(8.5,0.97)(9.0,0.96)(9.5,0.96)(10.0,0.95)(10.5,0.94)(11.0,0.93)(11.5,0.92)(12.0,0.92)(12.5,0.92)(13.0,0.91)(13.5,0.90)(14.0,0.91)(14.5,0.90)(15.0,0.91)(15.5,0.90)(16.0,0.90)(16.5,0.90)(17.0,0.89)(17.5,0.89)(18.0,0.90)(18.5,0.90)(19.0,0.90)(19.5,0.91)(20.0,0.90)
+            };
+        \end{axis}
+        \end{tikzpicture}
+        \begin{tikzpicture}
+        \begin{axis}[
+            width=15cm,
+            height=6cm,
+            legend pos=south east,
+            title={Iterations over similarity threshold},
+            xlabel={Similarity threshold},
+            ylabel={Average iterations},
+            xmin=0,
+            ymin=0,
+            enlargelimits=false,
+            xticklabel shift={.1cm},
+            yticklabel shift={.1cm} ]
+        ]
+
+        \addplot[
+            color=blue,
+            mark=square,
+            ]
+            coordinates {
+                (0.0,486.12)(0.5,481.60)(1.0,482.44)(1.5,425.45)(2.0,251.76)(2.5,174.06)(3.0,128.96)(3.5,111.75)(4.0,103.80)(4.5,102.82)(5.0,110.56)(5.5,113.00)(6.0,122.35)(6.5,133.64)(7.0,142.11)(7.5,154.28)(8.0,167.42)(8.5,184.58)(9.0,206.81)(9.5,213.87)(10.0,227.49)(10.5,248.85)(11.0,271.99)(11.5,283.54)(12.0,285.71)(12.5,279.04)(13.0,291.03)(13.5,298.53)(14.0,300.55)(14.5,311.57)(15.0,302.06)(15.5,301.56)(16.0,313.23)(16.5,305.37)(17.0,314.23)(17.5,330.94)(18.0,305.47)(18.5,311.92)(19.0,307.03)(19.5,295.83)(20.0,312.24)
+            };
+        \end{axis}
+        \end{tikzpicture}
+        \begin{tikzpicture}
+        \begin{axis}[
+            width=15cm,
+            height=6cm,
+            legend pos=south east,
+            title={CPU time over similarity threshold},
+            xlabel={Similarity threshold},
+            ylabel={Average CPU time (s)},
+            xmin=0,
+            ymin=0,
+            enlargelimits=false,
+            xticklabel shift={.1cm},
+            yticklabel shift={.1cm} ]
+        ]
+
+        \addplot[
+            color=blue,
+            mark=square,
+            ]
+            coordinates {
+                (0.0,117.27)(0.5,112.74)(1.0,119.57)(1.5,88.77)(2.0,29.85)(2.5,13.84)(3.0,7.33)(3.5,5.00)(4.0,3.87)(4.5,3.38)(5.0,3.70)(5.5,3.52)(6.0,4.10)(6.5,4.58)(7.0,5.05)(7.5,4.17)(8.0,5.87)(8.5,6.88)(9.0,8.46)(9.5,9.12)(10.0,7.59)(10.5,11.26)(11.0,9.79)(11.5,13.18)(12.0,13.64)(12.5,12.81)(13.0,12.93)(13.5,13.25)(14.0,14.07)(14.5,11.73)(15.0,15.02)(15.5,14.30)(16.0,11.16)(16.5,14.81)(17.0,14.81)(17.5,12.34)(18.0,10.86)(18.5,11.83)(19.0,14.87)(19.5,14.14)(20.0,11.12)
+            };
+        \end{axis}
+        \end{tikzpicture}
+    \end{center}
+    \caption{Performance metrics of the NEAT algorithm on the \textit{XOR} benchmark, over different similarity thresholds.
+    The evolution stopped when the fitness was $2\%$ away from the maximal fitness of $1.0$ or the maximum number of $500$ generations was reached.
+    The other parameters were set to the same values as in \cite{neat}.}
+    \label{fig:neat_xor_similarity}
+\end{figure}
+
+Another parameter is the maximum number of generations (or iterations).\Cref{fig:neat_xor_generations} presents the results of the algorithm on the problem, with different maximum numbers of generations,
+a population size of $300$ and a similarity threshold of $8.0$. As expected, all three metrics increase with the number of generations, particularly in the $50$ to $200$ range, before stabilizing.
+The algorithm was able to solve the problem in less than $150$ generations on average.
+
+\begin{figure}
+    \begin{center}
+        \begin{tikzpicture}
+        \begin{axis}[
+            width=15cm,
+            height=6cm,
+            title={Fitness over maximum number of generations},
+            xlabel={Maximum number of generations},
+            ylabel={Average fitness},
+            enlargelimits=false,
+            xmin=0,
+            ymin=0, ymax=1,
+            ytick={0,0.2,...,1},
+            xticklabel shift={.1cm},
+            yticklabel shift={.1cm} ]
+        ]
+
+        \addplot[
+            color=blue,
+            mark=square,
+            ]
+            coordinates {
+                (50,0.75)(100,0.86)(150,0.92)(200,0.96)(250,0.97)(300,0.97)(350,0.98)(400,0.98)(450,0.98)(500,0.98)(550,0.98)(600,0.98)(650,0.98)(700,0.98)(750,0.98)(800,0.98)(850,0.98)(900,0.98)(950,0.98)(1000,0.98)
+            };
+        \end{axis}
+        \end{tikzpicture}
+        \begin{tikzpicture}
+        \begin{axis}[
+            width=15cm,
+            height=6cm,
+            legend pos=south east,
+            title={Iterations over maximum number of generations},
+            xlabel={Maximum number of generations},
+            ylabel={Average iterations},
+            xmin=0,
+            ymin=0,
+            enlargelimits=false,
+            xticklabel shift={.1cm},
+            yticklabel shift={.1cm} ]
+        ]
+
+        \addplot[
+            color=blue,
+            mark=square,
+            ]
+            coordinates {
+                (50,49.98)(100,94.09)(150,118.51)(200,124.30)(250,132.62)(300,133.17)(350,136.31)(400,137.18)(450,139.44)(500,138.50)(550,134.95)(600,140.54)(650,147.27)(700,144.51)(750,142.80)(800,144.36)(850,145.69)(900,153.44)(950,140.22)(1000,147.16)
+            };
+        \end{axis}
+        \end{tikzpicture}
+        \begin{tikzpicture}
+        \begin{axis}[
+            width=15cm,
+            height=6cm,
+            legend pos=south east,
+            title={CPU time over maximum number of generations},
+            xlabel={Maximum number of generations},
+            ylabel={Average CPU time (s)},
+            xmin=0,
+            ymin=0,
+            enlargelimits=false,
+            xticklabel shift={.1cm},
+            yticklabel shift={.1cm} ]
+        ]
+
+        \addplot[
+            color=blue,
+            mark=square,
+            ]
+            coordinates {
+                (50,1.17)(100,2.66)(150,3.63)(200,3.89)(250,4.43)(300,4.61)(350,4.66)(400,4.65)(450,4.88)(500,4.88)(550,4.68)(600,4.98)(650,5.23)(700,5.30)(750,5.02)(800,5.06)(850,5.17)(900,5.84)(950,4.97)(1000,5.33)
+            };
+        \end{axis}
+        \end{tikzpicture}
+    \end{center}
+    \caption{Performance metrics of the NEAT algorithm on the \textit{XOR} benchmark, over different maximum generations.
+    The evolution stopped when the fitness was $2\%$ away from the maximal fitness of $1.0$ or the maximum number of generations was reached.
+    The other parameters were set to the same values as in \cite{neat}.}
+    \label{fig:neat_xor_generations}
+\end{figure}
+
+Finally, the most important characteristic of the algorithm is its ability to evolve topologies, by adding connections or nodes through mutations. This final experiment consisted in testing different
+values for the probability of adding a new node (and its connections) to the genome. The results are presented in \Cref{fig:neat_xor_probabilities}. The population size was set to $300$ individuals,
+the similarity threshold to $8.0$ and the maximum number of generations to $300$.
+
 ...
 
+\begin{figure}
+    \begin{center}
+        \begin{tikzpicture}
+        \begin{axis}[
+            width=15cm,
+            height=6cm,
+            title={Fitness over new node mutation probability},
+            xlabel={New node mutation probability},
+            ylabel={Average fitness},
+            enlargelimits=false,
+            xmin=0,
+            ymin=0, ymax=1,
+            ytick={0,0.2,...,1},
+            xticklabel shift={.1cm},
+            yticklabel shift={.1cm} ]
+        ]
+
+        \addplot[
+            color=blue,
+            mark=square,
+            ]
+            coordinates {
+            };
+        \end{axis}
+        \end{tikzpicture}
+        \begin{tikzpicture}
+        \begin{axis}[
+            width=15cm,
+            height=6cm,
+            legend pos=south east,
+            title={Iterations over new node mutation probability},
+            xlabel={New node mutation probability},
+            ylabel={Average iterations},
+            xmin=0,
+            ymin=0,
+            enlargelimits=false,
+            xticklabel shift={.1cm},
+            yticklabel shift={.1cm} ]
+        ]
+
+        \addplot[
+            color=blue,
+            mark=square,
+            ]
+            coordinates {
+            };
+        \end{axis}
+        \end{tikzpicture}
+        \begin{tikzpicture}
+        \begin{axis}[
+            width=15cm,
+            height=6cm,
+            legend pos=south east,
+            title={CPU time over new node mutation probability},
+            xlabel={New node mutation probability},
+            ylabel={Average CPU time (s)},
+            xmin=0,
+            ymin=0,
+            enlargelimits=false,
+            xticklabel shift={.1cm},
+            yticklabel shift={.1cm} ]
+        ]
+
+        \addplot[
+            color=blue,
+            mark=square,
+            ]
+            coordinates {
+            };
+        \end{axis}
+        \end{tikzpicture}
+    \end{center}
+    \caption{Performance metrics of the NEAT algorithm on the \textit{XOR} benchmark, over different new node mutation probabilities.
+    The evolution stopped when the fitness was $2\%$ away from the maximal fitness of $1.0$ or the maximum number of generations was reached.
+    The other parameters were set to the same values as in \cite{neat}.}
+    \label{fig:neat_xor_probabilities}
+\end{figure}
+
 \subsubsection{Double pole balancing problem}
+
+The NEAT algorithm was also tested on the double pole balancing control problem.
+The configuration described in \cite{neat} was found to be particularly efficient on this task, the results using it are presented in \Cref{tab:nneat_pole}.
+The algorithm was always able to solve the problem, and in $11$ iterations on average. ... % CPU time
+
+\begin{table}
+    \caption{Results of the NEAT algorithm on the \textit{Pole balancing} problem. The algorithm was tested with the same configuration as in \cite{neat}, with a maximum of $100$ generations.}
+    \centering
+    \label{tab:nneat_pole}
+    \begin{tabular}{ |c|c|c| }
+        \hline
+        Average fitness & Average iterations & Average CPU time (s) \\
+        \hline
+        1.00 & 11 &?? \\
+        \hline\hline
+    \end{tabular}
+\end{table}
+
+\subsubsection{Unit sphere classification problems}
+
+...
+
+\subsubsection{Proben1 classification problems}
 
 ...
 
@@ -1593,5 +1975,13 @@ a further increase in the number of iterations impractical.
 ...
 
 \subsubsection{Double pole balancing problem}
+
+...
+
+\section{Discussion}
+
+...
+
+\subsection{Guidelines}
 
 ...
