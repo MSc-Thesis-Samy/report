@@ -2449,12 +2449,21 @@ Then, based on this comparison, and the insights from the various experiments co
 based on the problem at hand, and for the selection of the parameters for the algorithms.
 
 The comparison is based on the fitness and CPU time metrics, as the number of iterations/generations is not directly comparable between the different algorithms.
-Furthermore, for each of the algorithm, the most efficient configuration(s) were used to represent it in the comparison, where the efficiency is defined as a trade-off between the fitness
-and the CPU time.
+Furthermore, for each of the algorithm, the most efficient configuration were used to represent it in the comparison, where the efficiency is defined as a trade-off between the fitness
+and the CPU time, with preference given to the fitness.
 
 \subsection{Unit-sphere classification problems}
 
-...
+The performance of the algorithms on the unit-sphere classification problems is presented in \Cref{tab:comparison_sphere}.
+All of the algorithms were able to solve the \textit{Half} and \textit{Quarter} problems.  However, the CPU time varied significantly between the algorithms, the $1 + 1$ NA and BNA algorithms
+both required around $0.4$ seconds, while the NEAT algorithm required $127$ seconds.
+
+For the \textit{TwoQuarters} problem, the $(1 + !)$ NA algorithm got the best fitness, followed by the BNA algorithm, while the NEAT and CMA-ES algorithms got values around $0.75$,
+corresponding to the fitness value of a local-optima solution. However, the CMA-ES algorithm stopped after $6$ seconds compared to the $935$ seconds for the NEAT algorithm.
+The same patterns were observed for the \textit{LocalOpt} problem.
+
+Therefore, for these problems, the $(1 + 1)$ NA and BNA algorithm are the most efficient, with the NEAT algorithm being particularly slow and the CMA-ES algorithm unable to find the
+optimal solutions to the problems.
 
 \begin{table}[]
 \caption{Comparison of the performance of the algorithms on the unit-sphere classification problems.}
@@ -2474,7 +2483,12 @@ and the CPU time.
 
 \subsection{XOR problem}
 
-...
+The performance of the algorithms on the \textit{XOR} problem is presented in \Cref{tab:comparison_xor}.
+The NEAT algorithm achieved the best fitness, with $0.96$, followed by the CMA-ES algorithm with $00.93$. However, for this problem NEAT was also significantly slower than the other algorithms,
+with a CPU time of $67$s, compared to $0.09$s for the CMA-ES algorithm and $0.01$ for the $(1 + 1)$ NA and BNA algorithms.
+In addition, it can be noted how the fitness results are inverted compared to the unit-sphere classification problems, with the BNA and $(1 + 1)$ NA finding optimal solutions less often
+than the NEAT and CMA-ES algorithms.
+Thus, for this problem, the CMA-ES algorithm is the best choice, being comparable in speed to the $(1 + 1)$ NA and BNA algorithms, and in fitness to the NEAT algorithm.
 
 \begin{table}
     \caption{Comparison of the performance of the algorithms on the \textit{XOR} benchmark.}
@@ -2497,7 +2511,10 @@ and the CPU time.
 
 \subsection{Proben1 classification problems}
 
-...
+The performance of the algorithms on the \textit{Proben1 Cancer1} problem is presented in \Cref{tab:comparison_proben1}.
+The four algorithms reached high fitness values on the task. The CMA-ES algorithm needed the least CPU time, with $21$ seconds, followed by the NEAT algorithm with $37$ seconds.
+For this problem, the $(1 + 1)$ NA and BNA algorithms were the slowest, with the BNA algorithm being almost three times slower than the $(1 + 1)$ NA algorithm.
+Thus, the CMA-ES algorithm is the best choices for this problem, being the fastest, and reaching the same fitness as the NEAT algorithm.
 
 \begin{table}
     \caption{Comparison of the performance of the algorithms on the \textit{Proben1 Cancer1} benchmark.}
@@ -2520,7 +2537,9 @@ and the CPU time.
 
 \subsection{Double pole balancing problem}
 
-...
+The performance of the NEAT and CMA-ES algorithms on the double pole balancing problem is presented in \Cref{tab:comparison_pole}.
+For this task, the NEAT algorithm is clearly the best choice, with a fitness of $1.0$, compared to $0.89$ for the CMA-ES algorithm, and a significantly lower CPU time, of $6.4$
+seconds compared to $300$ seconds for the CMA-ES algorithm.
 
 \begin{table}
     \caption{Comparison of the performance of the algorithms on the \textit{Double Pole Balancing} benchmark.}
