@@ -104,6 +104,7 @@ A python script was written to merge the results of the different runs in a sing
 in the \textt{pgfplots} plots of this report.
 
 \section{Results of the experiments}
+\label{sec:results}
 
 This section presents the results of the different experiments which were conducted to highlight properties of the algorithms, observe the impact of different parameters on the performance,
 and evaluate the algorithms on the selected benchmarks.
@@ -2443,7 +2444,98 @@ The number of iterations and CPU time increased with the number of hidden neuron
 
 \section{Discussion}
 
+This section presents a comparison of the performance of the algorithms on the different benchmarks.
+Then, based on this comparison, and the insights from the various experiments conducted and analyzed in \Cref{sec:results}, guidelines are proposed for the selection of the algorithm
+based on the problem at hand, and for the selection of the parameters for the algorithms.
+
+The comparison is based on the fitness and CPU time metrics, as the number of iterations/generations is not directly comparable between the different algorithms.
+Furthermore, for each of the algorithm, the most efficient configuration(s) were used to represent it in the comparison, where the efficiency is defined as a trade-off between the fitness
+and the CPU time.
+
+\subsection{Unit-sphere classification problems}
+
 ...
+
+\begin{table}[]
+\caption{Comparison of the performance of the algorithms on the unit-sphere classification problems.}
+\label{tab:comparison_sphere}
+\centering
+\begin{tabular}{|c|cccccccc|}
+\hline
+                   & \multicolumn{8}{c|}{\textbf{Problem}}                                                                                                                                                                                         \\ \hline
+\textbf{}          & \multicolumn{2}{c|}{\textit{\textbf{Half}}}             & \multicolumn{2}{c|}{\textit{\textbf{Quarter}}}          & \multicolumn{2}{c|}{\textit{\textbf{TwoQuarters}}}      & \multicolumn{2}{c|}{\textit{\textbf{LocalOpt}}} \\ \hline
+\textbf{Algorithm} & \multicolumn{1}{c|}{Fitness} & \multicolumn{1}{c|}{CPU} & \multicolumn{1}{c|}{Fitness} & \multicolumn{1}{c|}{CPU} & \multicolumn{1}{c|}{Fitness} & \multicolumn{1}{c|}{CPU} & \multicolumn{1}{c|}{Fitness}       & CPU        \\ \hline
+\textbf{(1 +1) NA} & \multicolumn{1}{c|}{1.0}     & \multicolumn{1}{c|}{0.4} & \multicolumn{1}{c|}{1.0}     & \multicolumn{1}{c|}{0.4} & \multicolumn{1}{c|}{0.94}    & \multicolumn{1}{c|}{14}  & \multicolumn{1}{c|}{0.85}          & 15         \\ \hline
+\textbf{BNA}       & \multicolumn{1}{c|}{1.0}     & \multicolumn{1}{c|}{0.4} & \multicolumn{1}{c|}{1.0}     & \multicolumn{1}{c|}{0.4} & \multicolumn{1}{c|}{0.85}    & \multicolumn{1}{c|}{14}  & \multicolumn{1}{c|}{0.80}          & 28         \\ \hline
+\textbf{NEAT}      & \multicolumn{1}{c|}{1.0}     & \multicolumn{1}{c|}{127} & \multicolumn{1}{c|}{1.0}     & \multicolumn{1}{c|}{39}  & \multicolumn{1}{c|}{0.74}    & \multicolumn{1}{c|}{935} & \multicolumn{1}{c|}{0.65}          & 1134       \\ \hline
+\textbf{CMA-ES}    & \multicolumn{1}{c|}{1.0}     & \multicolumn{1}{c|}{6}   & \multicolumn{1}{c|}{1.0}     & \multicolumn{1}{c|}{6}   & \multicolumn{1}{c|}{0.77}    & \multicolumn{1}{c|}{6}   & \multicolumn{1}{c|}{0.75}          & 68         \\ \hline
+\end{tabular}
+\end{table}
+
+\subsection{XOR problem}
+
+...
+
+\begin{table}
+    \caption{Comparison of the performance of the algorithms on the \textit{XOR} benchmark.}
+    \label{tab:comparison_xor}
+    \centering
+    \begin{tabular}{ |c|c|c| }
+        \hline
+        Algoeithm & Fitness & CPU time (s) \\
+        \hline
+        (1 + 1) NA & 0.83 & 0.01 \\
+        \hline
+        BNA & 0.79 & 0.01 \\
+        \hline
+        NEAT & 0.96 & 67 \\
+        \hline
+        CMA-ES & 0.93 & 0.09 \\
+        \hline\hline
+    \end{tabular}
+\end{table}
+
+\subsection{Proben1 classification problems}
+
+...
+
+\begin{table}
+    \caption{Comparison of the performance of the algorithms on the \textit{Proben1 Cancer1} benchmark.}
+    \label{tab:comparison_proben1}
+    \centering
+    \begin{tabular}{ |c|c|c| }
+        \hline
+        Algoeithm & Fitness & CPU time (s) \\
+        \hline
+        (1 + 1) NA & 0.96 & 72 \\
+        \hline
+        BNA & 0.96 & 199 \\
+        \hline
+        NEAT & 0.98 & 37 \\
+        \hline
+        CMA-ES & 0.98 & 21 \\
+        \hline\hline
+    \end{tabular}
+\end{table}
+
+\subsection{Double pole balancing problem}
+
+...
+
+\begin{table}
+    \caption{Comparison of the performance of the algorithms on the \textit{Double Pole Balancing} benchmark.}
+    \label{tab:comparison_pole}
+    \centering
+    \begin{tabular}{ |c|c|c| }
+        \hline
+        Algoeithm & Fitness & CPU time (s) \\
+        \hline
+        NEAT & 1.0 & 6.4 \\
+        \hline
+        CMA-ES & 0.89 & 300 \\
+        \hline\hline
+    \end{tabular}
+\end{table}
 
 \subsection{Guidelines}
 
