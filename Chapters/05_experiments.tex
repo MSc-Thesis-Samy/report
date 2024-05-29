@@ -1857,9 +1857,12 @@ The algorithm was able to solve the problem in less than $150$ generations on av
 
 Finally, the most important characteristic of the algorithm is its ability to evolve topologies, by adding connections or nodes through mutations. This final experiment consisted in testing different
 values for the probability of adding a new node (and its connections) to the genome. The results are presented in \Cref{fig:neat_xor_probabilities}. The population size was set to $300$ individuals,
-the similarity threshold to $8.0$ and the maximum number of generations to $300$.
+the similarity threshold to $8.0$ and the maximum number of generations to $300$. As it was the case for the other parameters, there is a range of values for the new node mutation probability that
+result in the best performance, in this case around the value of $0.05$, which is consistent with the choice made in \cite{neat} of $0.03$. Furthermore, for a value of $0.0$, no hidden nodes are added
+to the network, and because of the starting topology only consists in a input and output layer, the algorithm cannot solve the problem, which requires hidden neurons. For higher values,
+too many nodes are added, which results in an increase in the CPU time, and a decrease in the fitness, because of the increased complexity of the networks.
 
-...
+% TODO minimal network figure
 
 \begin{figure}
     \begin{center}
@@ -1883,6 +1886,7 @@ the similarity threshold to $8.0$ and the maximum number of generations to $300$
             mark=square,
             ]
             coordinates {
+                (0.00,0.75)(0.05,0.97)(0.10,0.94)(0.15,0.91)(0.20,0.89)(0.25,0.89)(0.30,0.87)(0.35,0.87)(0.40,0.86)(0.45,0.86)(0.50,0.85)(0.55,0.84)(0.60,0.84)(0.65,0.84)(0.70,0.84)(0.75,0.83)(0.80,0.82)(0.85,0.82)(0.90,0.82)(0.95,0.82)(1.00,0.81)
             };
         \end{axis}
         \end{tikzpicture}
@@ -1906,6 +1910,7 @@ the similarity threshold to $8.0$ and the maximum number of generations to $300$
             mark=square,
             ]
             coordinates {
+                (0.00,400.00)(0.05,146.24)(0.10,195.41)(0.15,221.95)(0.20,244.54)(0.25,250.58)(0.30,256.85)(0.35,263.36)(0.40,276.41)(0.45,270.41)(0.50,286.16)(0.55,289.77)(0.60,294.68)(0.65,299.33)(0.70,293.96)(0.75,312.23)(0.80,319.36)(0.85,318.08)(0.90,325.66)(0.95,332.90)(1.00,331.76)
             };
         \end{axis}
         \end{tikzpicture}
@@ -1929,6 +1934,7 @@ the similarity threshold to $8.0$ and the maximum number of generations to $300$
             mark=square,
             ]
             coordinates {
+                (0.00,6.64)(0.05,5.08)(0.10,11.66)(0.15,17.33)(0.20,22.40)(0.25,25.50)(0.30,28.25)(0.35,34.04)(0.40,39.72)(0.45,40.85)(0.50,48.71)(0.55,55.27)(0.60,61.06)(0.65,63.31)(0.70,66.60)(0.75,72.95)(0.80,77.61)(0.85,81.70)(0.90,99.15)(0.95,91.66)(1.00,128.62)
             };
         \end{axis}
         \end{tikzpicture}
@@ -1943,7 +1949,9 @@ the similarity threshold to $8.0$ and the maximum number of generations to $300$
 
 The NEAT algorithm was also tested on the double pole balancing control problem.
 The configuration described in \cite{neat} was found to be particularly efficient on this task, the results using it are presented in \Cref{tab:nneat_pole}.
-The algorithm was always able to solve the problem, and in $11$ iterations on average. ... % CPU time
+The algorithm was always able to solve the problem, and in $11$ iterations on average. The CPU time was $6.19$ seconds on average, which is high when compared to the previous benchmarks,
+when considering the same number of iterations. This is because of the fitness evaluation being more computationally expensive for this problem, as it requires simulating the pole balancing
+system.
 
 \begin{table}
     \caption{Results of the NEAT algorithm on the \textit{Pole balancing} problem. The algorithm was tested with the same configuration as in \cite{neat}, with a maximum of $100$ generations.}
@@ -1953,30 +1961,485 @@ The algorithm was always able to solve the problem, and in $11$ iterations on av
         \hline
         Average fitness & Average iterations & Average CPU time (s) \\
         \hline
-        1.00 & 11 &?? \\
+        1.00 & 11 & 6.19 \\
         \hline\hline
     \end{tabular}
 \end{table}
 
 \subsubsection{Unit sphere classification problems}
 
-...
+The algorithm was tested on the \textit{Half}, \textit{Quarter} and \textit{TwoQuarters} and \textit{LocalOpt} unit sphere classification problems. The performance metrics are presented in \Cref{tab:nneat_sphere}.
+
+% TODO Config in Appendix
+
+\begin{table}
+    \caption{Results of the NEAT algorithm on the unit-sphere classification problems.}
+    \centering
+    \label{tab:nneat_sphere}
+    \begin{tabular}{ |c|c|c|c| }
+        \hline
+        Problem & Average fitness & Average iterations & Average CPU time (s) \\
+        \hline
+        Half & 0.98 & 24 & 127 \\
+        \hline
+        Quarter & 0.98 & 9 & 39 \\
+        \hline
+        TwoQuarters & 0.74 & 100 & 935 \\
+        \hline
+        LocalOpt & 0.65 & 100 & 1134 \\
+        \hline\hline
+    \end{tabular}
+\end{table}
 
 \subsubsection{Proben1 classification problems}
 
-...
+Finally, the NEAT algorithm was tested on the \textit{Proben1 Cancer1} problem. The results are presented in \Cref{tab:neat_proben1}.
+The algorithm was able to solve the problem in all of the runs, in the particularly low number of 7 Iterations on average. However, the CPU time was high. As a matter of fact, it was
+higher than for the pole balancing problem, with an average of $35.8$ seconds, despite the lower number of iterations.
+
+% TODO Config in Appendix
+
+\begin{table}
+    \caption{Results of the NEAT algorithm on the \textit{Proben1 Cancer1} problem.}
+    \centering
+    \label{tab:neat_proben1}
+    \begin{tabular}{ |c|c|c| }
+        \hline
+        Average test set fitness & Average iterations & Average CPU time (s) \\
+        \hline
+        0.98 & 7 & 35.8 \\
+        \hline\hline
+    \end{tabular}
+\end{table}
 
 \subsection{Results of the CMA-ES algorithm}
 
-...
+The CMA-ES algorithm can be used to evolve the connection weights of networks, which can be used to solve all the selected benchmark problems. Experiments are thus conducted on the unit-sphere
+classification problems, the \textit{XOR} problem, the \textit{Proben1 Cancer1} problem and the double pole balancing problem. Many parameters can be tuned for this algorithm.
+However, the focus was put on the fixed network topologies, while using the default parameters for the algorithm provided by the \texttt{cmaes}
+crate \footnote{\url{https://docs.rs/cmaes/latest/cmaes/options/struct.CMAESOptions.html}}. For all of the following experiments, the sigmoid activation function was used for hidden
+and output neurons.
 
 \subsubsection{XOR problem}
 
-...
+The CMA-ES algorithm was first tested on the evolution of connection weights for the \textit{XOR} problem.
+Fully connected networks with $0$ to $5$ hidden neurons were tested. The results are presented in \Cref{fig:cmaes_xor}.
+For $0$ to $2$ hidden neurons, the algorithm was only able to find the $0.75$ fitness local optima. The number of iterations and the CPU time increased with the number of hidden neurons,
+but both remained particularly low. For the $4$ and $5$ hidden neurons case, the algorithm was able to find an optimal solution in the majority of the runs.
+
+\begin{figure}
+    \begin{center}
+        \begin{tikzpicture}
+        \begin{axis}[
+            width=15cm,
+            height=6cm,
+            title={Fitness over the number of hidden neurons},
+            xlabel={Number of hidden neurons},
+            ylabel={Average fitness},
+            enlargelimits=false,
+            xmin=0,
+            ymin=0, ymax=1,
+            ytick={0,0.2,...,1},
+            xticklabel shift={.1cm},
+            yticklabel shift={.1cm} ]
+        ]
+
+        \addplot[
+            color=blue,
+            mark=square,
+            ]
+            coordinates {
+                (0,0.75)(1,0.77)(2,0.77)(3,0.88)(4,0.92)(5,0.93)
+            };
+        \end{axis}
+        \end{tikzpicture}
+        \begin{tikzpicture}
+        \begin{axis}[
+            width=15cm,
+            height=6cm,
+            legend pos=south east,
+            title={Iterations over the number of hidden neurons},
+            xlabel={Number of hidden neurons},
+            ylabel={Average iterations},
+            xmin=0,
+            ymin=0,
+            enlargelimits=false,
+            xticklabel shift={.1cm},
+            yticklabel shift={.1cm} ]
+        ]
+
+        \addplot[
+            color=blue,
+            mark=square,
+            ]
+            coordinates {
+                (0,40.67)(1,56.48)(2,63.48)(3,82.22)(4,93.18)(5,109.86)
+            };
+        \end{axis}
+        \end{tikzpicture}
+        \begin{tikzpicture}
+        \begin{axis}[
+            width=15cm,
+            height=6cm,
+            legend pos=south east,
+            title={CPU time over the number of hidden neurons},
+            xlabel={Number of hidden neurons},
+            ylabel={Average CPU time (s)},
+            xmin=0,
+            ymin=0,
+            enlargelimits=false,
+            xticklabel shift={.1cm},
+            yticklabel shift={.1cm} ]
+        ]
+
+        \addplot[
+            color=blue,
+            mark=square,
+            ]
+            coordinates {
+                (0,0.01)(1,0.02)(2,0.02)(3,0.04)(4,0.07)(5,0.09)
+            };
+        \end{axis}
+        \end{tikzpicture}
+    \end{center}
+    \caption{Performance metrics of the CMA-ES algorithm on the \textit{XOR} benchmark, over different number of hidden neurons.}
+    \label{fig:cmaes_xor}
+\end{figure}
 
 \subsubsection{Double pole balancing problem}
 
-...
+Fully connected networks with $0$ to $6$ hidden neurons were considered for the double pole balancing problem. The results are presented in \Cref{fig:cmaes_pole}.
+The main observation which can be made is that when initially switching from a two-layers to a three-layers network, the fitness drops significantly from $0.67$ to $0.1$ but
+increases as more hidden neurons are added and eventually reaches $0.89$ for $6$ hidden neurons. Furthermore, in addition to the lower fitness values compared to the simpler \textit{XOR} problem,
+the number of iterations and CPU time were significantly higher, with the CPU time reaching $300$ seconds for $6$ hidden neurons.
+
+\begin{figure}
+    \begin{center}
+        \begin{tikzpicture}
+        \begin{axis}[
+            width=15cm,
+            height=6cm,
+            title={Fitness over the number of hidden neurons},
+            xlabel={Number of hidden neurons},
+            ylabel={Average fitness},
+            enlargelimits=false,
+            xmin=0,
+            ymin=0, ymax=1,
+            ytick={0,0.2,...,1},
+            xticklabel shift={.1cm},
+            yticklabel shift={.1cm} ]
+        ]
+
+        \addplot[
+            color=blue,
+            mark=square,
+            ]
+            coordinates {
+                (0,0.67)(1,0.16)(2,0.37)(3,0.59)(4,0.76)(5,0.85)(6,0.89)
+            };
+        \end{axis}
+        \end{tikzpicture}
+        \begin{tikzpicture}
+        \begin{axis}[
+            width=15cm,
+            height=6cm,
+            legend pos=south east,
+            title={Iterations over the number of hidden neurons},
+            xlabel={Number of hidden neurons},
+            ylabel={Average iterations},
+            xmin=0,
+            ymin=0,
+            enlargelimits=false,
+            xticklabel shift={.1cm},
+            yticklabel shift={.1cm} ]
+        ]
+
+        \addplot[
+            color=blue,
+            mark=square,
+            ]
+            coordinates {
+                (0,219.50)(1,191.51)(2,607.18)(3,1077.43)(4,1681.43)(5,2130.26)(6,3031.31)
+            };
+        \end{axis}
+        \end{tikzpicture}
+        \begin{tikzpicture}
+        \begin{axis}[
+            width=15cm,
+            height=6cm,
+            legend pos=south east,
+            title={CPU time over the number of hidden neurons},
+            xlabel={Number of hidden neurons},
+            ylabel={Average CPU time (s)},
+            xmin=0,
+            ymin=0,
+            enlargelimits=false,
+            xticklabel shift={.1cm},
+            yticklabel shift={.1cm} ]
+        ]
+
+        \addplot[
+            color=blue,
+            mark=square,
+            ]
+            coordinates {
+                (0,8.15)(1,3.77)(2,29.49)(3,75.35)(4,138.29)(5,198.70)(6,299.32)
+            };
+        \end{axis}
+        \end{tikzpicture}
+    \end{center}
+    \caption{Performance metrics of the CMA-ES algorithm on the \textit{Double Pole Balancing} benchmark, over different number of hidden neurons.}
+    \label{fig:cmaes_pole}
+\end{figure}
+
+\subsubsection{Unit sphere classification problems}
+
+The algorithm was tested with networks ranging from $0$ to $6$ hidden neurons on the \textit{Half}, \textit{Quarter}, \textit{TwoQuarters} and \textit{LocalOpt} unit sphere classification problems.
+The results are presented in \Cref{fig:cmaes_sphere}. Firstly, it can be noted how similar the tendencies for these metrics are for the four problems, and how they reflect the problem
+complexities. For the \textit{Half} and \textit{Quarter} problems, the algorithm was able to always find the optimal solution, except for the $1$ hidden neuron case, in less than
+$400$ iterations and $45$ seconds, on average. However, for the \textit{TwoQuarters} and \textit{LocalOpt} problems, the algorithm was never able to find an optimal solution, for the
+\textitP{LocalOpt} problem the fitness was even lower than $0.75$ for all but the $6$ hidden neurons case. As a consequence, the number of iterations and CPU time were higher than
+for the two other problems.
+
+\begin{figure}
+    \begin{center}
+        \begin{tikzpicture}
+        \begin{axis}[
+            width=15cm,
+            height=6cm,
+            legend pos=south east,
+            title={Fitness over the number of hidden neurons},
+            xlabel={Number of hidden neurons},
+            ylabel={Average fitness},
+            enlargelimits=false,
+            xmin=0,
+            ymin=0, ymax=1,
+            ytick={0,0.2,...,1},
+            xticklabel shift={.1cm},
+            yticklabel shift={.1cm} ]
+        ]
+
+        \addplot[
+            color=blue,
+            mark=square,
+            ]
+            coordinates {
+                (0,0.99)(1,0.75)(2,0.97)(3,1.00)(4,1.00)(5,1.00)(6,1.00)
+            };
+            \addlegendentry{Half}
+        \addplot[
+            color=red,
+            mark=square,
+            ]
+            coordinates {
+                (0,0.99)(1,0.80)(2,0.98)(3,0.99)(4,1.00)(5,1.00)(6,1.00)
+            };
+            \addlegendentry{Quarter}
+        \addplot[
+            color=green,
+            mark=square,
+            ]
+            coordinates {
+                (0,0.75)(1,0.62)(2,0.73)(3,0.75)(4,0.76)(5,0.77)(6,0.77)
+            };
+            \addlegendentry{TwoQuarters}
+        \addplot[
+            color=orange,
+            mark=square,
+            ]
+            coordinates {
+                (0,0.64)(1,0.60)(2,0.63)(3,0.67)(4,0.70)(5,0.74)(6,0.75)
+            };
+            \addlegendentry{LocalOpt}
+        \end{axis}
+        \end{tikzpicture}
+        \begin{tikzpicture}
+        \begin{axis}[
+            width=15cm,
+            height=6cm,
+            legend pos=south east,
+            title={Iterations over the number of hidden neurons},
+            xlabel={Number of hidden neurons},
+            ylabel={Average iterations},
+            xmin=0,
+            ymin=0,
+            enlargelimits=false,
+            xticklabel shift={.1cm},
+            yticklabel shift={.1cm} ]
+        ]
+
+        \addplot[
+            color=blue,
+            mark=square,
+            ]
+            coordinates {
+                (0,89.11)(1,96.17)(2,155.21)(3,239.27)(4,328.45)(5,462.97)(6,568.01)
+            };
+            \addlegendentry{Half}
+        \addplot[
+            color=red,
+            mark=square,
+            ]
+            coordinates {
+                (0,81.96)(1,89.09)(2,140.14)(3,214.40)(4,290.83)(5,404.78)(6,495.47)
+            };
+            \addlegendentry{Quarter}
+        \addplot[
+            color=green,
+            mark=square,
+            ]
+            coordinates {
+                (0,82.60)(1,88.10)(2,139.73)(3,215.31)(4,297.54)(5,423.82)(6,528.90)
+            };
+            \addlegendentry{TwoQuarters}
+        \addplot[
+            color=orange,
+            mark=square,
+            ]
+            coordinates {
+                (0,89.02)(1,71.80)(2,142.56)(3,249.84)(4,387.99)(5,587.37)(6,719.70)
+            };
+            \addlegendentry{LocalOpt}
+        \end{axis}
+        \end{tikzpicture}
+        \begin{tikzpicture}
+        \begin{axis}[
+            width=15cm,
+            height=6cm,
+            legend pos=south east,
+            title={CPU time over the number of hidden neurons},
+            xlabel={Number of hidden neurons},
+            ylabel={Average CPU time (s)},
+            xmin=0,
+            ymin=0,
+            enlargelimits=false,
+            xticklabel shift={.1cm},
+            yticklabel shift={.1cm} ]
+        ]
+
+        \addplot[
+            color=blue,
+            mark=square,
+            ]
+            coordinates {
+                (0,2.40)(1,3.18)(2,6.83)(3,12.22)(4,24.36)(5,36.22)(6,50.96)
+            };
+            \addlegendentry{Half}
+        \addplot[
+            color=red,
+            mark=square,
+            ]
+            coordinates {
+                (0,2.25)(1,2.79)(2,6.13)(3,9.47)(4,22.36)(5,32.22)(6,43.57)
+            };
+            \addlegendentry{Quarter}
+        \addplot[
+            color=green,
+            mark=square,
+            ]
+            coordinates {
+                (0,2.25)(1,2.91)(2,5.52)(3,9.99)(4,22.66)(5,32.81)(6,47.98)
+            };
+            \addlegendentry{TwoQuarters}
+        \addplot[
+            color=orange,
+            mark=square,
+            ]
+            coordinates {
+                (0,2.46)(1,2.32)(2,6.15)(3,12.54)(4,28.56)(5,46.02)(6,68.19)
+            };
+            \addlegendentry{LocalOpt}
+        \end{axis}
+        \end{tikzpicture}
+    \end{center}
+    \caption{Performance metrics of the CMA-ES algorithm on the unit-sphere classification benchmarks, over different number of hidden neurons.}
+    \label{fig:cmaes_sphere}
+\end{figure}
+
+\subsubsection{Proben1 classification problems}
+
+Finally, the CMA-ES algorithm was tested on the \textit{Proben1 Cancer1} problem, with fully connected networks with $0$ to $3$ hidden neurons. The results are presented in \Cref{fig:cmaes_proben1}.
+Here, it was able to average a fitness of $0.98$, on the test set, for the $0, 2$ and $3$ hidden neurons cases, and $0.78$ for the $1$ hidden neuron case.
+The number of iterations and CPU time increased with the number of hidden neurons, with the CPU time reaching $20.79$ seconds for $3$ hidden neurons, with $319$ iterations.
+
+\begin{figure}
+    \begin{center}
+        \begin{tikzpicture}
+        \begin{axis}[
+            width=15cm,
+            height=6cm,
+            title={Fitness over the number of hidden neurons},
+            xlabel={Number of hidden neurons},
+            ylabel={Average fitness},
+            enlargelimits=false,
+            xmin=0,
+            ymin=0, ymax=1,
+            ytick={0,0.2,...,1},
+            xticklabel shift={.1cm},
+            yticklabel shift={.1cm} ]
+        ]
+
+        \addplot[
+            color=blue,
+            mark=square,
+            ]
+            coordinates {
+                (0,0.98)(1,0.78)(2,0.96)(3,0.98)
+            };
+        \end{axis}
+        \end{tikzpicture}
+        \begin{tikzpicture}
+        \begin{axis}[
+            width=15cm,
+            height=6cm,
+            legend pos=south east,
+            title={Iterations over the number of hidden neurons},
+            xlabel={Number of hidden neurons},
+            ylabel={Average iterations},
+            xmin=0,
+            ymin=0,
+            enlargelimits=false,
+            xticklabel shift={.1cm},
+            yticklabel shift={.1cm} ]
+        ]
+
+        \addplot[
+            color=blue,
+            mark=square,
+            ]
+            coordinates {
+                (0,148.35)(1,154.35)(2,223.47)(3,319.86)
+            };
+        \end{axis}
+        \end{tikzpicture}
+        \begin{tikzpicture}
+        \begin{axis}[
+            width=15cm,
+            height=6cm,
+            legend pos=south east,
+            title={CPU time over the number of hidden neurons},
+            xlabel={Number of hidden neurons},
+            ylabel={Average CPU time (s)},
+            xmin=0,
+            ymin=0,
+            enlargelimits=false,
+            xticklabel shift={.1cm},
+            yticklabel shift={.1cm} ]
+        ]
+
+        \addplot[
+            color=blue,
+            mark=square,
+            ]
+            coordinates {
+                (0,5.99)(1,7.64)(2,12.99)(3,20.79)
+            };
+        \end{axis}
+        \end{tikzpicture}
+    \end{center}
+    \caption{Performance metrics of the CMA-ES algorithm on the \textit{Proben1} benchmark, over different number of hidden neurons.}
+    \label{fig:cmaes_proben1}
+\end{figure}
 
 \section{Discussion}
 
