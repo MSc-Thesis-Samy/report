@@ -213,8 +213,6 @@ impact of the number of neurons on the computational cost of the algorithm.
     \label{fig:na_localopt_visual}
 \end{figure}
 
-% TODO discuss how initialization is more important, greedy nature, lack of exploration, cpu time vs number of neurons, more iterations are for fine-tuning, not linearly separable but one neuron is best etc.
-
 \begin{figure}
     \begin{center}
         \begin{tikzpicture}
@@ -2581,12 +2579,34 @@ Furthermore, in addition to the versatility of the algorithms and their performa
 impacted by its number of tunable parameters and its implementation complexity, are important factors to consider. The $(1 + 1)$ NA and BNA algorithms are particularly simple, with a couple
 of parameters to tune. The widely used CMA-ES algorithm is also relatively simple to use thanks to the various libraries available and its default parameters allowing for a direct
 application to problems. On the other hand, NEAT is more complex, with a large number of parameters to tune, which have a major impact on the performance of the algorithm, and which
-vary drastically depending on the problem at hand.
+vary drastically depending on the problem at hand, or with more network topologies.
 
 Altogether, the CMA-ES algorithm appears as the most versatile and reliable algorithm, with good performance on all of the tested problems, coupled with its ease of use. The even simpler $(1 + 1)$ NA
 and BNA algorithms are also good choices for simple binary classification problems, while NEAT appears as a good option, being particularly versatile and performing well, in particular
-on the control problem, after a careful selection of the parameters.
+on the control problem, after a careful selection of the parameters. It also is the only algorithm evolving the network topology among the tested ones, which could be a significant advantage
+for some problems.
 
 \subsubsection{Parameter selection}
 
-...
+The parameters of the algorithms have a significant impact on their performance. The following guidelines are proposed for the selection of the parameters for each of the algorithms.
+
+\paragraph{$(1 + 1)$ NA and BNA algorithms:} First of all, for these two algorithms, it was observed that the resolution can simply be set to a high enough value and does not require a
+fine-grained tuning. The number of (V-)neurons however requires a more careful selection. Indeed, it was observed, on the \textit{TwoQuarters} and \textit{LocalOpt} problems for instance, that
+even in the case where enough neurons are evolved to be able to find a solution, the algorithms would end up stuck at local-optima solutions, which could be reached using fewer neurons, with a
+faster CPU time. Furthermore, it was also observed during manual experiments with the algorithms, that even though increasing the number of iterations or stagnation before stopping the algorithm,
+allowed for an increase in fitness as shown in \Cref{sec:results}, the initial parameter values seemed to play a major role in the quality of the solution. Indeeed, the final solution would in
+most cases be relatively close to the initial one, which can be explained by the greedy nature of these non-population based algorithms, not allowing for a proper exploration of the search space.
+Therefore, an interesting strategy for these two algorithms could be to set the number of neurons to a low value, take advantage of their simplicity and fast running times, and run the algorithms
+multiple times.
+
+\paragraph{NEAT algorithm:} This algorithm has a large number of parameters to tune. For instance, the weights and similarity threshold were fond
+to have the most significant impact on the perform For instance, the weights and threshold used for computing similarity were found to have the most significant impact on the performance of the
+algorithm. They should be set to allow for more than a single species to evolve, while preventing the explosion of the number of species. Similarly, the population size should also be
+carefully selected, lower values result in a faster running but more complex problems require a large population size. Howerver, apart from these parameters and the number of generations,
+the other parameters were left untouched from the values given in \cite{neat} and still allowed for good performance on the tested problems.
+
+\paragraph{CMA-ES algorithm:} This algorithm also has a large number of parameters to tune, but the default values implemented by the different libraries are already well suited for most
+problems. Hence, the focus can be put on the network topology as a starting point, before further fine-tuning the CMA-ES parameters if needed. Regarding the network topologies, fully
+connected three l(or two) layers networks were tested, using varying number of hidden neurons, which allowed for good performance on the tested problems. In particular, it was observed how
+the initial increase in the number of layers would result in a drop in performance before increasing again as more neurons are added, allowing for higher quality solutions at the expense
+of a higher CPU time. Therefore, the network topology should be carefully selected based on the complexity of the problem at hand and running time requirements.
