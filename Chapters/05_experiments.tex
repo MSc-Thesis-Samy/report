@@ -2558,4 +2558,35 @@ seconds compared to $300$ seconds for the CMA-ES algorithm.
 
 \subsection{Guidelines}
 
+This section presents guidelines for the selection of algorithms based on the problem class, as well as for the selection of the parameters for each of the algorithms.
+
+\subsubsection{Algorithm selection}
+
+The selected benchmark problems are divided into two problem classes: classification and control problems. Furthermore, the \textit{Proben1 Cancer1}, consisting in two distinct datasets,
+can be further distinguished from the unit-sphere and \textit{XOR} problems.
+
+First of all, the $(1 + !)$ NA and BNA algorithm are limited to binary classification problems, while NEAT and CMA-ES are more versatile, and can thus be used on more types of problems or
+network architectures. For the \textit{XOR} and unit-sphere classification problems, the CMA-ES, $(1 + 1)$ NA and BNA algorithms all appeared as viable options, with particularly similar running time.
+The $(1 + !)$ NA and BNA algorithms performed better on the unit-sphere problems, while CMA-ES performed better on the \textit{XOR} problem.
+However, further experiments should be conducted to explain this difference, such as testing CMA-ES on the unit-sphere classification problems using Cartesian coordinates instead of polar coordinates,
+or allowing for a longer stagnation before the algorithm stops.
+For example, this first experiment was conducted in \cite{na} but it did not result in an improvement of the performance of the algorithm.
+Moreover, the fastest CPU time achieved by CMA-ES on the more realistic \textit{Proben1 Cancer1} problem could also translate to other datasets, and make this algorithm the best option for
+these types of problems. NEAT also performed significantly better on this problem. But as highlighted in \Cref{sec:results}, all algorithms were surprisingly able to reach particularly high fitness
+values on this problem, with a low number of parameters and iterations. More complex datasets could be tested to further validate these results.
+Regarding the control problems, NEAT was the best performing algorithm on the double pole balancing problem, both in terms of solution quality and CPU time. Once again, it could be interesting to
+experiment with different parameters for the CMA-ES algorithm itself.
+
+Furthermore, in addition to the versatility of the algorithms and their performance, other criteria should be consiered when selecting an algorithm. Indeed the ease of use of the algorithm,
+impacted by its number of tunable parameters and its implementation complexity, are important factors to consider. The $(1 + 1)$ NA and BNA algorithms are particularly simple, with a couple
+of parameters to tune. The widely used CMA-ES algorithm is also relatively simple to use thanks to the various libraries available and its default parameters allowing for a direct
+application to problems. On the other hand, NEAT is more complex, with a large number of parameters to tune, which have a major impact on the performance of the algorithm, and which
+vary drastically depending on the problem at hand.
+
+Altogether, the CMA-ES algorithm appears as the most versatile and reliable algorithm, with good performance on all of the tested problems, coupled with its ease of use. The even simpler $(1 + 1)$ NA
+and BNA algorithms are also good choices for simple binary classification problems, while NEAT appears as a good option, being particularly versatile and performing well, in particular
+on the control problem, after a careful selection of the parameters.
+
+\subsubsection{Parameter selection}
+
 ...

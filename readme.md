@@ -34,3 +34,4 @@
 * [X] Diwscus python script in experiments workflow section
 * [ ] Example of networks evolved using NEAT in Results section
 * [ ] Figures for the CMA-S networks in the results section
+* [ ] Add configs in the appendix
