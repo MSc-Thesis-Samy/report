@@ -2,7 +2,7 @@
 
 ## TODO
 
-* [ ] Update abstract with results
+* [X] Update abstract with results
 * [ ] Citations in introduction
 * [ ] Citations in background
 * [ ] coordinates figure in (1 + 1) NA section
@@ -35,3 +35,4 @@
 * [ ] Example of networks evolved using NEAT in Results section
 * [ ] Figures for the CMA-S networks in the results section
 * [ ] Add configs in the appendix
+* [ ] Flow diagram for algorithm selection

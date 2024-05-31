@@ -8,8 +8,10 @@ evolutionary robotics and continuous domains of reinforcement learning.
 In this thesis, we are interested in the development of a framework that implements neuroevolution algorithms, and that is used to evaluate these algorithms on a
 selection of benchmark problems. Algorithms and benchmarks were collected from the state of the art in applied and theoretical research in
 the field of neuroevolution. The framework, implemented in Rust, is invoked through a command-line interface, and allows for a visualization of key problem
-characteristics and the evolution process, through a graphical user interface. The selected algorithms and benchmarks are presented in detail. Results collected
+characteristics and the evolution process through a graphical user interface. The selected algorithms and benchmarks are presented in detail. Results collected
 from the conducted experiments are analyzed, discussed and used to provide a series of guidelines for the choice of algorithms and parameters with respect
 to problem classes.
-
-% TODO Discuss results, guidelines...
+The results from the different experiments indicate that there is not a single algorithm that is best for all problems, being in terms of solution quality or
+running time, but rather highlight the trade-off between these two metrics and the importance of choosing the right algorithm for the right problem.
+However, out of the tested $(1 + 1)$ NA, BNA, CMA-ES and NEAT algorithm, CMA-ES performed well on all problems and can be considered the most versatile and robust algorithm.
+NEAT performs best on the control problem, while the simple $(1 + 1)$ NA and BNA can find high quality solutions on the classification problems with a fast running time.
