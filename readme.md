@@ -3,7 +3,7 @@
 ## TODO
 
 * [X] Update abstract with results
-* [ ] Citations in introduction
+* [X] Citations in introduction
 * [ ] Citations in background
 * [ ] coordinates figure in (1 + 1) NA section
 * [ ] ANN figure in (1 + 1) NA section
