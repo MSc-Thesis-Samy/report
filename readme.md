@@ -36,3 +36,9 @@
 * [ ] Figures for the CMA-S networks in the results section
 * [ ] Add configs in the appendix
 * [ ] Flow diagram for algorithm selection
+* [ ] Mention irace and co in future work section
+
+## Questions
+
+* Why is neuroevolution slow?
+* How to cite the unreleased paper?

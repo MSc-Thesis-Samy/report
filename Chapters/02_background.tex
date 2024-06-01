@@ -1,23 +1,30 @@
 \chapter{Background}
 \label{chap:background}
 
+This chapter provides provides background information on the topics relevant to this thesis, pointing out to resources for further reading.
+It introduces the concepts of artificial neural networks, different machine learning problem classes and learning paradigms, evolutionary algorithms, and neuroevolution.
+
 \section{Artificial Neural Networks}
 
 Artificial neural networks (ANNs) are a class of machine learning models, which are inspired by biological neural networks. ANNs are composed of interconnected
-neurons, which are organized in layers. The first layer of an ANN is referred to as the input layer, the last layer is the output layer, and the layers
-in between are hidden layers. In feed-forward ANNs, nodes in a layer are connected to nodes from the immediately preceding and succeeding layers. The connections between nodes
-are associated weights.  Signal travels from the input layer to the output layer and the output of a node is computed by applying a non-linear activation function
-to the weighted sum of the inputs. The weights of the connections are typically learned using gradient-based optimization algorithms, such as backpropagation.
-Given a neuron with inputs $x_1, x_2, \ldots, x_n$ and weights $w_1, w_2, \ldots, w_n$, the output $y$ of the neuron is computed as
+neurons, which are organized in layers. The first layer of an ANN is referred to as the input layer, the last layer as the output layer, and the layers
+in between as hidden layers. In feed-forward ANNs, nodes in a layer are connected to nodes from the immediately preceding and succeeding layers. The connections between nodes
+are associated weights, which are real-valued parameters.
+Signal travels from the input layer to the output layer and the output of any node in the network is computed by applying a non-linear activation function
+to the weighted sum of the inputs to the node as well as a bias term.
+The weights of connections are typically learned using gradient-based optimization algorithms, such as backpropagation \cite{backpropagation}.
+
+Given a neuron with inputs $x_1, x_2, \ldots, x_n$, bias $b$ and weights $w_1, w_2, \ldots, w_n$, the output $y$ of the neuron is computed as
 
 \[
-    y = f(\sum_{i=1}^{n} w_i x_i)
+    y = f(b + \sum_{i=1}^{n} w_i x_i)
 \]
 
 where $f$ is the neuron's activation function.
 
 An example of a feed-forward neural network is shown in \Cref{fig:ann}. This network consists of an input layer with four nodes, a hidden layer with five nodes,
-and an output layer with one node. The connections between nodes are represented by arrows, and the weights of the connections are not shown.
+and an output layer with one node. The connections between nodes are represented by arrows. Connection weights, biases and activation functions are
+not shown. The network is fully connected, meaning that each node in a layer is connected to each node in the next layer.
 
 \def\layersep{2.5cm}
 
@@ -65,13 +72,13 @@ and an output layer with one node. The connections between nodes are represented
     \end{center}
 \end{figure}
 
-Activation functions are used to introduce non-linearity in the model, which is important to enable the model to learn complex patterns in the data. Without
+Activation functions \cite{activation} are used to introduce non-linearity in the model, which is important to enable the model to learn complex patterns in the data. Without
 non-linear activation functions, the model would be limited to learning linear functions, which are not sufficient to model complex relationships in the data.
-Two commonly used activation functions are the \textbf{sigmoid} function and the \textbf{rectified linear unit} (ReLU) function. The sigmoid function is defined as
+Two commonly used activation functions are the sigmoid function and the rectified linear unit (ReLU) function. The sigmoid function is defined as
 $\sigma(x) = \frac{1}{1 + e^{-x}}$, it maps the input to the range $[0, 1]$, making it useful for binary classification tasks. The ReLU function is defined as
 $f(x) = \max(0, x)$, which is a piecewise linear function that maps negative inputs to zero and positive inputs to the input itself. The ReLU function is
 commonly used in deep learning models, as it has been shown to improve the convergence of the optimization algorithm in deep architectures, by addressing the
-vanishing gradient problem. The graphs of the sigmoid and ReLU activation functions are shown in \Cref{fig:activation_functions}.
+vanishing gradient problem \cite{relu}. Graphs of the sigmoid and ReLU activation functions are shown in \Cref{fig:activation_functions}.
 
 \begin{figure}
     \begin{center}
@@ -99,14 +106,14 @@ vanishing gradient problem. The graphs of the sigmoid and ReLU activation functi
     \end{center}
 \end{figure}
 
-Any function can be approximated by ANNs. Over the years, these models have been applied to a wide range of problems, including classification and reinforcement
+Any continuous function can be approximated by ANNs \cite{approximation}. Over the years, these models have been applied to a wide range of problems, including classification and reinforcement
 learning tasks. The process of applying ANNs consists in the design of its architecture, the choice of parameters such as the loss function or parameters for the
-weigh optimization algorithm, and the optimization of its weight, in order to maximize its performance on a given task.
+weigh optimization algorithm, and the optimization of its weights, in order to maximize its performance on a given task.
 
 Many challenges are associated with the use of ANNs, such as the choice of the network architecture and hyperparameters, which can have an significant
-impact on the performace of the model. Furthermore, the optimization of the network weights using gradient=based algorithms can result in various issues, such
+impact on the performace of the model. Furthermore, the optimization of the network weights using gradient-based algorithms can result in various issues, such
 as overfitting, which arises when the model performs well on the training data but poorly on unseen data, suboptimal local minima, and vanishing and
-exploding gradients, when using deep networks.
+exploding gradients, when using deep networks \cite{overfitting,vanishing_gradient}.
 
 \section{Problem classes and learning paradigms}
 
@@ -117,28 +124,28 @@ problems and learning paradigms in machine learning.
 
 Supervised learning is a class of machine learning tasks, where the goal is to learn a mapping from input data to output data, given a dataset of labeled
 examples. The dataset consists of pairs of input-output data, and the goal is to learn a function which maps the input to the output. The function is typically
-learned by minimizing a loss function, which depends on the problem at hand, and which measures the difference between the predicted output and the true output.
-The performance of the model is evaluated using a test set, which is separate from the training set. Supervised learning is used for tasks such as \textbf{classification}
-and \textbf{regression} problems. For classification tasks, the output is a discrete class label, while for regression tasks, the output is a continuous value.
-Famous examples of classification tasks include image classification, where the goal is to classify images into different categories or spam detection, where
-the goal is to classify emails as spam or not spam. When two classes are involved, the task is referred to as \textbf{binary classification}.
-Different metrics can be used to evaluate the performance of ANNs on classification tasks, such as the accuracy which measures the proportion of correctly
+learned by minimizing a loss function \cite{on_loss,loss_survey}, which depends on the problem at hand, and which measures the difference between the predicted output and
+the true output. The performance of the model is evaluated using a test set, which is separate from the training set. Supervised learning is used for tasks such
+as classification and regression problems. For classification tasks, the output is a discrete class label, while for regression tasks, the output is a continuous value.
+Famous examples of classification tasks include image classification \cite{cnn,cnn_survey}, where the goal is to classify images into different categories or spam detection \cite{spam_survey},
+where the goal is to classify emails as spam or not spam. When two classes are involved, the task is referred to as binary classification.
+Different metrics can be used to evaluate the performance of ANNs on classification tasks \cite{classification_metrics}, such as the accuracy which measures the proportion of correctly
 classified examples. For regression tasks, metrics such as the mean squared error can be used.
 
 \subsection{Unsupervised Learning}
 
-Unsupervised learning is a machine learning task where the goal is to learn patterns in the data without the use of labeled examples.
+Unsupervised learning \cite{unsupervised_learning} is a machine learning task where the goal is to learn patterns in the data without the use of labeled examples.
 In other words, no ground-truth is provided from the (training) data and the goal is to learn the underlying structure of the data, such as clusters or a latent
-representation space. Unsupervised learning is used for tasks such as clustering, which consists in grouping similar examples together, or dimensionality reduction,
-which consists in reducing the number of features in the data while preserving as much information as possible.
+representation space. Unsupervised learning is used for tasks such as clustering, which consists in grouping similar examples together, or dimensionality reduction
+\cite{dimensionality_review,dimensionality_survey}, which consists in reducing the number of features in the data while preserving as much information as possible.
 
 \subsection{Reinforcement Learning}
 
-Reinforcement learning problems can be compared to trial-and-error learning. These problems are composed of three main components: an agent, an environment, and a reward
+Reinforcement learning problems \cite{rl_survey} can be compared to trial-and-error learning. These problems are composed of three main components: an agent, an environment, and a reward
 signal. The agent interacts with the environment by taking actions, and is provided with a reward signal which measures how well it is performing.. The agent interacts with
 the environment by observing the current environment state, and taking actions. It receives a reward signal from the environment, the state is updated and the process is repeated.
 As the agent interacts with the environment it learns a strategy mapping states to actions, which is referred to as a policy, with the goal of maximizing its cumulative reward.
-Reinforcement learning is used for dynamic tasks such as game playing or \textbf{control tasks}.
+Reinforcement learning is used for dynamic tasks such as game playing or control tasks.
 There is no labeled data in reinforcement learning, and the agent must learn from its own experience, by exploring the environment and learning from the feedback it receives.
 
 \section{Evolutionary Algorithms}
@@ -146,8 +153,8 @@ There is no labeled data in reinforcement learning, and the agent must learn fro
 Evolutionary algorithms (EAs) are a class of optimization algorithms, which are inspired by the process of natural selection. EAs are based on the idea of
 evolving a population of candidate solutions to a problem, in order to find the best solution. The process of evolution consists in the selection of the
 fittest individuals, which are then recombined to produce offspring, which are then mutated. The fitness of the offspring is evaluated and the process is
-repeated for a number of generations until a stopping criterion is met, such as a maximum number of generations or a desired level of performance.
-At each generation, the population is updated by replacing the worst-performing individuals with the offspring.
+repeated for a number of generations until a stopping criterion is met, such as a maximum number of generations, a maximum number of iterations with no improvement,
+or a desired level of performance. At each generation, the population is updated by replacing the worst-performing individuals with the offspring.
 
 Individuals are represented by genotypes, which are encoded in a way that allows the application of genetic operators, such as crossover and mutation, and
 by phenotypes, which are the actual interpretation of the genotype used as solutions to the problem. The fitness of an individual is evaluated using a
@@ -156,7 +163,7 @@ fitness function, which measures the quality of the solution.
 Mutations are used to introduce diversity in the population, which is important to avoid premature convergence to suboptimal solutions. During mutations,
 parts of the genotype are modified while other parts remain unchanged, with the goal of performing a local search around the current genotype.
 The individuals reproduce using crossover, which combines the genotypes of two parents to produce offspring. The offspring inherit parts of the genotypes
-of the parents. The idea is that combining two good solutions can produce an even better solution.
+of the parents. The idea is that combining two good solutions should produce an even better solution.
 
 The general structure of an evolutionary algorithm is shown in \Cref{alg:ea}.
 
@@ -178,16 +185,17 @@ The general structure of an evolutionary algorithm is shown in \Cref{alg:ea}.
 \end{algorithm}
 
 It should be noted that evolutionary algorithms often have a variety of parameters that need to be tuned, such as the population size, the mutation rate,
-the crossover rate, and the selection mechanism. The performance of the algorithm can be sensitive to the choice of these parameters, and finding the
-right combination of parameters can be a challenging task.
+the crossover rate, and the selection mechanism. The performance of the algorithm is sensitive to the choice of these parameters, and finding the
+right combination of parameters can be a challenging task. For example, a mutation rate that is too low would result in a lack of diversity in the population, but if
+it is too high, the algorithm might not converge to a high-quality solution, a trade-off that needs to be carefully balanced.
 
 Evolutionary algorithms can be organized into different categories, including:
 
 \begin{itemize}
-    \item \textbf{Genetic algorithms (GAs):} Genetic Algorithms are generally applied to optimization problems and follow the principles described above.
-    \item \textbf{Genetic programming (GP):} Genetic programming is a variant of genetic algorithms where the individuals are computer programs, which are evolved to solve a problem.
-        Programs are traditionally represented as trees.
-    \item \textbf{Evolution strategies (ES):} Evolution strategies are black-box optimization algorithms, which are used to optimize continuous real-valued functions.
+    \item \textbf{Genetic algorithms (GAs):} Genetic Algorithms \cite{genetic_alg,genetic_alg_review} are generally applied to optimization problems and follow the principles described above.
+    \item \textbf{Genetic programming (GP):} Genetic programming \cite{cartesian_gp} is a variant of genetic algorithms where the individuals are computer programs, which are evolved to
+        solve a problem. Programs are traditionally represented as trees.
+    \item \textbf{Evolution strategies (ES):} Evolution strategies \cite{es_intro} are black-box optimization algorithms, which are used to optimize continuous real-valued functions.
         Unlike other classes of EAs, evolution strategies do not maintain an explit population of individuals, but instead, a parametrized probability distribution
         used to sample the individuals.
 \end{itemize}
@@ -195,15 +203,15 @@ Evolutionary algorithms can be organized into different categories, including:
 \section{Neuroevolution}
 
 Neuroevolution is a subfield of machine learning, which combines evolutionary algorithms and artificial neural networks. The idea is to evolve the weights,
-and potentially, the architecture or hyperparameters of ANNs using an EA instead of traditional gradient-based methods. Hence, this approach aims to
+and potentially, the architecture or hyperparameters of ANNs using an EA instead of gradient-based methods. Hence, this approach aims to
 offer an alternative to the manual trial-and-error process of designing suited architectures and choosing hyperparameters. Furthermore, this approach,
-being more general than traditional gradient-based methods, can be applied to a wider range of problems, such as reinforcement learning tasks, offering an
-alternative to the traditional reinforcement learning methods, which do not scale well for problems with large state space or partial observability,
-or other problems where no training data is available to perform supervised learning.
+being more general than traditional gradient-based methods, can be applied to a wide range of problems, such as reinforcement learning tasks, offering an
+alternative to the traditional reinforcement learning methods, which do not scale well for problems with large state space or partial observability
+\cite{challenges_of_rl,rl_control}, or other problems where no training data is available to perform supervised learning.
 
 However, neuroevolution comes with a major limitation which its computational cost, making it not suitable for the evolution of networks with more than
-tens of thousands of parameters, while gradient-based methods have successfully been applied to networks with billions of parameters. It is still particularly
-interesting for problems where smaller networks can be used or where other methods are not applicable.
+tens of thousands of parameters, while gradient-based methods have successfully been applied to networks with billions of parameters \cite{llama3}.
+It is still particularly interesting for problems where smaller networks can be used or where other methods are not applicable.
 
 From the perspective of the EA, neural networks serve as the phenotype, one of the main challenges is to define an encoding strategy into genotypes, which
 allows for the conduction of genetic operations. For example, it is not trivial to define a crossover operation for neural networks when topologies are also
@@ -211,11 +219,12 @@ being evolved. For this reason, neuroevolution has traditionally  been used to e
 for neural networks can be divided into two main categories:
 
 \begin{itemize}
-    \item \textbf{Direct encoding:} Genomes contain the information for all nodes and connections in the network, and are directly translated into a network. This
-    is the strategy which is employed by most neuroevolution algorithms.
-    \item \textbf{Indirect encoding:} Genomes contain a set of rules or instructions to generate the network, which is then constructed from these rules.
+    \item \textbf{Direct encoding:} In the case of direct encodings \cite{neuroevolution_learning,neuroevolution_trends,neuroevolution_survey}, genomes contain the information for
+        all nodes and connections in the network, and are directly translated into a network. This is the strategy which is employed by most neuroevolution algorithms.
+    \item \textbf{Indirect encoding:} In the case of indirect encodings \cite{neuroevolution_learning,neuroevolution_trends,neuroevolution_survey}, Genomes contain a set of rules or
+        instructions to generate the network, which is then constructed from these rules.
 \end{itemize}
 
-Neuroevolution algorithms evolving both the weights and the topology of the network are referred to as \textbf{TWEANNs} (Topology and Weight Evolving Artificial Neural Networks).
+Neuroevolution algorithms evolving both the weights and the topology of the network are referred to as TWEANNs (Topology and Weight Evolving Artificial Neural Networks) \cite{neat}.
 Lastly, neuroevolution can also be used in combination with traditional training methods to optimize the hyperparameters of a network, such as the learning rate or the
-activation function, or the topology of the network, while the weights are learned using gradient-based methods.
+activation function, or the topology of the network, while the weights are learned using gradient-based methods \cite{neuroevolution_trends}.
