@@ -564,3 +564,13 @@ The equations for motion are integrated using the Euler method. For a time step 
 The fitness function is defined as the sum of the time steps during which the poles are balanced and the cart is within the allowed bounds, over $1000$ time steps.
 A pole is considered balanced if its angle is within $30$ degrees of the vertical position.
 The evaluated algorithms outputs are mapped to the magnitude of the force $F \in [-10, 10]$N to be applied to the car at each time step.
+
+\section{Related Work}
+
+Various works evaluate the performance of neuroevolution algorithms on different benchmarks, and compare them to other algorithms.
+First of all, all of the selected algorithms were evaluated on a selection of benchmarks in thei original papers.
+Both the (1 + 1) NA and BNA algorithms were evaluated on the unit-sphere classification problems \cite{na, bna}, and NEAT was evaluated on the XOR and pole balancing problems \cite{neat}.
+Moreover, BNA is compared to (1 + 1) NA on the unit-sphere classification problems in \cite{bna}, which was also compared to the use of the CMA-ES algorithm on the descibed ANN architecture in
+\cite{na}. However, both studies did not compare these algorithms to other neuroevolution algorithms, and as these theory algorithms are not used in practice, they are not the subject of
+coparison to other neuroevolution algorithms in other studies. This is a research gap which this study aims to address.
+Regarding NEAT and CMA-ES, both algorithms were re-evaluated and compared on the double pole balancing problem in \cite{neuroevolution_es_rl}, and, among other problems, in \cite{robust}.
