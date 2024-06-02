@@ -2,14 +2,14 @@
 \label{chap:review}
 
 This chapter covers the first task of this thesis project, which is the review of the literature on neuroevolution algorithms and benchmarks.
-The first goal of this review is to identify the state of the art algorithms and benchmarks which were proposed in the neuroevolution literature, with a particular
+The first goal of this review is to identify the state of the art algorithms and benchmarks which were proposed in the neuroevolution theoretical and applied literature, with a particular
 focus on the recent theory literature from 2023 and 2024. Following this, a selection of algorithms and benchmarks from the ones which were identified is made.
 This selection consists in the algorithms and benchmarks which are presented in detail in this section and which are implemented in the framework.
 
 \section{Methodology}
 
 Given the large amount of literature on this well-established field, the review was conducted in a systematic manner, following the guidelines of \cite{snowballing,systematic_review}.
-Indeed, using a rigid methodology is important in order to ensure that the review is impartial and precise.
+Indeed, using a rigid methodology is cruucial in order to ensure that the review is impartial and precise.
 
 \subsection{Research Questions}
 
@@ -19,7 +19,7 @@ The research goals are summarized in the following research questions:
     \item \textbf{RQ1:} What are the state of the art neuroevolution algorithms?
     \item \textbf{RQ2:} What are the different kinds of neuroevolution algorithms?
     \item \textbf{RQ3:} Which benchmarks are used to evaluate neuroevolution algorithms?
-    \item \textbf{RQ4:} What are the key characteristics of these benchmarks?
+    \item \textbf{RQ4:} What are the key characteristics of these different benchmarks?
 \end{itemize}
 
 \textbf{RQ1} and \textbf{RQ3} are concerned with the identification of the state of the art algorithms and benchmarks, while \textbf{RQ2} and \textbf{RQ4} are concerned
@@ -44,7 +44,8 @@ The following inclusion criteria were applied to the abstracts:
 \begin{itemize}
     \item \textbf{IC1:} The paper is published after 2002.
     \item \textbf{IC2:} It is clear that the work is proposing a new noeuroevolution algorithm or performing an evaluation of existing algorithms.
-    \item \textbf{IC3:} The considered algorithm(s) rely solely on evolutionary algorithms
+    \item \textbf{IC3:} The considered algorithm(s) rely solely on evolutionary algorithms.
+    \item \textbf{IC4:} The considered algorithm(s) aim at the evolution of weights, and possibly topologies, of artificial neural networks.
 \end{itemize}
 
 And the following exclusion criteria were used:
@@ -55,25 +56,51 @@ And the following exclusion criteria were used:
     \item \textbf{EC3:} The study is a duplicate of a previously included study.
 \end{itemize}
 
-The cut-off date of 2002 is motivated by the release year of the \cite{neat} paper, proposing the NEAT algorithm, which is the most well-known neuroevolution algorithm
+The cut-off date of 2002 is motivated by the release year of the \cite{neat} paper, proposing the NEAT algorithm, which is the most studied neuroevolution algorithm and which
 is still the subject of many studies today.
 
 \section{Neuroevolution algorithms}
 
 A variety of neuroevolution algorithms have been proposed in the literature.
 These algorithms can be classified into different categories based on their main characteristics.
-The following three main distinctions have been identified during the review:
+The following three main distinctions, which were mentioned in \Cref{chap:background}, have been identified during the review:
 
 \begin{itemize}
     \item \textbf{Conventional neuroevolution algorithms vs. TWEANNs} Conventional neuroevolution algorithms are those which only evolve the connection weights,
-        considering a fixed topology, while TWEANNs (Topology and Weight Evolving Artificial Neural Networks) are those which also evolve the topology of the
+        considering a fixed topology, while TWEANNs (Topology and Weight Evolving Artificial Neural Networks) \cite{neat} are those which also evolve the topology of the
         neural network.
-    \item \textbf{The category of the evolutionary algorithm} such as genetic algorithms, evolutionary strategies, genetic programming, etc.
-    \item \textbf{The encoding strategy} This refers to the way the neural network is encoded as a genotype, which is then evolved by the algorithm.
+    \item \textbf{The category of the evolutionary algorithm} such as genetic algorithms \cite{genetic_alg,genetic_alg_review}, evolutionary strategies \cite{es_intro},
+        genetic programming \cite{cartesian_gp}.
+    \item \textbf{The encoding strategy} This refers to the way the neural network is encoded as a genotype, \cite{neuroevolution_learning,neuroevolution_trends,neuroevolution_survey}.
         The most common encoding strategies are direct encoding, indirect encoding and generative encoding.
 \end{itemize}
 
-% TODO algorithm table with categories
+\Cref{tab:neuroevolution_algorithms} presents a classification of the neuroevolution algorithms which were identified during the review.
+Various algorithms were identified for each of the categorie, such as different evolution strategies, an approach relying on Cartesian genetic programming, an anglrotihm not evolving the
+weights, or an algorithm proposing an entirely new evolutionary method.
+
+\begin{table}[]
+\caption{Neuroevolution algorithms classification}
+\label{tab:neuroevolution_algorithms}
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Algorithm}  & \textbf{Evolves topologies} & \textbf{EA category}                                                             & \textbf{Encoding strategy}                                          \\ \hline
+\textbf{NEAT} \cite{neat}     & Yes                         & Genetic Algorithm                                                                & Direct                                                    \\ \hline
+\textbf{CMA-ES} \cite{cmaes}  & N/A                         & Evolution strategies                                                             & N/A                                                       \\ \hline
+\textbf{(1 + 1) NA} \cite{na} & No                          & Genetic Algoerithm                                                               & Direct                                                    \\ \hline
+\textbf{BNA} \cite{bna}       & No                          & Genetic Algorithm                                                                & Direct                                                    \\ \hline
+HyperNEAT \cite{hyperneat}    & Yes                         & Genetic Algorithm                                                                & Indirect                                                  \\ \hline
+CGPANN \cite{cgpann}          & Yes                         & Genetic Programming                                                              & Direct                                                    \\ \hline
+CoSyNE \cite{cosyne}          & No                          & Genetic Algorithm                                                                & Direct                                                    \\ \hline
+AGE \cite{age}                & Yes                         & Genetic Algorithm                                                                & Indirect                                                  \\ \hline
+WANNs \cite{wanns}            & Yes (not the weights)       & Genetic Algorithm                                                                & Direct                                                    \\ \hline
+EANT2 \cite{eant2}            & Yes                         & \begin{tabular}[c]{@{}c@{}}Genetic Algorithm\\ Evolution Strategies\end{tabular} & \begin{tabular}[c]{@{}c@{}}Direct\\ Indirect\end{tabular} \\ \hline
+xNES \cite{xnes}              & N/A                         & Evolution Strategies                                                             & N/A                                                       \\ \hline
+OpenAI ES \cite{openai_es}    & N/A                         & Evolution Strategies                                                             & N/A                                                       \\ \hline
+SUNA \cite{suna}              & Yes                         & Specific evolutionary method                                                     & Direct                                                    \\ \hline
+\end{tabular}
+\end{table}
 
 \subsection{Algorithms selection}
 
@@ -86,15 +113,17 @@ The following algorithms were selected for the implementation in the framework:
     \item The NEAT algorithm
 \end{itemize}
 
-Given the duration of the project, the choice was made to limit the number of algorithms to four, in order to allow for a thorough implementation and evaluation of
+Given the duration of the project, the choice was made to limit the number of algorithms to four, in order to allow for an in-depth implementation and evaluation of
 each of them, thus various criteria were used for the selection of the algorithm, to allow for a good coverage of the different categories of algorithms and
 interesting comparisons between them.
 
-Therfore, the (1 + 1) NA and bias-invariant (1+1) NA algorithms were selected as the two theory paper proposals this thesis is particularly interested in.
+The (1 + 1) NA and bias-invariant (1+1) NA algorithms were selected as the two theory paper proposals this thesis is particularly interested in.
 The CMA-ES algorithm, which is the representative of the evolutionary strategies category was selected because of its popularity in the modern neuroevolution literature
 and applications, and because of its status as a state-of-the-art algorithm for continuous optimization problems.
 Finally, the NEAT algorithm, the representative of the TWEANN category, was selected because of its status as the most well-known neuroevolution algorithm, making
-it a subject of most comparison studies in the literature.
+it a subject of the vast majority of the comparison studies in the literature, and as a baseline for the evaluation of new algorithms.
+
+The following sections present the selected algorithms in detail.
 
 \subsection{(1 + 1) NA}
 
@@ -365,6 +394,60 @@ from dominating the population. The offspring are generated using the crossover 
 individuals. At each generation, the population is replaced by the offspring.
 
 \section{Neuroevolution benchmarks}
+
+Neuroevolution algorithms are typically evaluated on a variety of benchmarks, which are used to test the performance of the algorithms on different problem classes.
+These problems can be classified into different categories, based on the following characteristics:
+
+\begin{itemize}
+    \item \textbf{Problem type} The type of problem which is considered, such as classification, regression, control, etc.
+    \item \textbf{Problem complexity} The complexity of the problem, which can be measured by the size of the state space, the number of inputs, the number of classes, etc.
+    \item \textbf{The realism of the problem} The realism of the problem, which can be measured by the relevance of the problem to real-world applications, in opposition to
+        toy problems which are used for theoretical studies.
+\end{itemize}
+
+\Cref{tab:neuroevolution_benchmarks} presents the benchmarks which were identified during the review. These benchmarks were found in the new algorithm proposals papers
+and comparison studies. However, it is worth noting that many more benchmarks can be considered, such as any classification dataset, or the various environments implemented
+in the OpenAI Gym toolkit \cite{gym}.
+
+\begin{table}[]
+\centering
+\caption{Benchmarks classification}
+\label{tab:neuroevolution_benchmarks}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Problem}                                                                                                   & \textbf{Class} & \textbf{Variables} \\ \hline
+\textbf{Unit-sphere classification} \cite{na}                                                                      & Classification & 2                  \\ \hline
+\textbf{XOR} \cite{neat}                                                                                           & Classification & 2                  \\ \hline
+\textbf{Double pole balancing} \cite{pole_balancing}                                                               & Control        & 6                  \\ \hline
+\begin{tabular}[c]{@{}c@{}}Double pole balancing\\ (Without velocity) \cite{pole_balancing}\end{tabular}           & Control        & 3                  \\ \hline
+\textbf{Proben1 Cancer1} \cite{proben}                                                                             & Classification & 9                  \\ \hline
+Mountain Car \cite{mountain_car}                                                                                   & Control        & 2                  \\ \hline
+Ball throwing \cite{ball_throwing}                                                                                 & Control        & 3                  \\ \hline
+\end{tabular}
+\end{table}
+
+\subsection{Benchmarks selection}
+
+The following benchmarks were selected for the implementation in the framework:
+
+\begin{itemize}
+    \item The unit-sphere classification problems
+    \item The XOR problem
+    \item The \textit{Proben1 Cancer1} dataset classification problem
+    \item The double pole balancing problem
+\end{itemize}
+
+Once again, the choice was made to limit the number of benchmarks to four, for the same reason of allowing for an in-depth implementation and evaluation of the algorithms on each of them.
+The selected benchmarks were chosen to allow for a good coverage of the different problem classes, and to allow for interesting comparisons between different algorithms or different
+configurations of the same algorithm.
+
+The double pole balancing problem was selected as a classic benchmark in the neuroevolution literature. It is the most widely used benchmark in the field, and is relevant to real-world
+control problems. The unit-sphere classification problems were selected as classification toy problems, introduced in the theory paper \cite{na} and used to test the (1 + 1) NA and BNA algorithms.
+Moreover, the XOR problem was selected as another classic toy classification problem, which is particularly simple, and useful for testing the ability of the algorithms to solve non-linear problems.
+Lastly, the \textit{Proben1 Cancer1} dataset classification problem was selected as a more realistic classification problem, making use of a training and testing dataset, and consisting
+in a higher-dimmmensional input space of $9$ features, as opposed to the $2$ features of the unit-sphere classification problems and XOR problem.
+
+The following sections present the different benchmarks which were selected for the implementation in the framework.
 
 \subsection{Unit hypersphere sphere classification problems}
 \label{subsection:sphere_classification}

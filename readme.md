@@ -4,7 +4,10 @@
 
 * [X] Update abstract with results
 * [X] Citations in introduction
-* [ ] Citations in background
+* [X] Citations in background
+* [X] Algorithms and categories comparison table
+* [X] Benchmarks comparison table
+* [ ] Related work
 * [ ] coordinates figure in (1 + 1) NA section
 * [ ] ANN figure in (1 + 1) NA section
 * [ ] Add figure in hypershpere problems section
@@ -12,7 +15,6 @@
 * [ ] Bna topology figure
 * [ ] Dependency graph in framework section
 * [ ] CMA-ES figure
-* [ ] Algorithms and categories comparison table
 * [ ] Update cli listing
 * [ ] GUI sphere figure
 * [ ] NEAT encoding figure
@@ -37,6 +39,9 @@
 * [ ] Add configs in the appendix
 * [ ] Flow diagram for algorithm selection
 * [ ] Mention irace and co in future work section
+* [ ] Mention no need for any pre-defined knowledge on the task in advantages
+* [ ] Update future work saying to add a genetic programming and indirect encoding algorithm
+* [ ] Code cleanup (parameters in pole balancing, todos, etc)
 
 ## Questions
 
