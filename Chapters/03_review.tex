@@ -134,28 +134,29 @@ a simple artificial neural network.
 \subsubsection{The artificial neural network topology}
 
 Artificial neurons with $D$ inputs and a binary threshold activation function are considered.
-These neurons have $D$ parameters, the input weights $w_1, \ldots, w_D$ and the threshold $t$.
+These neurons have $D + 1$ parameters, the input weights $w_1, \ldots, w_D$ and the threshold $t$.
 Let $x = (x_1, \ldots, x_D) \in \mathds{R}^D$ be the input of the neuron. The neuron outputs $1$ if $\sum_{i=1}^D w_i x_i \geq t$ and $0$
 otherwise.
 This can be interpreted geometrically as the neuron outputting $1$ if the input vector $x$ is above or on the hyperplane with normal vector
 $w = (w_1, \ldots, w_D)$ and bias $t$.
 j
 Furthermore, an alternative representation of the decision hyperplane can be used by considering spherical coordinates.
-The normal vector to the decision hyperplane is described by by $D - 1$ angles and the bias, where the bias corresponds to the distance from the origin
+The decision hyperplane is described by its normal vector, which is characterized by by $D - 1$ angles, and by the bias, which corresponds to the distance from the origin
 measured in the opposite direction of that of the normal vector.
-As a matter of fact, for $D = 2$, the normal vector can be represented by its cartesian coordinates $(x_1, x_2)$ or by its polar coordinates
+For example, for $D = 2$, the normal vector can be represented by its cartesian coordinates $(x_1, x_2)$ or by its polar coordinates
 $(r, \theta)$, where $r$ is the distance from the origin and $\theta$ is the angle with the $x_1$ axis. Similarly, for $D = 3$, the normal vector can
 be represented by its cartesian coordinates $(x_1, x_2, x_3)$ or by its spherical coordinates $(r, \theta, \phi)$, where $r$ is the distance from the
 origin, $\theta$ is the angle with the $x_1$ axis and $\phi$ is the angle with the $x_3$ axis.
-It is easy to convert between these two representations. In addition, the spherical representation uses one less parameter than the cartesian
-representation, and hence, allows for the reduction of the number of inputs to the neurons to $D - 1$.
+It is easy to convert between these two representations \cite{spherical}. In addition, the spherical representation uses one less parameter than the cartesian
+representation, and hence, allows for the reduction of the number of inputs to the neurons to $D$, as opposed to $D + 1$ when using the cartesian representation,
+where $D$ parameters are used for the normal vector and $1$ for the bias.
 
 % TODO coordinates figure
 
-The ANNs which are considered in the study contain two layers, a hidden layer with $N > 1$ neurons and an output layer with a single neuron.
+The ANNs which are considered in the study contain three layers: the input layer, a hidden layer with $N > 1$ neurons and an output layer with a single neuron.
 Each of the hidden neurons are connected to the $D$ inputs and output a binary value. The output neuron is connected to the $N$ hidden neurons and
 computes the Boolean OR function of their outputs.
-This architecture is motivated by the problems which are considered in the study, described in \Cref{subsec:na-problems}.
+This architecture is motivated by the problems which are considered in the study \cite{na}.
 Geometrically, these ANNs output the union of a number of $N$-dimensional hyperplanes.
 
 % TODO ANN figure
@@ -164,7 +165,7 @@ Geometrically, these ANNs output the union of a number of $N$-dimensional hyperp
 
 Let's consider an ANN with $N$ neurons in the hidden layer and $D$ inputs, with parameters
 $(\phi_{1,1}, \dots, \phi_{1,D-1}, b_1, \dots, \phi_{N,1}, \dots, \phi_{N,D-1}, b_N$.
-In the paper \cite{na}, the search space $[0 , \dots, n]^{N D}$ is considered, where $r$ is the resolution of the continuous $[0, 1]$ domain.
+In \cite{na}, the search space $[0 , \dots, n]^{N D}$ is considered, where $r$ is the resolution of the continuous $[0, 1]$ domain.
 This discretiisation allows for the values $\{0, 1/r, 2/r, \dots, 1\}$. Setting the parameters of ANNs is tipically a continous optimization problem,
 but rigurous runtime analysis is much less developed for continous optimization than for discrete optimization, which motivates this choice.
 Let $f : \{0 , \dots, r\}^{N D} \to [0, 1]$ be the fitness function which measures the performance of the ANN and is to be maximized.
@@ -186,7 +187,7 @@ $\text{Harm}(r)$ on $\{1, \dots, r\}$: For $l \sim \text{Harm}(r)$,
     \While{termination criterion not met}
         \State Let $y = (\varphi_{1,1}, \ldots, \varphi_{1,D-1}, b_1, \ldots, \varphi_{N,1}, \ldots, \varphi_{N,N-1}, b_N) \gets x_t;$
         \ForAll{$i \in \{1, \ldots, N\}$}
-            \State Mutate $\varphi_i$ and $b_i$ with probability $\frac{1}{DN}$, independently of each other and other indices;
+            \State Mutate $\varphi_{i,1} \dots, \varphi_{i_D}$ and $b_i$ with probability $\frac{1}{DN}$, independently of each other and other indices;
             \State Mutation chooses $\sigma \in \{-1, 1\}$ uniformly at random and $l \sym \text{Harm}(r)$ and adds $\sigma l$ to the selected component, the
             result is then taken modulo $r$ for angles and modulo $r + 1$ for biases.
             \For {$i \in \{1, \ldots, N\}$}
@@ -207,7 +208,7 @@ $\text{Harm}(r)$ on $\{1, \dots, r\}$: For $l \sim \text{Harm}(r)$,
 \end{algorithmic}
 \end{algorithm}
 
-\subsubsection{The evaluation}
+\subsubsection{The evaluation in practice}
 
 The ANNs which are evolved using the (1 + 1) NA algorithm output the union of $N$-dimensional hyperplanes. To check whether or not the input is above the
 hyperplane described by one of the neurons, the normal vector $\overrightarrow{n}$ to the hyperplane is computed using the angles and a norm of $1$.
@@ -219,8 +220,7 @@ the output of the neuron is $1$ if the dot product is negative and $0$ otherwise
 
 In \cite{bna}, the authors extend upon the analysis in \cite{na} by considering more realistic ANN settings, presenting the Bias-Invariant (1+1) NA (BNA) algorithm.
 The considered ANNs uses Rectified-Linear-Unit (ReLU) activation functions, commonly used in real-world ANNs.
-This allows for the construction of bended hyperplanes, resulting in solutions to the problems described in \Cref{subsec:na-problems} which are invariant
-to the bias.
+This allows for the construction of bended hyperplanes, resulting in solutions to the problems described in \cite{na} which are invariant to the bias.
 
 \subsubsection{The artificial neural network topology}
 
@@ -229,7 +229,7 @@ $k$ inputs from the previous layer.
 The weights between the first and second layer and between the second and third layer are fixed. The topology for $D = 2$ in shown in \Cref{fig:bna-ann}.
 The use of ReLU activation functions results in piecewise linear output. Hence, as described in \Cref{fig:bna-ann} for the case $D = 2$, these networks compute a
 V-shaped area of positive classification. Such topologies are considered as a single neuron, refered to as a \textbf{V-neuron}, and which can be part of a
-standard ANN topology.
+standard ANN topology. For example V-neurons can be used in the hidden layer of the (1 + 1) NA ANNs \cite{na} to compute the union of V-shaped areas of positive classification.
 
 Therefore, these V-neurons can be described by $D + 1$ parameters:
 
@@ -259,7 +259,7 @@ It is mostly the same as the (1+1) NA algorithm, with the difference that the be
     \While{termination criterion not met}
         \State Let $y = (\theta_1, \varphi_{1,1}, \ldots, \varphi_{1,D-1}, b_1, \ldots, \theta_N, \varphi_{N,1}, \ldots, \varphi_{N,N-1}, b_N) \gets x_t;$
         \ForAll{$i \in \{1, \ldots, N\}$}
-            \State Mutate $\varphi_i$ and $b_i$ with probability $\frac{1}{(D+1) N}$, independently of each other and other indices;
+            \State Mutate $\varphi_{i,1}, \dots, \varphi_{i,D}$, $\theta_i$ and $b_i$ with probability $\frac{1}{(D+1) N}$, independently of each other and other indices;
             \State Mutation chooses $\sigma \in \{-1, 1\}$ uniformly at random and $l \sym \text{Harm}(r)$ and adds $\sigma l$ to the selected component, the
             result is then taken modulo $r$ for angles and modulo $r + 1$ for biases.
             \For {$i \in \{1, \ldots, N\}$}

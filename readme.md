@@ -7,7 +7,7 @@
 * [X] Citations in background
 * [X] Algorithms and categories comparison table
 * [X] Benchmarks comparison table
-* [ ] Related work
+* [X] Related work
 * [ ] coordinates figure in (1 + 1) NA section
 * [ ] ANN figure in (1 + 1) NA section
 * [ ] Add figure in hypershpere problems section
@@ -42,6 +42,7 @@
 * [ ] Mention no need for any pre-defined knowledge on the task in advantages
 * [ ] Update future work saying to add a genetic programming and indirect encoding algorithm
 * [ ] Code cleanup (parameters in pole balancing, todos, etc)
+* [ ] Move eval in practice to framework section
 
 ## Questions
 

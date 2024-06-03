@@ -101,7 +101,7 @@ done
 \end{lstlisting}
 
 A python script was written to merge the results of the different runs in a single CPU file, extract the relevant metrics and statistics, and output data which directly be used
-in the \textt{pgfplots} plots of this report.
+in the \texttt{pgfplots} plots of this report.
 
 \section{Results of the experiments}
 \label{sec:results}
@@ -112,7 +112,7 @@ and evaluate the algorithms on the selected benchmarks.
 \subsection{Results of the $(1 + 1)$ NA algorithm}
 
 The $(1 + 1)$ NA algorithm can be applied to binary classification problems. Results are thus presented for the unit-sphere classification problems, the \textit{XOR} problem, and
-the \texit{Cancer1} classification problem.
+the \textit{Cancer1} classification problem.
 The parameters which can be tuned for this algorithm are the resolution and the number of neurons.
 
 \subsubsection{Unit-sphere classification problems}
@@ -313,7 +313,7 @@ impact of the number of neurons on the computational cost of the algorithm.
         \end{axis}
         \end{tikzpicture}
     \end{center}
-    \caption{Performance metrics of the $(1 + 1)$ NA algorithm on the \textit{Half} and \texit{Quarter} benchmarks, with a single neuron, over different resolutions.
+    \caption{Performance metrics of the $(1 + 1)$ NA algorithm on the \textit{Half} and \textit{Quarter} benchmarks, with a single neuron, over different resolutions.
     The evolution stopped when the fitness was $2\%$ away from the maximal fitness of $1.0$. The maximum number of iterations was set to $200$.}
     \label{fig:na_maxiter}
 \end{figure}
@@ -1144,7 +1144,7 @@ as it was the case for the $(1 + 1)$ NA algorithm, the results on the two proble
 
 The results for the \textit{TwoQuarters} benchmark are shown in \Cref{fig:bna_twoquarters} and the results for the \textit{LocalOpt} benchmark are shown in \Cref{fig:bna_localopt}.
 For both problems, the same observations can be made as for the $(1 + 1)$ NA algorithm. For the \textit{TwoQuarters} benchmark, with two V-neurons, the fitness converges to approximately $0.85$,
-while the algorithm quickly reaches the maximal fitness of $0.75$ in the case of one V-neuron. Regarding the \texit{LocalOpt} benchmark, it was able to find the optimal solution once and also
+while the algorithm quickly reaches the maximal fitness of $0.75$ in the case of one V-neuron. Regarding the \textit{LocalOpt} benchmark, it was able to find the optimal solution once and also
 got stcuk in local optima, with an average fitness converging to $0.75$ for all three cases. Examples of local optima and optimal solutions are shown in \Cref{fig:bna_twoquarters_visual}
 and \Cref{fig:bna_localopt_visual}.
 
@@ -2197,7 +2197,7 @@ The algorithm was tested with networks ranging from $0$ to $6$ hidden neurons on
 The results are presented in \Cref{fig:cmaes_sphere}. Firstly, it can be noted how similar the tendencies for these metrics are for the four problems, and how they reflect the problem
 complexities. For the \textit{Half} and \textit{Quarter} problems, the algorithm was able to always find the optimal solution, except for the $1$ hidden neuron case, in less than
 $400$ iterations and $45$ seconds, on average. However, for the \textit{TwoQuarters} and \textit{LocalOpt} problems, the algorithm was never able to find an optimal solution, for the
-\textitP{LocalOpt} problem the fitness was even lower than $0.75$ for all but the $6$ hidden neurons case. As a consequence, the number of iterations and CPU time were higher than
+\textit{LocalOpt} problem the fitness was even lower than $0.75$ for all but the $6$ hidden neurons case. As a consequence, the number of iterations and CPU time were higher than
 for the two other problems.
 
 \begin{figure}
