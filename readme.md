@@ -17,8 +17,8 @@
 * [ ] CMA-ES figure
 * [ ] Update cli listing
 * [ ] GUI sphere figure
-* [ ] NEAT encoding figure
-* [ ] NEAT crossover figure
+* [X] NEAT encoding figure
+* [X] NEAT crossover figure
 * [X] NEAT similarity equation
 * [ ] Pole Balancing figure
 * [X] Pole Balancing equations

@@ -187,7 +187,7 @@ $\text{Harm}(r)$ on $\{1, \dots, r\}$: For $l \sim \text{Harm}(r)$,
     \While{termination criterion not met}
         \State Let $y = (\varphi_{1,1}, \ldots, \varphi_{1,D-1}, b_1, \ldots, \varphi_{N,1}, \ldots, \varphi_{N,N-1}, b_N) \gets x_t;$
         \ForAll{$i \in \{1, \ldots, N\}$}
-            \State Mutate $\varphi_{i,1} \dots, \varphi_{i_D}$ and $b_i$ with probability $\frac{1}{DN}$, independently of each other and other indices;
+            \State Mutate $\varphi_{i,1} \dots, \varphi_{i,D}$ and $b_i$ with probability $\frac{1}{DN}$, independently of each other and other indices;
             \State Mutation chooses $\sigma \in \{-1, 1\}$ uniformly at random and $l \sym \text{Harm}(r)$ and adds $\sigma l$ to the selected component, the
             result is then taken modulo $r$ for angles and modulo $r + 1$ for biases.
             \For {$i \in \{1, \ldots, N\}$}
@@ -249,6 +249,7 @@ angle $\theta$ with the normal vector to the hyperplane given by the bias $b$ an
 
 The BNA algorithm is given in \Cref{alg:bna}.
 It is mostly the same as the (1+1) NA algorithm, with the difference that the bend angles are also mutated.
+In particular, it can be seen that when fixing the bend angles to $\pi / 2$, the BNA algorithm is equivalent to the (1+1) NA algorithm.
 
 \begin{algorithm}
     \caption{Bias-Invariant (1 + 1) NA (BNA)}
@@ -322,15 +323,15 @@ and converting between a vector representation of the network, for the optimizat
 
 \subsection{Neuroevolution of Augmenting Topologies (NEAT)}
 
-The NEAT algorithm was introduced in \cite{neat}. It is a TWANN (Topology and Weight Evolving Artificial Neural Network) algorithm, which evolves, simultaneously,  both
-the topology and weights of neural networks. The main idea behind this algorithm is to start from a minimal topology, incrementally adding new neurons and connections to,
-the networks, which allows for the evolution of complex neural networks while keeping the computational cost low and justifying each new addition to the network topology.
+The NEAT algorithm was introduced in \cite{neat}. It is a TWEANN (Topology and Weight Evolving Artificial Neural Network) algorithm, which evolves, simultaneously,  both
+the topology and weights of neural networks. The main idea behind this algorithm is to start from a minimal topology, incrementally adding new neurons and connections to
+the networks, which allows for the evolution of complex neural networks, while keeping the computational cost low and justifying each new addition to the network topology.
 The following sections describe the main components of the algorithm.
 
 \subsubsection{Genetic Encoding}
 
 NEAT uses a direct encoding of the neural networks. The goal of the encoding strategy is to allow crossover among different network topologies.
-Each genome contains two sets of genes, which specify nodes and connections in the network:
+Each genome contains two sets of genes, which specify the nodes and the connections in the network:
 
 \begin{itemize}
     \item \textbf{Node genes} Each node gene contains an identifier and layer (input, hidden, output or bias, which is an input that is always set to $1.0$.
@@ -338,18 +339,25 @@ Each genome contains two sets of genes, which specify nodes and connections in t
         disabled, and an innovation number.
 \end{itemize}
 
-% TODO NEAT encoding figure
+An example of a genotype to phenotype mapping is shown in \Cref{fig:neat_genome}.
 
-Where node identifiers are shared between the individuals in the population, the enabled flag specifies whether or not the connection is expressed in the phenotype (i.e
+\begin{figure}
+    \centering
+    \includegraphics[width=0.9\textwidth]{Pictures/neat_encoding}
+    \caption{NEAT genotype to phenotype mapping example. The disabled connection, with innovation number $2$, is not expressed in the phenotype.}
+    \label{fig:neat_genome}
+\end{figure}
+
+Node identifiers are shared between the individuals in the population, the enabled flag specifies whether or not the connection is expressed in the phenotype (i.e
 the network) and the innovation number is used to track the historical origin of the gene.
 
 \subsubsection{Mutations}
 
-NEAT uses two types of mutations: weight mutations and structural mutations. Weight mutations are used to perturb the weights of the connections in the network,while
+NEAT uses two types of mutations: weight mutations and structural mutations. Weight mutations are used to perturb the weights of the connections in the network, while
 structural mutations are used to modify the topology of the network. There are two types of structural mutations:
 
 \begin{itemize}
-    \item \textbf{Add connection} This mutation adds a new connection between two unconnected nodes in the network. The connection is assigned a random weight.
+    \item \textbf{Add connection} This mutation adds a new connection between two unconnected nodes in the network. The newly added connection is assigned a random weight.
     \item \textbf{Add node} This mutation adds a new node in the network, splitting an existing connection into two. The old connection is disabled and two new
         connections are added to the new node. The connection leading into the new node is assigned a weight of 1, while the connection leading out from the new node is
         assigned the weight of the old connection. This allows for the minimization of the initial effort of the mutation, as the activation of the output layer
@@ -357,41 +365,57 @@ structural mutations are used to modify the topology of the network. There are t
 \end{itemize}
 
 Because of these two types of mutations, inserting new nodes and connection genes, genomes can only grow larger over time, resulting in the evolution of increasingly
-complex networks.
+complex networks. An example of the effect of both mutations is shown in \Cref{fig:neat_mutations}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.9\textwidth]{Pictures/neat_mutations}
+    \caption{NEAT mutations example. The add node connection mutation adds a connection between nodes $1$ and $3$.
+    The add node mutation splits the connection between nodes $1$ and $4$, adding a new node $5$ and two new connections. The connection between nodes $1$ and $4$ is disabled.}
+    \label{fig:neat_mutations}
+\end{figure}
 
 \subsubsection{Crossover}
 
-One of the challenges of evolving neural networks is the crossover operator, because of the different topologies of the networks. NEAT addresses this issue by making
-use of the innovation numbers in connection genes, which allows for the tracking of the historical origin of each gene. This allows for the matching of genes between
-individuals. Genes are assigned increasing innovation numbers as they appear in the population and innovation numbers are inherited. Hence, the matching of genes is done
-by comparing the innovation numbers. Thus, the crossover operator consists in inheriting matching genes from one parent at random, and adding the remaining disjoint
-and excess genes from the fittest parent. This strategy is particularly cost-effective as it requires no topological analysis of the networks.
+One of the main challenges of evolving neural network topologies is the crossover operator, precisely because of the presence of different topologies in the population,
+which makes trivial crossover operators relying on the matching of nodes and connections impossible.
+NEAT addresses this issue by making use of the innovation numbers in connection genes, which allows for the tracking of the historical origin of each gene. This allows
+for the matching of genes between individuals. Genes are assigned increasing innovation numbers as they appear in the population and innovation numbers are inherited.
+Hence, the matching of genes is done by comparing the innovation numbers. Thus, the crossover operator consists in inheriting matching genes from one parent at random,
+and adding the remaining disjoint and excess genes from the fittest parent. This strategy is particularly cost-effective as it requires no topological analysis of the networks.
+An example of crossover is shown in \Cref{fig:neat_crossover}.
 
-% TODO NEAT crossover figure
+\begin{figure}
+    \centering
+    \includegraphics[width=0.9\textwidth]{Pictures/neat_crossover}
+    \caption{NEAT crossover example. Matching genes are inherited from both parents at random. Disjoint and excess genes are inherited from the fittest parent. In this case, the
+    disabled gene with innovation $9$ was enabled in the offspring.}
+    \label{fig:neat_crossover}
+\end{figure}
 
 \subsubsection{Speciation}
 
 An issue with the current strategy is that the population is unable to protect topological innovation, because of smaller topologies optimizing faster and the
 addition of new connections usually resulting in an initial drop in fitness. To address this issue, NEAT uses speciation, which groups individuals into species based
-on their genetic similarity. This strategy allows for the protection of topological innovation by having individuals compete within their specie, rather than the entire population.
-In addition, as it is the case with the crossover operator, historical matching allows for an efficient solution.
+on their genetic similarity. This strategy allows for the protection of topological innovation by having individuals compete within their specie, rather than within the
+entire population. In addition, as it is the case with the crossover operator, historical matching also allows for an efficient solution to this problem.
 
 The similarity between two individuals is computed as a weighted sum of the number of excess $E$ genes, the number of disjoint $D$ genes and the average weight difference $\bar{W}$
 of matching genes:
 
 \[
-    \delta = c_1 \frac{E}{N} + c_2 \frac{D}{N} + c_3 \bar{W}
+    \delta = c_1 \frac{E}{N} + c_2 \frac{D}{N} + c_3 \bar{W}.
 \]
 
 Where $c_1$, $c_2$ and $c_3$ are coefficients which control the importance of each term, and $N$ is the number of genes in the larger genome.
 
-At each generation, individuals are sequentially assigned to a specie based on the similarity with the representative of the specie, which is
-a randomly selected individual from the previous generation which was part of the specie, and a similarity threshold. If no specie is found, a new specie is created.
+At each generation, individuals are sequentially assigned to a species based on their similarity with the representative of the specie, which is
+a randomly selected individual from the previous generation which was part of the specie, and a similarity threshold. If no species is found, then a new species is created.
 
 Each species is given a number of offspring in proportion to the sum of the adjusted fitness of its members. Where the adjusted fitness $f_i'$ of an individual $i$ is
 given by $f_i' = f_i / n_i$, where $f_i$ is the fitness of the individual and $n_i$ is the number of individuals in the specie. This is done to prevent large species
 from dominating the population. The offspring are generated using the crossover and mutation operators, on members of the species, after the selection of the fittest
-individuals. At each generation, the population is replaced by the offspring.
+individuals. At each generation, the population is replaced by the offspring. This process is repeated until a termination criterion is met.
 
 \section{Neuroevolution benchmarks}
 
