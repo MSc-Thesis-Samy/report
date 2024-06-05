@@ -13,7 +13,7 @@
 * [X] Add figure in hypershpere problems section
 * [ ] BNA cone figure
 * [ ] BNA topology figure
-* [ ] Dependency graph in framework section
+* [X] Dependency graph in framework section
 * [X] CMA-ES figure
 * [ ] Update cli listing
 * [ ] GUI figures

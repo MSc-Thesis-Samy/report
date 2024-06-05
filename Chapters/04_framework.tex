@@ -5,7 +5,7 @@ This chapter presents the design and implementation of the framewor which was de
 It list the requirements of the framework, goes through its development lifecycle and presents the architecture of the framework.
 
 This framework, which is the main contribution of this thesis, allows for a fair comparison of the considered algorithms by having them implemented in a common environment
-and language, in order to avoid performacne differences induced by the programming language, and running them on the exact same benchmark problem implementations and
+and language, in order to avoid performacne differences induced by the programming language, and by having them run on the exact same benchmark problem implementations and
 settings.
 
 The code for the framework is available at \url{https://github.com/MSc-Thesis-Samy/code} and includes a README file with instructions on how to use it.
@@ -21,7 +21,6 @@ The framework collects the results of the tests as well as the list of passed-in
 These tests can either be run individually or in batch mode, where the framework runs a set of tests in parallel, and collects statistics on these runs.
 
 Furthermore, the framework also allows for the visualization of the problem, solution process and network structure through a graphical user interface.
-In addition, it generates graphs for visualizing the test results, plotting the performance of the algorithm on the benchmark problem over the generation count.
 
 \subsection{Non-functional requirements}
 
@@ -54,13 +53,17 @@ The framework is divided into three main components:
     \item The graphical user interface: This component allows the user to visualize the problem, solution process and network structure, as well as the test results.
 \end{itemize}
 
-% TODO check this
 The core is used by both the command line interface and the graphical user interface. And the graphical user interface is used by the command line interface.
 Indeed, the UI allows for the visualization of the solution process, but interaction with the framework is done when invoking it through the command line interface.
 
 The dependency graph of the framework is shown in \Cref{fig:dependency_graph}.
 
-% TODO add dependency graph
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{Pictures/dependency}
+    \caption{Dependency graph of the framework}
+    \label{fig:dependency_graph}
+\end{figure}
 
 \subsection{Background on Rust features}
 
