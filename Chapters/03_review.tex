@@ -293,15 +293,14 @@ $1$ if $\pi - \alpha \leq \theta$ and $0$ otherwise.
 
 \subsection{The CMA-ES Evolutionary Strategy}
 
-CMA-ES, short for \textit{Covariance Matrix Adaptation Evolution Strategy}, is a kind of evolution strategy (ES). An ES is an optimization technique based on evolution, and
-belonging to the class of evolutionary algorithms (EA).
+CMA-ES \cite{cmaes}, short for \textit{Covariance Matrix Adaptation Evolution Strategy}, is a kind of evolution strategy (ES) \cite{es_intro}.
 This kind of blax-box optimization algorithms aim at optimizing a function $f : \mathds{R}^n \to \mathds{R}$, for which the analytic form is not known,
-but for which evaluations of the function are possible. As it ts the case for CMA-ES, These algorithms are typically stochastic and are used for the optimization of
-non-linear or non-convex continuous optimization problems.
+but for which evaluations of the function are possible. As it ts the case for CMA-ESl these algorithms are typically stochastic and are used for the optimization of
+non-linear or non-convex continuous variables optimization problems.
 
-ES algorithms maintain a population of candidate solutions. These candidate solutions are sampled from a multivariate normal distribution. Parameters of the distribution
+ES algorithms maintain a (parametrized) population of candidate solutions. These candidate solutions are sampled from a multivariate normal distribution. Parameters of the distribution
 are updated at each generation based on the performance of the candidate solutions. As a matter of fact, a simple greedy ES algorithm could consist in updating the
-mean of the distribution, and using a fixed standard deviation. The mean is updated to the best solution after the evaluation of the fitness of each of the candidate
+mean of the distribution, and using a fixed standard deviation. The mean is updated to the best solution after the evaluation of the fitness of candidate
 solutions. The next generation is then sampled around this mean. However, this kind of simple greedy algorithms is particularly prone to getting stuck at local optima because
 of the lack of exploration.
 
@@ -311,15 +310,23 @@ practice, candidates solutions end up converging to a local optimum.
 
 CMA-ES addresses these issues and allows for the adaption of the search space when needed, reducing it when the confidence in current solutions is high, for fine-tuning, or
 increasing it when the confidence is low, in order to allow for more exploration. This is done by adapting the covariance matrix of the multivariate normal distribution,
-which stores pairwise dependencies between the parameters for the sample distribution. This makes CMA-ES a powerful and widely used optimization algorithm. The main drawback
-of this algorithm is its computational cost, induced by the use of the covariance matrix, which makes it less suitable for high-dimensional problems.
-
-...
-
-% TODO CMA-ES figure
+which stores pairwise dependencies between the parameters for the sample distribution. This process is illustrated in \Cref{fig:cmaes_visualization}.
+It makes CMA-ES a powerful and widely used optimization algorithm. The main drawback of this algorithm is its computational cost, induced by the use of the covariance matrix,
+which makes it less suitable for high-dimensional problems.
 
 CMA-ES can be used for the evolution of fixed-topology neural networks, by considering the weights of the connections as the parameters of the optimization problem,
-and converting between a vector representation of the network, for the optimization input, and the standard graph representation, for the evaluation.
+and converting between a vector representation of the network, for the optimization input, and the standard graph representation, for the evaluation of individuals.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{Pictures/cmaes}
+    \caption{Visualization of a CMA-ES evolution process on 5 generations.
+    The minimized function $f: (x,y) \in \mathds{R}^2 \to x^2 + y^2$ is depicted by lines of equal values. The mean and standard deviation of the distribution, visualized as an ellipse,
+    are updated at each generation. In particular, confidence is high in the first generation, but the solution is not optimal, in future generations, a larger
+    search space is used to explore the solution space, before the population concentrating around the $(0,0)$ optimum.}
+
+    \label{fig:cmaes_visualization}
+\end{figure}
 
 \subsection{Neuroevolution of Augmenting Topologies (NEAT)}
 

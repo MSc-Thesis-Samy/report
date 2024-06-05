@@ -14,7 +14,7 @@
 * [ ] Bna cone figure
 * [ ] Bna topology figure
 * [ ] Dependency graph in framework section
-* [ ] CMA-ES figure
+* [X] CMA-ES figure
 * [ ] Update cli listing
 * [ ] GUI sphere figure
 * [X] NEAT encoding figure
@@ -43,6 +43,7 @@
 * [ ] Update future work saying to add a genetic programming and indirect encoding algorithm
 * [ ] Code cleanup (parameters in pole balancing, todos, etc)
 * [ ] Move eval in practice to framework section
+* Shorter titles in list of figures and tables
 
 ## Questions
 
