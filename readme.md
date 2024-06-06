@@ -16,7 +16,7 @@
 * [X] Dependency graph in framework section
 * [X] CMA-ES figure
 * [X] Update cli listing
-* [ ] GUI figures
+* [X] GUI figures
 * [X] NEAT encoding figure
 * [X] NEAT crossover figure
 * [X] NEAT similarity equation

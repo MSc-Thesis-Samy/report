@@ -321,12 +321,39 @@ the normal vector and decision cones are shown. For the CMA-ES and NEAT algorith
 Similarly, for the \textit{XOR} problem, the only difference is that the unit-sphere is not shown.
 No visualization is shown for the higher dimension \textit{Proben1 Cancer1} problem.
 
-% TODO figure
-
 \subsubsection{Pole balancing}
 
 The visualization of the pole balancing problem consists in drawing the cart and pole, and updating their position based on the state of the simulation.
 It is implemented in the \texttt{pole\_balancing\_gui.rs} file. Compared to the classification problems, where the visualization is updated as the algorithm is evolved in the \texttt{update} method,
 the pole balancing visualization does not update the passed-in algorithm, but rather updates the simulation state based on the output of the algorithm.
 
-% TODO figure
+Screenshots of the GUI for different problems and algorithms are shown in \Cref{fig:gui_screenshots}.
+
+\begin{figure}
+    \centering
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+        \includegraphics[width=0.8\linewidth]{Pictures/oneplusonena_gui}
+        \caption{(1 + 1) NA algorithm on the \textit{Quarter} sphere classification problem}
+    \end{subfigure}%
+    \hfill
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+        \includegraphics[width=0.8\linewidth]{Pictures/xor_gui}
+        \caption{NEAT algorithm on the \textit{XOR} problem}
+    \end{subfigure}%
+    \hfill
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+        \includegraphics[width=0.8\linewidth]{Pictures/pole_balancing_gui}
+        \caption{Pole balancing simulation}
+    \end{subfigure}%
+    \hfill
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+        \includegraphics[width=0.8\linewidth]{Pictures/bna_gui}
+        \caption{BNA algorithm on the \textit{TwoQuarters} sphere classification problem}
+    \end{subfigure}%
+    \caption{Examples of the GUI visualizations for different problems and algorithms}
+    \label{fig:gui_screenshots}
+\end{figure}
