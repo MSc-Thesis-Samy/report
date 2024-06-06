@@ -8,10 +8,9 @@
 * [X] Algorithms and categories comparison table
 * [X] Benchmarks comparison table
 * [X] Related work
-* [ ] coordinates figure in (1 + 1) NA section
-* [ ] ANN figure in (1 + 1) NA section
+* [X] ANN figure in (1 + 1) NA section
 * [X] Add figure in hypershpere problems section
-* [ ] BNA cone figure
+* [X] BNA cone figure
 * [ ] BNA topology figure
 * [X] Dependency graph in framework section
 * [X] CMA-ES figure

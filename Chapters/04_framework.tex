@@ -280,7 +280,7 @@ Neuroevolution framework for testing algorithms on benchmark problems.
 Usage: main [OPTIONS] <ALGORITHM> <PROBLEM>
 
 Arguments:
-  <ALGORITHM>  The algorithm to test [possible values: oneplusonena, bna, neat, neural-network]
+  <ALGORITHM>  The algorithm to test [possible values: oneplusonena, bna, neat, cmaes]
   <PROBLEM>    the benchmark problem [possible values: half, quarter, two-quarters, square, cube, xor, pole-balancing, proben1, local-opt]
 
 Options:
@@ -317,7 +317,8 @@ The number of iterations and the best fitness value are shown in the top left co
 
 For the sphere classification problem, the unit-sphere is shown, along with its points which are labeled as \texttt{true}, which are shown in green, and its points
 labeled as \texttt{false} which are shown in red. When running the (1 + 1) NA algorithm, the decision line and normal vector are shown. In the case of the BNA algorithm,
-the normal vector and decision cones are shown. For the CMA-ES and NEAT algorithms, the output of the network is shown.
+the normal vector and decision cones are shown. For the CMA-ES and NEAT algorithms, the output of the network is shown, as a gradient of colors, with the green
+corresponding to the highest values and the red to the lowest values.
 Similarly, for the \textit{XOR} problem, the only difference is that the unit-sphere is not shown.
 No visualization is shown for the higher dimension \textit{Proben1 Cancer1} problem.
 
