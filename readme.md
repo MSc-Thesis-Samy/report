@@ -41,8 +41,3 @@
 * [ ] Revised project plan
 * [ ] Inspirations in figures
 * [ ] Update impl details
-
-## Questions
-
-* Why exactly is neuroevolution slow?
-* How to cite the unreleased paper?
