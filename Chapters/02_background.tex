@@ -205,12 +205,12 @@ Evolutionary algorithms can be organized into different categories, including:
 Neuroevolution is a subfield of machine learning, which combines evolutionary algorithms and artificial neural networks. The idea is to evolve the weights,
 and potentially, the architecture or hyperparameters of ANNs using an EA instead of gradient-based methods. Hence, this approach aims to
 offer an alternative to the manual trial-and-error process of designing suited architectures and choosing hyperparameters. Furthermore, this approach,
-being more general than traditional gradient-based methods, can be applied to a wide range of problems, such as reinforcement learning tasks, offering an
-alternative to the traditional reinforcement learning methods, which do not scale well for problems with large state space or partial observability
-\cite{challenges_of_rl,rl_control}, or other problems where no training data is available to perform supervised learning.
+being more general than traditional gradient-based methods, can be applied to a wide range of problems, without the need for any pre-defined knowledge on the task
+at hand, such as reinforcement learning tasks, offering an alternative to the traditional reinforcement learning methods, which do not scale well for problems with large
+state space or partial observability \cite{challenges_of_rl,rl_control}, or other problems where no training data is available to perform supervised learning.
 
-However, neuroevolution comes with a major limitation which its computational cost, making it not suitable for the evolution of networks with more than
-tens of thousands of parameters, while gradient-based methods have successfully been applied to networks with billions of parameters \cite{llama3}.
+However, neuroevolution generally comes with a major limitation which its computational cost, making it not suitable for the evolution of large networks,
+while gradient-based methods have successfully been applied to networks with billions of parameters \cite{llama3}.
 It is still particularly interesting for problems where smaller networks can be used or where other methods are not applicable.
 
 From the perspective of the EA, neural networks serve as the phenotype, one of the main challenges is to define an encoding strategy into genotypes, which

@@ -86,8 +86,10 @@ In fact, traits allow for the definition of a default implementation for a set o
 
 \subsubsection{Enums}
 
-% TODO discuss pattern matching and how enums are used in the framework
-...
+Enums are a powerful feature of Rust, which allow for the definition of a type through the enumeration of its possible variants.
+They are used in combination with pattern matching, which allows for the deconstruction of an enum and the extraction of its values.
+Together, these two features allow for the definition of complex types and the implementation of algorithms in a concise and readable way, and are widely used in the
+framework.
 
 \subsubsection{Library management}
 
@@ -102,8 +104,8 @@ or to define the behavior of the code. They are defined using the \texttt{\#} sy
 \subsubsection{Testing}
 
 In Rust, unit-testing is usually done by defining a test module (with a test attribute) at the end of the file containing the functionalities to be
-tested. Test functions correspond to functions defined in such modules, which are marked with a specific test attribute. Tests can be run
-with \texttt{cargo test}. They fail when a \textit{panics} occur, and utility macros such as \texttt{asserteq} or \texttt{assert} can be used to panic
+tested. Test functions correspond to functions defined in such modules, which are marked with a specific test attribute. They can be run
+with \texttt{cargo test} and fail when a \textit{panics} occur.  Utility macros such as \texttt{asserteq} or \texttt{assert} can be used to panic
 when conditions are not met.
 
 \subsubsection{Concurrency}
@@ -138,33 +140,52 @@ fn sum_of_squares_parallel(input: &[i32]) -> i32 {
 \subsection{Core}
 
 This component contains the core functionality of the framework
+
 Various constants and utility functions, used across the project, are defined in the \texttt{utils.rs} and \texttt{constants.rs} files.
 
 \subsubsection{Algorithms}
 
 The algorithms are implemented as structs and are accessed as variants of an \texttt{Algorithm} enum, which lists all the implemented algorithms.
 The algorithm structs and the \texttt{Algorithm} enum implement the \texttt{NeuroevolutionAlgorithm} trait, which defines the methods that an algorithm must implement.
-These methods are \texttt{optimization\_step}, \texttt{optimize\_cmaes}, \texttt{evaluate} and \texttt{optimize}, which is implemented as a default method in the trait.
+These methods are:
+
+\begin{itemize}
+    \item \texttt{evaluate}: This method takes as input a vector of floats and returns the output of the algorithm on this input.
+    \item \texttt{optimization\_step}: This method takes as input a problem and performs an optimization step on the algorithm.
+    \item \texttt{optimize}: This method takes as input a problem and a number of iterations, and performs successive optimization steps on the algorithm.
+        It is implemented as a default method, which calls the \texttt{optimization\_step} method in a loop.
+    \item \texttt{optimize\_with\_early\_stopping}: This method takes as input a problem, a number of maximum iterations, a tolerance value and an optional number of
+        stagnation iterations. It performs optimization steps on the algorithm, stopping when the maximum number of iterations is reached, when the fitness value
+        is close enough to the optimal value (based on the passed-in tolerance) or when the fitness value has not improved for a number of iterations (based on the
+        passed-in stagnation iterations). It is also implemented as a default method at the trait level.
+\end{itemize}
+
 The \texttt{Algorithm} enum and the \texttt{NeuroevolutionAlgorithm} trait are defined in the \\ \texttt{neuroevolution\_algorithm.rs} file.
-Each of the different algorithm structs are defined in their own file, such as \texttt{vneuron.rs} or \texttt{neat.rs}.
+Each of the different algorithm structs are defined in their own file, such as \texttt{neat.rs} or \texttt{vnetwork.rs}.
 
 \subsubsection{Benchmarks}
 
 The problems are implemented as variants of a \texttt{Benchmark} enum, and are defined in the \texttt{becnhmarks.rs} file.
-This enum contains three variant, for each of the implemented benchmark types: \texttt{PoleBalancing}, \texttt{Classification} and \texttt{SphereClassification}.
-The two classification enums hold an instance of the \texttt{LabeledPoints} type, storing the labeled data. The file contains functions to generate the
-data for each of the classification problems, i.e, parsing it from a text file for the \textit{cancer} problem and generating and iterating other
+This enum contains four variant, for each of the implemented benchmark types: \texttt{PoleBalancing}, \texttt{Classification}, \texttt{SphereClassification}
+and \\ \texttt{DatasetClassification}.
+The classification variants hold an instance of the \texttt{LabeledPoints} type, storing the labeled data.
+Because of the presence of a training and testing set in the case of the \texttt{DatasetClassification} variant, the variant stores two instance of this type.
+The file contains functions to generate the
+data for each of the classification problems, i.e, parsing it from a text file for the \textit{Cancer1} problem, or iterating other
 angle values for the sphere classification problems. In particular, the \texttt{Benchmark} enum defines a \texttt{evaluate} method, taking as input an
 algorithm (an instance of the \texttt{Algorithm} enum) and which returns the fitness of the algorithm on the task.
+It also defines a \texttt{test} method, which generally behaves the same as the \texttt{evaluate} method, except for dataset classification problems, where
+the fitness is computed on the testing set, as opposed to the training set in the \texttt{evaluate} method.
 
 \paragraph{Classification problems} For the sphere classification and dataset classification tasks, the fitness is computed using the \texttt{classification}
-function from the \texttt{benchmarks.rs} file, which computes the $MAE$ (Mean Absolute Error). For the bna and (1 + 1) NA algorithm, which output boolean
+function from the \texttt{benchmarks.rs} file, which computes the $MAE$ (Mean Absolute Error) \footnote{\url{https://en.wikipedia.org/wiki/Mean_absolute_error}}
+For the bna and (1 + 1) NA algorithm, which output boolean
 values, this is equivalent to computing the accuracy (i.e, the number of correct predictions divided by the number of total predictions), while also
 allowing for the evaluation of the CMA-ES and NEAT method, outputting probables when using the sigmoid activation on the output neuron.
 
 \paragraph{Pole Balancing} The logic for the pole balancing simulation is implemented in the  \\ \texttt{pole\_balancing.rs} file, where the state is defined, along with methods
-responsible for updating it based on the equations and the Euler method. The \texttt{pole\_balancing} function in the \texttt{benchmarks.rs} file simply
-updates the state, using the algorithm output as the applied force, and checking whether or not the success conditions for the task are still met.
+responsible for updating it based on the dynamic equations and the Euler method. The \texttt{pole\_balancing} function in the \texttt{benchmarks.rs} file simply
+updates the state, using the scaled algorithm output as the applied force, and checking whether or not the success conditions for the task are still met.
 
 \subsubsection{Testing}
 
@@ -211,10 +232,10 @@ In order to ensure that the passed-in arguments are valid, the rust type system 
 For example, the iteration number is set to an unsigned integer \texttt{u32}, while the algoithm and benchmarks are set to two enums, \texttt{AlgorithmType} and
 \texttt{Problem}, with variants for each possible option.
 
-The command line interface is shown in \ref{verb:cli}. Parameters for the BNA and $(1 + 1)$ NA algorithms are passed in as named arguments. For NEAT and CMA-ES, where more
+The command line interface is shown in \Cref{verb:cli}. Parameters for the BNA and $(1 + 1)$ NA algorithms are passed in as named arguments. For NEAT and CMA-ES, where more
 parameters can be specified, the path to \texttt{.toml} configuration files are passed-in instead. Examples of such configuration files are shown in \ref{verb:cmaes_config}
 and \ref{verb:neat_config}. The CMA-ES configuration file is used to specify the fixed network topology and activation functions, while the NEAT configuration file
-is used to specify the various parameters of the algorithm.
+is used to specify the various parameters of the algorithm. Some configuration files are provided in the \texttt{config} directory.
 
 \begin{lstlisting}[label=verb:cmaes_config,caption=Example of configuration File for CMAE-ES,float,frame=tb]
 input_ids = [1, 2]
@@ -253,7 +274,6 @@ champion_copy_threshold = 5
 stagnation_threshold = 1500
 \end{lstlisting}
 
-% TODO update
 \begin{lstlisting}[label=verb:cli,caption=Command line interface,float,frame=tb]
 Neuroevolution framework for testing algorithms on benchmark problems.
 
@@ -261,25 +281,25 @@ Usage: main [OPTIONS] <ALGORITHM> <PROBLEM>
 
 Arguments:
   <ALGORITHM>  The algorithm to test [possible values: oneplusonena, bna, neat, neural-network]
-  <PROBLEM>    the benchmark problem [possible values: half, quarter, two-quarters, square, cube, xor, pole-balancing, proben1-train, proben1-test]
+  <PROBLEM>    the benchmark problem [possible values: half, quarter, two-quarters, square, cube, xor, pole-balancing, proben1, local-opt]
 
 Options:
   -r, --resolution <RESOLUTION>  Resolution, when applicable [default: 1000]
   -i, --iterations <ITERATIONS>  Number of iterations [default: 500]
-  -c, --continuous               Use the continuous version of the algorithm, when applicable
-  -e, --es                       Optimize using cma-es
   -n, --neurons <NEURONS>        Number of neurons, when applicable [default: 1]
   -g, --gui                      Display visualization
   -f, --file <FILE>              Configuration file
   -o, --output <OUTPUT>          Results output file
   -t, --test-runs <TEST_RUNS>    Number of runs
+  -e, --error-tol <ERROR_TOL>    Max fitness tolerance [default: 0.02]
+  -s, --stagnation <STAGNATION>  Max stagnation
   -h, --help                     Print help
   -V, --version                  Print version
 \end{lstlisting}
 
 \subsection{Graphical user interface}
 
-The UI is implemented using the \texttt{ggez} crate, which is intended to be a simple 2D game framework.
+The UI is implemented using the \texttt{ggez} \footnote{\url{https://ggez.rs}} crate, which is intended to be a simple 2D game framework.
 In particular, it provides a simple interface for creating windows, drawing geometrical shapes and handling user input.
 This crate relies on the definition of a \texttt{State} struct, which holds the parameters of the game state, and which implements the \texttt{EventHandler} trait.
 This trait defines two methods: \texttt{update}, which is used for updating the state, and \texttt{draw} which is used for rendering the state.
@@ -298,6 +318,8 @@ The number of iterations and the best fitness value are shown in the top left co
 For the sphere classification problem, the unit-sphere is shown, along with its points which are labeled as \texttt{true}, which are shown in green, and its points
 labeled as \texttt{false} which are shown in red. When running the (1 + 1) NA algorithm, the decision line and normal vector are shown. In the case of the BNA algorithm,
 the normal vector and decision cones are shown. For the CMA-ES and NEAT algorithms, the output of the network is shown.
+Similarly, for the \textit{XOR} problem, the only difference is that the unit-sphere is not shown.
+No visualization is shown for the higher dimension \textit{Proben1 Cancer1} problem.
 
 % TODO figure
 

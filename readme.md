@@ -15,7 +15,7 @@
 * [ ] BNA topology figure
 * [X] Dependency graph in framework section
 * [X] CMA-ES figure
-* [ ] Update cli listing
+* [X] Update cli listing
 * [ ] GUI figures
 * [X] NEAT encoding figure
 * [X] NEAT crossover figure
@@ -23,7 +23,6 @@
 * [X] Pole Balancing figure
 * [X] Pole Balancing equations
 * [X] Trigonometry equations for (1 + 1) NA and BNA
-* [ ] Optional? Add figures for (1 + 1) NA and BNA evaluation details
 * [X] ANN figure for background section
 * [X] Discuss the different kinds of EAs in the background section
 * [X] EAs pseudocode in the background section
@@ -35,11 +34,13 @@
 * [ ] Add configs in the appendix
 * [ ] Flow diagram for algorithm selection
 * [ ] Mention irace and co in future work section
-* [ ] Mention no need for any pre-defined knowledge on the task in advantages
 * [ ] Update future work saying to add a genetic programming and indirect encoding algorithm
-* [ ] Code cleanup (parameters in pole balancing, todos, etc)
+* [ ] Code cleanup (parameters in pole balancing configs, todos, error handling in main, etc)
 * [ ] Move eval in practice to framework section
 * [ ] Shorter titles in list of figures and tables
+* [ ] Revised project plan
+* [ ] Inspirations in figures
+* [ ] Update impl details
 
 ## Questions
 
