@@ -35,7 +35,7 @@
 * [ ] Update future work saying to add a genetic programming and indirect encoding algorithm + irace + hard wired OR
 * [ ] Code cleanup (parameters in pole balancing configs, todos, error handling in main, etc)
 * [X] Move eval in practice to framework section
-* [ ] Shorter titles in list of figures and tables
+* [X] Shorter titles in list of figures and tables
 * [ ] Revised project plan
 * [ ] Inspirations in figures
 * [ ] Update impl details

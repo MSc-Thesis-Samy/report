@@ -349,8 +349,8 @@ and converting between a vector representation of the network, for the optimizat
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{Pictures/cmaes}
-    \caption{Visualization of a CMA-ES evolution process on 5 generations.
-    The minimized function $f: (x,y) \in \mathds{R}^2 \to x^2 + y^2$ is depicted by lines of equal values. The mean and standard deviation of the distribution, visualized as an ellipse,
+    \caption{Visualization of a CMA-ES evolution process on 5 generations}
+    {The minimized function $f: (x,y) \in \mathds{R}^2 \to x^2 + y^2$ is depicted by lines of equal values. The mean and standard deviation of the distribution, visualized as an ellipse,
     are updated at each generation. In particular, confidence is high in the first generation, but the solution is not optimal, in future generations, a larger
     search space is used to explore the solution space, before the population concentrating around the $(0,0)$ optimum.}
 
@@ -380,7 +380,7 @@ An example of a genotype to phenotype mapping is shown in \Cref{fig:neat_genome}
 \begin{figure}
     \centering
     \includegraphics[width=0.9\textwidth]{Pictures/neat_encoding}
-    \caption{NEAT genotype to phenotype mapping example. The disabled connection, with innovation number $2$, is not expressed in the phenotype.}
+    \caption{NEAT genotype to phenotype mapping example.}{The disabled connection, with innovation number $2$, is not expressed in the phenotype.}
     \label{fig:neat_genome}
 \end{figure}
 
@@ -406,7 +406,7 @@ complex networks. An example of the effect of both mutations is shown in \Cref{f
 \begin{figure}
     \centering
     \includegraphics[width=0.9\textwidth]{Pictures/neat_mutations}
-    \caption{NEAT mutations example. The add node connection mutation adds a connection between nodes $1$ and $3$.
+    \caption{NEAT mutations example}{The add node connection mutation adds a connection between nodes $1$ and $3$.
     The add node mutation splits the connection between nodes $1$ and $4$, adding a new node $5$ and two new connections. The connection between nodes $1$ and $4$ is disabled.}
     \label{fig:neat_mutations}
 \end{figure}
@@ -424,7 +424,7 @@ An example of crossover is shown in \Cref{fig:neat_crossover}.
 \begin{figure}
     \centering
     \includegraphics[width=0.9\textwidth]{Pictures/neat_crossover}
-    \caption{NEAT crossover example. Matching genes are inherited from both parents at random. Disjoint and excess genes are inherited from the fittest parent. In this case, the
+    \caption{NEAT crossover example}{Matching genes are inherited from both parents at random. Disjoint and excess genes are inherited from the fittest parent. In this case, the
     disabled gene with innovation $9$ was enabled in the offspring.}
     \label{fig:neat_crossover}
 \end{figure}
@@ -570,7 +570,7 @@ The four problems are illustrated in \Cref{fig:sphere_classification}.
 \draw [black, line width=1.0, domain=180:240] plot ({8+cos(\x)}, {sin(\x)});
 \draw [black, line width=1.0, domain=330:360] plot ({8+cos(\x)}, {sin(\x)});
 \end{tikzpicture}
-\caption{Unit hypersphere classification problems. The red area represents the positive class, while the black area represents the negative class.}
+\caption{Unit hypersphere classification problems}{The red area represents the positive class, while the black area represents the negative class.}
 \label{fig:sphere_classification}
 \end{figure}
 
@@ -616,7 +616,7 @@ in this project.
 \begin{figure}
     \centering
     \includegraphics[width=0.8\textwidth]{Pictures/cart_pole}
-    \caption{Double pole balancing problem. The cart is controlled by applying a force of magnitude $F$ to it, in order to balance the two poles attached to it.}
+    \caption{Double pole balancing problem}{The cart is controlled by applying a force of magnitude $F$ to it, in order to balance the two poles attached to it.}
     \label{fig:pole_balancing}
 \end{figure}
 

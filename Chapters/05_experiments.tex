@@ -160,8 +160,8 @@ resolutions where the problems could be solved and the number of iterations need
 \begin{figure}
     \centering
     \includegraphics[width=7cm]{Pictures/twoquarters-single}
-    \caption{Visualization of a solution with a fitness of $0.75$ after evolution of the $(1 + 1)$ NA algorithm with one neuron on the \textit{TwoQuarters} problem.
-    The top-left quarter of the unit sphere is misclassified.}
+    \caption{Visualization of a solution with a fitness of $0.75$ after evolution of the $(1 + 1)$ NA algorithm with one neuron on the \textit{TwoQuarters} problem}
+    {The top-left quarter of the unit sphere is misclassified.}
     \label{fig:na_twoquarters_single_visual}
 \end{figure}
 
@@ -316,8 +316,8 @@ impact of the number of neurons on the computational cost of the algorithm.
         \end{axis}
         \end{tikzpicture}
     \end{center}
-    \caption{Performance metrics of the $(1 + 1)$ NA algorithm on the \textit{Half} and \textit{Quarter} benchmarks, with a single neuron, over different resolutions.
-    The evolution stopped when the fitness was $2\%$ away from the maximal fitness of $1.0$. The maximum number of iterations was set to $200$.}
+    \caption{Performance metrics of the $(1 + 1)$ NA algorithm on the \textit{Half} and \textit{Quarter} benchmarks, with a single neuron, and a maximum iterations stopping criteria, over different resolutions}
+    {The evolution stopped when the fitness was $2\%$ away from the maximal fitness of $1.0$. The maximum number of iterations was set to $200$.}
     \label{fig:na_maxiter}
 \end{figure}
 
@@ -438,8 +438,8 @@ impact of the number of neurons on the computational cost of the algorithm.
         \end{axis}
         \end{tikzpicture}
     \end{center}
-    \caption{Performance metrics of the $(1 + 1)$ NA algorithm on the \textit{Half} benchmark, with a single neuron, over different resolutions.
-    The evolution stopped when the fitness was $2\%$ away from the maximal fitness of $1.0$ or the maximum number of stagnation iteration was reached.}
+    \caption{Performance metrics of the $(1 + 1)$ NA algorithm on the \textit{Half} benchmark, with a single neuron and a maximum number of stagnation iterations criteria, over different resolutions}
+    {The evolution stopped when the fitness was $2\%$ away from the maximal fitness of $1.0$ or the maximum number of stagnation iteration was reached.}
     \label{fig:na_half_stagnation}
 \end{figure}
 
@@ -560,8 +560,8 @@ impact of the number of neurons on the computational cost of the algorithm.
         \end{axis}
         \end{tikzpicture}
     \end{center}
-    \caption{Performance metrics of the $(1 + 1)$ NA algorithm on the \textit{Quarter} benchmark, with a single neuron, over different resolutions.
-    The evolution stopped when the fitness was $2\%$ away from the maximal fitness of $1.0$ or the maximum number of stagnation iteration was reached.}
+    \caption{Performance metrics of the $(1 + 1)$ NA algorithm on the \textit{Quarter} benchmark, with a single neuron, over different resolutions}
+    {The evolution stopped when the fitness was $2\%$ away from the maximal fitness of $1.0$ or the maximum number of stagnation iteration was reached.}
     \label{fig:na_quarter_stagnation}
 \end{figure}
 
@@ -668,8 +668,8 @@ impact of the number of neurons on the computational cost of the algorithm.
         \end{axis}
         \end{tikzpicture}
     \end{center}
-    \caption{Performance metrics of the $(1 + 1)$ NA algorithm on the \textit{TwoQuarters} benchmark, over different maximum iterations.
-    The evolution stopped when the fitness was $2\%$ away from the maximal fitness of $1.0$ or the maximum number of iterations was reached.}
+    \caption{Performance metrics of the $(1 + 1)$ NA algorithm on the \textit{TwoQuarters} benchmark, with a maximum number of iterations criteria, over different maximum iterations}
+    {The evolution stopped when the fitness was $2\%$ away from the maximal fitness of $1.0$ or the maximum number of iterations was reached.}
     \label{fig:na_twoquarters}
 \end{figure}
 
@@ -723,8 +723,8 @@ impact of the number of neurons on the computational cost of the algorithm.
         \end{axis}
         \end{tikzpicture}
     \end{center}
-    \caption{Performance metrics of the $(1 + 1)$ NA algorithm on the \textit{TwoQuarters} benchmark with two  neurons, over different numbers of maximum stagnant iterations.
-    The evolution stopped when the fitness was $2\%$ away from the maximal fitness of $1.0$, when $2500$ iterations was reached, or the maximum number of stagnant iterations was reached.}
+    \caption{Performance metrics of the $(1 + 1)$ NA algorithm on the \textit{TwoQuarters} benchmark with two neurons, over different numbers of maximum stagnant iterations}
+    {The evolution stopped when the fitness was $2\%$ away from the maximal fitness of $1.0$, when $2500$ iterations was reached, or the maximum number of stagnant iterations was reached.}
     \label{fig:na_twoquarters_stag}
 \end{figure}
 
@@ -855,8 +855,8 @@ impact of the number of neurons on the computational cost of the algorithm.
         \end{axis}
         \end{tikzpicture}
     \end{center}
-    \caption{Performance metrics of the $(1 + 1)$ NA algorithm on the \textit{LocalOpt} benchmark, over different maximum iterations.
-    The evolution stopped when the fitness was $2\%$ away from the maximal fitness of $1.0$ or the maximum number of iterations was reached.}
+    \caption{Performance metrics of the $(1 + 1)$ NA algorithm on the \textit{LocalOpt} benchmark, over different maximum iterations}
+    {The evolution stopped when the fitness was $2\%$ away from the maximal fitness of $1.0$ or the maximum number of iterations was reached.}
     \label{fig:na_localopt}
 \end{figure}
 
@@ -886,7 +886,7 @@ in most cases.
 \end{figure}
 
 \begin{table}
-    \caption{Results of the $1 + 1$ NA algorithm on the \textit{XOR} problem. The algorithm was tested with a maximum number of stagnant iterations of $200$.}
+    \caption{Results of the (1 + 1) NA algorithm on the \textit{XOR} problem}{The algorithm was tested with a maximum number of stagnant iterations of $200$.}
     \centering
     \label{tab:na_xor}
     \begin{tabular}{ |c|c|c|c| }
@@ -915,7 +915,7 @@ on this problem. One could then try to use a maximum number iteration criteria o
 However, this value is still too low starting from three neurons. The one neuron case still gets the best result, but more importantly, the CPU time is already way higher than for the previous problems.
 
 \begin{table}
-    \caption{Results of the $1 + 1$ NA algorithm on the \textit{Proben1 Cancer1} problem. The algorithm was tested with $10000$ iterations.}
+    \caption{Results of the $1 + 1$ NA algorithm on the \textit{Proben1 Cancer1} problem}{The algorithm was tested with $10000$ iterations.}
     \centering
     \label{tab:na_proben1}
     \begin{tabular}{ |c|c|c|c| }
@@ -1018,8 +1018,8 @@ However, this value is still too low starting from three neurons. The one neuron
         \end{axis}
         \end{tikzpicture}
     \end{center}
-    \caption{Performance metrics of the $(1 + 1)$ NA algorithm on the \textit{Proben1 Cancer1} benchmark, over different number of neurons.
-    The evolution stopped when the fitness was $2\%$ away from the maximal fitness of $1.0$ or the maximum number of $200$ stagnant iterations was reached.}
+    \caption{Performance metrics of the $(1 + 1)$ NA algorithm on the \textit{Proben1 Cancer1} benchmark, over different number of neurons}
+    {The evolution stopped when the fitness was $2\%$ away from the maximal fitness of $1.0$ or the maximum number of $200$ stagnant iterations was reached.}
     \label{fig:na_proben1}
 \end{figure}
 
@@ -1141,8 +1141,8 @@ as it was the case for the $(1 + 1)$ NA algorithm, the results on the two proble
         \end{axis}
         \end{tikzpicture}
     \end{center}
-    \caption{Performance metrics of the BNA algorithm on the \textit{Half} and \textit{Quarter} benchmarks, over different maximum iterations.
-    The evolution stopped when the fitness was $2\%$ away from the maximal fitness of $1.0$ or the maximum number of iterations was reached.}
+    \caption{Performance metrics of the BNA algorithm on the \textit{Half} and \textit{Quarter} benchmarks, over different maximum iterations}
+    {The evolution stopped when the fitness was $2\%$ away from the maximal fitness of $1.0$ or the maximum number of iterations was reached.}
     \label{fig:bna_half_quarter}
 \end{figure}
 
@@ -1292,8 +1292,8 @@ and \Cref{fig:bna_localopt_visual}.
         \end{axis}
         \end{tikzpicture}
     \end{center}
-    \caption{Performance metrics of the BNA algorithm on the \textit{TwoQuarters} benchmark, over different maximum iterations.
-    The evolution stopped when the fitness was $2\%$ away from the maximal fitness of $1.0$ or the maximum number of iterations was reached.}
+    \caption{Performance metrics of the BNA algorithm on the \textit{TwoQuarters} benchmark, over different maximum iterations}
+    {The evolution stopped when the fitness was $2\%$ away from the maximal fitness of $1.0$ or the maximum number of iterations was reached.}
     \label{fig:bna_twoquarters}
 \end{figure}
 
@@ -1424,8 +1424,8 @@ and \Cref{fig:bna_localopt_visual}.
         \end{axis}
         \end{tikzpicture}
     \end{center}
-    \caption{Performance metrics of the BNA algorithm on the \textit{LocalOpt} benchmark, over different maximum iterations.
-    The evolution stopped when the fitness was $2\%$ away from the maximal fitness of $1.0$ or the maximum number of iterations was reached.}
+    \caption{Performance metrics of the BNA algorithm on the \textit{LocalOpt} benchmark, over different maximum iterations}
+    {The evolution stopped when the fitness was $2\%$ away from the maximal fitness of $1.0$ or the maximum number of iterations was reached.}
     \label{fig:bna_localopt}
 \end{figure}
 
@@ -1446,7 +1446,7 @@ while also resulting in a slight decrease in the number of iterations, but the C
 \end{figure}
 
 \begin{table}
-    \caption{Results of the BNA algorithm on the \textit{XOR} problem. The algorithm was tested with a maximum number of stagnant iterations of $200$.}
+    \caption{Results of the BNA algorithm on the \textit{XOR} problem}{The algorithm was tested with a maximum number of stagnant iterations of $200$.}
     \centering
     \label{tab:bna_xor}
     \begin{tabular}{ |c|c|c|c| }
@@ -1470,7 +1470,7 @@ the configurations with more than three V-neurons to reach a fitness as high as 
 a further increase in the number of iterations impractical.
 
 \begin{table}
-    \caption{Results of the BNA algorithm on the \textit{Proben1 Cancer1} problem. The algorithm was tested with $10000$ iterations.}
+    \caption{Results of the BNA algorithm on the \textit{Proben1 Cancer1} problem}{The algorithm was tested with $10000$ iterations.}
     \centering
     \label{tab:bna_proben1}
     \begin{tabular}{ |c|c|c|c| }
@@ -1573,8 +1573,8 @@ a further increase in the number of iterations impractical.
         \end{axis}
         \end{tikzpicture}
     \end{center}
-    \caption{Performance metrics of the BNA algorithm on the \textit{Proben1 Cancer1} benchmark, over different number of neurons.
-    The evolution stopped when the fitness was $2\%$ away from the maximal fitness of $1.0$ or the maximum number of $200$ stagnant iterations was reached.}
+    \caption{Performance metrics of the BNA algorithm on the \textit{Proben1 Cancer1} benchmark, over different number of neurons}
+    {The evolution stopped when the fitness was $2\%$ away from the maximal fitness of $1.0$ or the maximum number of $200$ stagnant iterations was reached.}
     \label{fig:bna_proben1}
 \end{figure}
 
@@ -1680,8 +1680,8 @@ on average, while a population of $1500$ individuals resulted in a fitness of $0
         \end{axis}
         \end{tikzpicture}
     \end{center}
-    \caption{Performance metrics of the NEAT algorithm on the \textit{XOR} benchmark, over different population sizes.
-    The evolution stopped when the fitness was $2\%$ away from the maximal fitness of $1.0$ or the maximum number of $500$ generations was reached.
+    \caption{Performance metrics of the NEAT algorithm on the \textit{XOR} benchmark, over different population sizes}
+    {The evolution stopped when the fitness was $2\%$ away from the maximal fitness of $1.0$ or the maximum number of $500$ generations was reached.
     The other parameters were set to the same values as in \cite{neat}.}
     \label{fig:neat_xor}
 \end{figure}
@@ -1769,8 +1769,8 @@ all individuals being similar.
         \end{axis}
         \end{tikzpicture}
     \end{center}
-    \caption{Performance metrics of the NEAT algorithm on the \textit{XOR} benchmark, over different similarity thresholds.
-    The evolution stopped when the fitness was $2\%$ away from the maximal fitness of $1.0$ or the maximum number of $500$ generations was reached.
+    \caption{Performance metrics of the NEAT algorithm on the \textit{XOR} benchmark, over different similarity thresholds}
+    {The evolution stopped when the fitness was $2\%$ away from the maximal fitness of $1.0$ or the maximum number of $500$ generations was reached.
     The other parameters were set to the same values as in \cite{neat}.}
     \label{fig:neat_xor_similarity}
 \end{figure}
@@ -1854,8 +1854,8 @@ The algorithm was able to solve the problem in less than $150$ generations on av
         \end{axis}
         \end{tikzpicture}
     \end{center}
-    \caption{Performance metrics of the NEAT algorithm on the \textit{XOR} benchmark, over different maximum generations.
-    The evolution stopped when the fitness was $2\%$ away from the maximal fitness of $1.0$ or the maximum number of generations was reached.
+    \caption{Performance metrics of the NEAT algorithm on the \textit{XOR} benchmark, over different maximum generations}
+    {The evolution stopped when the fitness was $2\%$ away from the maximal fitness of $1.0$ or the maximum number of generations was reached.
     The other parameters were set to the same values as in \cite{neat}.}
     \label{fig:neat_xor_generations}
 \end{figure}
@@ -1944,8 +1944,8 @@ too many nodes are added, which results in an increase in the CPU time, and a de
         \end{axis}
         \end{tikzpicture}
     \end{center}
-    \caption{Performance metrics of the NEAT algorithm on the \textit{XOR} benchmark, over different new node mutation probabilities.
-    The evolution stopped when the fitness was $2\%$ away from the maximal fitness of $1.0$ or the maximum number of generations was reached.
+    \caption{Performance metrics of the NEAT algorithm on the \textit{XOR} benchmark, over different new node mutation probabilities}
+    {The evolution stopped when the fitness was $2\%$ away from the maximal fitness of $1.0$ or the maximum number of generations was reached.
     The other parameters were set to the same values as in \cite{neat}.}
     \label{fig:neat_xor_probabilities}
 \end{figure}
@@ -1959,7 +1959,7 @@ when considering the same number of iterations. This is because of the fitness e
 system.
 
 \begin{table}
-    \caption{Results of the NEAT algorithm on the \textit{Pole balancing} problem. The algorithm was tested with the same configuration as in \cite{neat}, with a maximum of $100$ generations.}
+    \caption{Results of the NEAT algorithm on the \textit{Pole balancing} problem}{The algorithm was tested with the same configuration as in \cite{neat}, with a maximum of $100$ generations.}
     \centering
     \label{tab:nneat_pole}
     \begin{tabular}{ |c|c|c| }
