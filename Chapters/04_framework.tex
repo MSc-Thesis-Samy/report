@@ -163,6 +163,29 @@ These methods are:
 The \texttt{Algorithm} enum and the \texttt{NeuroevolutionAlgorithm} trait are defined in the \\ \texttt{neuroevolution\_algorithm.rs} file.
 Each of the different algorithm structs are defined in their own file, such as \texttt{neat.rs} or \texttt{vnetwork.rs}.
 
+For the CMA-ES algorithm, the \texttt{cmaes} crate \footnote{\url{https://docs.rs/cmaes/latest/cmaes/}}  is used. An external library was used instead of implementing
+the algorithm from scratch in the framework because of the popularity of CMA-ES, which led to the devlopment of high quality and trusted libraries for different programming
+languages, and because the focus of the thesis regarding this algorithm is not on the CMA-ES algorithm itself, as its default parameters can already be applied to problems, but
+on the topology of the used networks.
+
+As described in \Cref{chap:review}, the computation of outputs for these two algorithms consist in checking whether or
+not the input is above hyperplanes in the case of (1 + 1) NA, or in cones in the case of BNA. The following two paragraphs described how this is done in the framework.
+
+\paragraph{Computation for (1 + 1) NA in practice: }
+The ANNs which are evolved using the (1 + 1) NA algorithm output the union of $N$-dimensional hyperplanes. To check whether or not the input is above the
+hyperplane described by one of the neurons, the normal vector $\overrightarrow{n}$ to the hyperplane is computed using the angles and a norm of $1$.
+For an input vector $\overrightarrow{x}$, the dot product $(\overrightarrow{x} - \lvert b \rvert \overrightarrow{n}) \cdot \overrightarrow{n}$ is computed, where
+$b$ is the bias of the neuron. If $b \geq 0$, the output of the neuron is $1$ if the dot product is positive and $0$ otherwise. If $b < 0$,
+the output of the neuron is $1$ if the dot product is negative and $0$ otherwise.
+
+\paragraph{Computation for BNA in practice: }
+V-neurons output whether or not the input is in the cone described by the neuron. The vector $\overrightarrow{\varphi}$ is computed using the angles $\varphi_1, \ldots, \varphi_{D-1}$
+and a norm of $1$. Given an input vector $\overrightarrow{x}$, the dot product $(\overrightarrow{x} - \lvert b \rvert \overrightarrow{\varphi}) \cdot \overrightarrow{\varphi}$ is computed.
+The angle $\alpha$ between the input vector and the normal vector can then be computed as
+$\alpha = \cos^{-1}(\frac{(\overrightarrow{x} - \lvert b \rvert \overrightarrow{\varphi}) \cdot \overrightarrow{\varphi})}{\lVert \overrightarrow{x} - \lvert b \rvert \overrightarrow{\varphi} \rVert
+\lVert \overrightarrow{\varphi} \rVert})$. If $b \geq 0$, the output of the neuron is $1$ if $\alpha \leq \theta$ and $0$ otherwise. If $b < 0$, the output of the neuron is
+$1$ if $\pi - \alpha \leq \theta$ and $0$ otherwise.
+
 \subsubsection{Benchmarks}
 
 The problems are implemented as variants of a \texttt{Benchmark} enum, and are defined in the \texttt{becnhmarks.rs} file.
@@ -354,6 +377,18 @@ Screenshots of the GUI for different problems and algorithms are shown in \Cref{
         \centering
         \includegraphics[width=0.8\linewidth]{Pictures/bna_gui}
         \caption{BNA algorithm on the \textit{TwoQuarters} sphere classification problem}
+    \end{subfigure}%
+    \hfill
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+        \includegraphics[width=0.8\linewidth]{Pictures/oneplusonena_xor_gui}
+        \caption{(1 + 1) NA algorithm on the \textit{XOR} problem}
+    \end{subfigure}%
+    \hfill
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+        \includegraphics[width=0.8\linewidth]{Pictures/neat_sphere_gui}
+        \caption{NEAT algorithm on the \textit{Quarter} problem}
     \end{subfigure}%
     \caption{Examples of the GUI visualizations for different problems and algorithms}
     \label{fig:gui_screenshots}

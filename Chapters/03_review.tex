@@ -247,14 +247,6 @@ $\text{Harm}(r)$ on $\{1, \dots, r\}$: For $l \sim \text{Harm}(r)$,
 \end{algorithmic}
 \end{algorithm}
 
-\subsubsection{The evaluation in practice}
-
-The ANNs which are evolved using the (1 + 1) NA algorithm output the union of $N$-dimensional hyperplanes. To check whether or not the input is above the
-hyperplane described by one of the neurons, the normal vector $\overrightarrow{n}$ to the hyperplane is computed using the angles and a norm of $1$.
-For an input vector $\overrightarrow{x}$, the dot product $(\overrightarrow{x} - \lvert b \rvert \overrightarrow{n}) \cdot \overrightarrow{n}$ is computed, where
-$b$ is the bias of the neuron. If $b \geq 0$, the output of the neuron is $1$ if the dot product is positive and $0$ otherwise. If $b < 0$,
-the output of the neuron is $1$ if the dot product is negative and $0$ otherwise.
-
 \subsection{Bias-Invariant (1+1) NA (BNA)}
 
 In \cite{bna}, the authors extend upon the analysis in \cite{na} by considering more realistic ANN settings, presenting the Bias-Invariant (1+1) NA (BNA) algorithm.
@@ -265,10 +257,12 @@ This allows for the construction of bended hyperplanes, resulting in solutions t
 
 The considered ANNs contain three layers, in which each of the neurons uses a ReLU activation function i.e they output $\max(0, \sum_{i=1}^k w_i x_i)$ for
 $k$ inputs from the previous layer.
-The weights between the first and second layer and between the second and third layer are fixed. The topology for $D = 2$ in shown in \Cref{fig:bna-ann}.
-The use of ReLU activation functions results in piecewise linear output. Hence, these networks compute a V-shaped area of positive classification. Such topologies are considered
-as a single neuron, refered to as a \textbf{V-neuron}, and which can be part of a standard ANN topology. For example V-neurons can be used in the hidden layer of the (1 + 1) NA
-ANNs \cite{na} to compute the union of V-shaped areas of positive classification.
+The weights between the first and second layer and between the second and third layer are fixed.
+The use of ReLU activation functions results in piecewise linear output. Both, the fixed weight values and Relu activation results in these networks computing a V-shaped area of positive classification.
+Such topologies are considered as a single neuron, refered to as V-neuron, and which can be part of a standard ANN topology. For example, multiple V-neurons can be used in the hidden layer of the
+(1 + 1) NA ANNs \cite{na}, instead of the regular neurons, to compute the union of V-shaped areas of positive classification.
+
+% TODO ANN figure
 
 Therefore, these V-neurons can be described by $D + 1$ parameters:
 
@@ -288,8 +282,6 @@ angle $\theta$ with the normal vector to the hyperplane given by the bias $b$ an
     \caption{Visualization of the area of positive classification of a V-neuron for $D = 2$.}
     \label{fig:bna-cone}
 \end{figure}
-
-% TODO ANN figure
 
 \subsubsection{The Bias-Invariant (1+1) NA algorithm}
 
@@ -327,15 +319,6 @@ In particular, it can be seen that when fixing the bend angles to $\pi / 2$, the
     \EndWhile
 \end{algorithmic}
 \end{algorithm}
-
-\subsubsection{The evaluation}
-
-V-neurons output whether or not the input is in the cone described by the neuron. The vector $\overrightarrow{\varphi}$ is computed using the angles $\varphi_1, \ldots, \varphi_{D-1}$
-and a norm of $1$. Given an input vector $\overrightarrow{x}$, the dot product $(\overrightarrow{x} - \lvert b \rvert \overrightarrow{\varphi}) \cdot \overrightarrow{\varphi}$ is computed.
-The angle $\alpha$ between the input vector and the normal vector can then be computed as
-$\alpha = \cos^{-1}(\frac{(\overrightarrow{x} - \lvert b \rvert \overrightarrow{\varphi}) \cdot \overrightarrow{\varphi})}{\lVert \overrightarrow{x} - \lvert b \rvert \overrightarrow{\varphi} \rVert
-\lVert \overrightarrow{\varphi} \rVert})$. If $b \geq 0$, the output of the neuron is $1$ if $\alpha \leq \theta$ and $0$ otherwise. If $b < 0$, the output of the neuron is
-$1$ if $\pi - \alpha \leq \theta$ and $0$ otherwise.
 
 \subsection{The CMA-ES Evolutionary Strategy}
 
