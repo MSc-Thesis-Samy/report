@@ -32,11 +32,11 @@
 * [ ] Figures for the CMA-ES networks in the results section
 * [ ] Add configs in the appendix
 * [ ] Flow diagram for algorithm selection
-* [ ] Mention irace and co in future work section
-* [ ] Update future work saying to add a genetic programming and indirect encoding algorithm
+* [ ] Update future work saying to add a genetic programming and indirect encoding algorithm + irace + hard wired OR
 * [ ] Code cleanup (parameters in pole balancing configs, todos, error handling in main, etc)
 * [X] Move eval in practice to framework section
 * [ ] Shorter titles in list of figures and tables
 * [ ] Revised project plan
 * [ ] Inspirations in figures
 * [ ] Update impl details
+* [ ] Check tables and figureds
