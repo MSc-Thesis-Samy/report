@@ -2597,6 +2597,14 @@ solution quality, the CPU time and the ease of use and versatility of the differ
 on all of the tested problems, coupled with its ease of use. The even simpler $(1 + 1)$ NA and BNA algorithms are also good choices for simple binary classification problems, while NEAT appears as a good
 option, being particularly versatile and performing well, in particular on the control problem, after a careful selection of the parameters. It also is the only algorithm evolving the network topology among the
 tested ones, which could be a significant advantage for some problems, with no prior knowledge to guide the choice of network structures.
+\Cref{fig:flowchart} shows a flow diagram representing the proposed strategy for the selection of the neuroevolution algorithm given the problem class.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{Pictures/alg_choice}
+    \caption{Flow diagram for the neuroevolution algorithm decision based on the problem class}
+    \label{fig:flowchart}
+\end{figure}
 
 \subsubsection{Parameter selection}
 

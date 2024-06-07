@@ -31,7 +31,7 @@
 * [ ] Example of networks evolved using NEAT in Results section
 * [ ] Figures for the CMA-ES networks in the results section
 * [ ] Add configs in the appendix
-* [ ] Flow diagram for algorithm selection
+* [X] Flow diagram for algorithm selection
 * [ ] Update future work saying to add a genetic programming and indirect encoding algorithm + irace + hard wired OR
 * [ ] Code cleanup (parameters in pole balancing configs, todos, error handling in main, etc)
 * [X] Move eval in practice to framework section
