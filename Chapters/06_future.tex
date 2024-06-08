@@ -7,6 +7,7 @@ Neuroevolution is a particularly vast field and this five month project has only
 
 First of all, this project's literature review, algorithm implementation and evaluation focussed on a limited number of neuroevolution algorithms out of the many that exist. Future work could involve
 the implementation and evaluation of other algorithms, including potential new ones that may be developed in the future. This would result in a more comprehensive evaluation of neuroevolution algorithms.
+For example, an algorithm making use of indirect encoding could be considered, such as EANT2 \cite{eant2}, as well as algorithms relying on genetic programming, such as CGPANN \cite{cgpann} .
 
 Similarly, the evaluation of the algorithms could be extended to include more benchmarks. For example, considering other control benchmarks or more complex binary classification datasets.
 This would allow to further validate the results obtained in this project and to provide a more comprehensive evaluation of the algorithms.
@@ -18,6 +19,10 @@ in \cite{na} and \cite{bna} could also be considered, such as experimenting with
 Moreover, the evaluation process could also be extended to include more metrics. For example, adding the number of fitness evaluations which could be more relevant when comparing different algorithm
 than the number of iterations. In addition, computing the percentage of optimal solutions found by the algorithms could also be interesting to consider.
 
-Finally, future work could also involve improvements and extensions to the framework. For example, adding support for serialization of the evolved networks and loading them back for testing, making
+In addition, future work could also involve improvements and extensions to the framework. For example, adding support for serialization of the evolved networks and loading them back for testing, making
 use of parallelism in the algorithms themselves, which is already supported by the \texttt{cmaes} crate but was not used for this project to keep the results comparable with the manually implemented
 algorithms, or adding support for extracting the evolved network parameters to readable text files for further analysis, which could be particularly in the case of the NEAT algorithm.
+
+Finally, as the results of the project showed that neuroevolution algorithms do not entirely address the issue of parameter tuning, future work could involve experimentation with
+uutomatic algorithm configuration techniques \cite{automl}, which aim at automatically determining well-performing parameter settings for algorithms. Examples of such techniques include
+irace \cite{irace} and SMAC \cite{smac}.

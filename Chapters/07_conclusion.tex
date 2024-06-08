@@ -1,4 +1,30 @@
 \chapter{Conclusion}
 \label{chap:conclusion}
 
-...
+The aim of this project was to develop a framework that implements algorithms and benchmarks collected from the state of the art in the research in the field of neuroevolution, with a particular
+focus on the most recent theory literature in the field from 2023 and 2024. This framework was to be used for the visualization of the evolution process, network structure and problem when
+running algorithms on the problems, as well as for the evaluation of the performance of the algorithms on the problems.
+
+To achieve this, the project was divided into a succession of stages. Firstly, a literature review was conducted to identify the proposed algorithms and benchmarks in the field of neuroevolution,
+following a rigorous methodology.
+Based on the finding, a selection of algorithms and benchmarks was made according to identified criteria. The widely used NEAT and CMA-ES algorithms, as well as the (1 + 1) NA and BNA
+
+algorithms from the theory literature were selected. The benchmarks selected were the toy \textit{XOR} and unit-sphere classification problems, the \textit{Proben12 Cancer1} classification problem
+and the double pole balancing control problem.
+
+The next stage was the design and implementation of the framework. It was developed in Rust, a programming language that is known for its performance and safety. The framework was designed
+to be modular and with clear distinctions between its components. Unit testing was extensively used to ensure the correctness of the implementation. It is interacted with through a command-line
+interface, and allows for visualizations through a graphical user interface.
+
+Following the framework implementation, various experiments were designed in order to highlight key properties of the algorithms and benchmarks, and to measure the performance of each of
+the algorithm on its applicable benchmark problems. These experiments were run on the DTU HPC cluster, to benefit from the parallelization capabilities of the framework.
+The results of the experiments showed that there is not a single algorithm that is the best for all problems, but that each algorithm has its strengths and weaknesses. CMA-ES was overall
+the most robust algorithm, performing reasonably well on all problems, but it requires the manual design of network topologies. NEAT was the slowest algorithm, but got the best results on the
+double pole balancing control problem. Lastly, the less versatile but simpler (1 + 1) NA and BNA algorithms performed best on the unit sphere classification problems, both in terms of
+solution quality and speed.
+
+Finally, based on the findings of the experiments and literature review, guidelines were proposed for the selection of algorithms based on the problem class, and for the choice of
+parameters for each algorithm.
+
+The project was successful in achieving its goals. Its limitations were discussed, and suggestions for future work were made, such as the implementation of more algorithms and benchmarks,
+and the need for further experiments for a more precise algorithm selection guide.

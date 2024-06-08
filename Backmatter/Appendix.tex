@@ -1,1 +1,229 @@
-\chapter{Title}
+\chapter{Algorithm configurations}
+\label{app:configurations}
+
+\section{NEAT configurations}
+
+\begin{lstlisting}[label=verb:neat_xor_config,caption=NEAT XOR configuration]
+population_size = 300
+n_inputs = 2
+n_outputs = 1
+weights_mean = 0.0
+weights_stddev = 0.8
+perturbation_stddev = 0.2
+new_weight_probability = 0.1
+enable_probability = 0.25
+survival_threshold = 0.25
+connection_mutation_rate = 0.3
+node_mutation_rate = 0.03
+weight_mutation_rate = 0.8
+similarity_threshold = 7.0
+excess_weight = 1.0
+disjoint_weight = 1.0
+matching_weight = 0.3
+champion_copy_threshold = 5
+stagnation_threshold = 1500
+\end{lstlisting}
+
+\begin{lstlisting}[label=verb:neat_pole_config,caption=NEAT Pole Balancing configuration]
+population_size = 100
+n_inputs = 6
+n_outputs = 1
+weights_mean = 0.0
+weights_stddev = 0.8
+perturbation_stddev = 0.2
+new_weight_probability = 0.1
+enable_probability = 0.25
+survival_threshold = 0.25
+connection_mutation_rate = 0.3
+node_mutation_rate = 0.03
+weight_mutation_rate = 0.8
+similarity_threshold = 15.0
+excess_weight = 1.0
+disjoint_weight = 1.0
+matching_weight = 3.0
+champion_copy_threshold = 4
+stagnation_threshold = 1500
+\end{lstlisting}
+
+\begin{lstlisting}[label=verb:neat_sphere_config,caption=NEAT unit sphere classification configuration]
+population_size = 300
+n_inputs = 2
+n_outputs = 1
+weights_mean = 0.0
+weights_stddev = 0.8
+perturbation_stddev = 0.2
+new_weight_probability = 0.1
+enable_probability = 0.25
+survival_threshold = 0.25
+connection_mutation_rate = 0.3
+node_mutation_rate = 0.03
+weight_mutation_rate = 0.8
+similarity_threshold = 5.0
+excess_weight = 1.0
+disjoint_weight = 1.0
+matching_weight = 0.3
+champion_copy_threshold = 5
+stagnation_threshold = 1500
+\end{lstlisting}
+
+\begin{lstlisting}[label=verb:neat_proben1_config,caption=NEAT Proben1 Cancer1 configuration]
+population_size = 300
+n_inputs = 9
+n_outputs = 1
+weights_mean = 0.0
+weights_stddev = 0.8
+perturbation_stddev = 0.2
+new_weight_probability = 0.1
+enable_probability = 0.25
+survival_threshold = 0.25
+connection_mutation_rate = 0.3
+node_mutation_rate = 0.03
+weight_mutation_rate = 0.8
+similarity_threshold = 7.0
+excess_weight = 1.0
+disjoint_weight = 1.0
+matching_weight = 0.3
+champion_copy_threshold = 5
+stagnation_threshold = 1500
+\end{lstlisting}
+
+\section{CMA-ES network configurations}
+
+\begin{lstlisting}[label=verb:cmaes_xor_config,caption=CMA-ES XOR configuration (5 hidden neurons)]
+input_ids = [1, 2]
+output_ids = [9]
+bias_id = 3
+
+[[neurons]]
+id = 4
+inputs = [1, 2, 3]
+activation = "sigmoid"
+
+[[neurons]]
+id = 5
+inputs = [1, 2, 3]
+activation = "sigmoid"
+
+[[neurons]]
+id = 6
+inputs = [1, 2, 3]
+activation = "sigmoid"
+
+[[neurons]]
+id = 7
+inputs = [1, 2, 3]
+activation = "sigmoid"
+
+[[neurons]]
+id = 8
+inputs = [1, 2, 3]
+activation = "sigmoid"
+
+[[neurons]]
+id = 9
+inputs = [4, 5, 6, 7, 8]
+activation = "sigmoid"
+\end{lstlisting}
+
+\begin{lstlisting}[label=verb:cmaes_pole_config,caption=CMA-ES Pole Balancing configuration (6 hidden neurons)]
+input_ids = [1, 2, 3, 4, 5, 6]
+output_ids = [14]
+bias_id = 7
+
+[[neurons]]
+id = 8
+inputs = [1, 2, 3, 4, 5, 6, 7]
+activation = "sigmoid"
+
+[[neurons]]
+id = 9
+inputs = [1, 2, 3, 4, 5, 6, 7]
+activation = "sigmoid"
+
+[[neurons]]
+id = 10
+inputs = [1, 2, 3, 4, 5, 6, 7]
+activation = "sigmoid"
+
+[[neurons]]
+id = 11
+inputs = [1, 2, 3, 4, 5, 6, 7]
+activation = "sigmoid"
+
+[[neurons]]
+id = 12
+inputs = [1, 2, 3, 4, 5, 6, 7]
+activation = "sigmoid"
+
+[[neurons]]
+id = 13
+inputs = [1, 2, 3, 4, 5, 6, 7]
+activation = "sigmoid"
+
+[[neurons]]
+id = 14
+inputs = [8, 9, 10, 11, 12, 13]
+activation = "sigmoid"
+\end{lstlisting}
+
+\begin{lstlisting}[label=verb:cmaes_sphere_config,caption=CMA-ES unit sphere classification configuration (6 hidden neurons)]
+input_ids = [1, 2]
+output_ids = [10]
+bias_id = 3
+
+[[neurons]]
+id = 4
+inputs = [1, 2, 3]
+activation = "sigmoid"
+
+[[neurons]]
+id = 5
+inputs = [1, 2, 3]
+activation = "sigmoid"
+
+[[neurons]]
+id = 6
+inputs = [1, 2, 3]
+activation = "sigmoid"
+
+[[neurons]]
+id = 7
+inputs = [1, 2, 3]
+activation = "sigmoid"
+
+[[neurons]]
+id = 8
+inputs = [1, 2, 3]
+activation = "sigmoid"
+
+[[neurons]]
+id = 9
+inputs = [1, 2, 3]
+activation = "sigmoid"
+
+[[neurons]]
+id = 10
+inputs = [4, 5, 6, 7, 8, 9]
+activation = "sigmoid"
+\end{lstlisting}
+
+\begin{lstlisting}[label=verb:cmaes_proben1_config,caption=CMA-ES Proben1 Cancer1 configuration (2 hidden neurons)]
+input_ids = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+output_ids = [13]
+bias_id = 10
+
+[[neurons]]
+id = 11
+inputs = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+activation = "sigmoid"
+
+[[neurons]]
+id = 12
+inputs = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+activation = "sigmoid"
+
+[[neurons]]
+id = 13
+inputs = [11, 12]
+activation = "sigmoid"
+\end{lstlisting}

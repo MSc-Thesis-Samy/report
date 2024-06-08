@@ -258,7 +258,8 @@ For example, the iteration number is set to an unsigned integer \texttt{u32}, wh
 The command line interface is shown in \Cref{verb:cli}. Parameters for the BNA and $(1 + 1)$ NA algorithms are passed in as named arguments. For NEAT and CMA-ES, where more
 parameters can be specified, the path to \texttt{.toml} configuration files are passed-in instead. Examples of such configuration files are shown in \ref{verb:cmaes_config}
 and \ref{verb:neat_config}. The CMA-ES configuration file is used to specify the fixed network topology and activation functions, while the NEAT configuration file
-is used to specify the various parameters of the algorithm. Some configuration files are provided in the \texttt{config} directory.
+is used to specify the various parameters of the algorithm. Some configuration files are provided in the \texttt{config} directory and more examples can be found in
+\Cref{app:configurations}.
 
 \begin{lstlisting}[label=verb:cmaes_config,caption=Example of configuration File for CMAE-ES,float,frame=tb]
 input_ids = [1, 2]
