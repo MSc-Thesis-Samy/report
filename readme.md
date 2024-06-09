@@ -37,6 +37,6 @@
 * [X] Write the conclusion
 * [X] Inspirations in figures
 * [X] Check tables, plots, listings and figureds
-* [ ] Check references
-* [ ] Code readme
+* [X] Check references
+* [X] Code readme
 * [ ] Revised project plan
