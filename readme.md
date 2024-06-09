@@ -35,7 +35,7 @@
 * [X] Shorter titles in list of figures and tables
 * [X] Update impl details
 * [X] Write the conclusion
-* [ ] Inspirations in figures
+* [X] Inspirations in figures
 * [X] Check tables, plots, listings and figureds
 * [ ] Check references
 * [ ] Code readme
