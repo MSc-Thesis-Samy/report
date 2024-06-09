@@ -195,7 +195,7 @@ Geometrically, these ANNs output the union of a number of $N$-dimensional hyperp
             \node[annot,left of=hl] {Input layer (D neurons)};
             \node[annot,right of=hl] {Output layer (1 neuron)};
         \end{tikzpicture}
-        \caption{Structure of the ANNs evolved by the (1 + 1) NA algorithm}
+        \caption{Structure of the ANNs evolved by the (1 + 1) NA algorithm}{The output neuron computes the Boolean OR function of the outputs of the hidden neurons.}
         \label{fig:oneplusonena_ann}
     \end{center}
 \end{figure}
@@ -224,14 +224,14 @@ $\text{Harm}(r)$ on $\{1, \dots, r\}$: For $l \sim \text{Harm}(r)$,
     \State $t \gets 0$
     \State Select $x_0$ uniformly at random from $\{0, \ldots, r\}^{DN}$.
     \While{termination criterion not met}
-        \State Let $y = (\varphi_{1,1}, \ldots, \varphi_{1,D-1}, b_1, \ldots, \varphi_{N,1}, \ldots, \varphi_{N,N-1}, b_N) \gets x_t;$
+        \State Let $y = (\varphi_{1,1}, \ldots, \varphi_{1,D-1}, b_1, \ldots, \varphi_{N,1}, \ldots, \varphi_{N,D-1}, b_N) \gets x_t;$
         \ForAll{$i \in \{1, \ldots, N\}$}
-            \State Mutate $\varphi_{i,1} \dots, \varphi_{i,D}$ and $b_i$ with probability $\frac{1}{DN}$, independently of each other and other indices;
-            \State Mutation chooses $\sigma \in \{-1, 1\}$ uniformly at random and $l \sym \text{Harm}(r)$ and adds $\sigma l$ to the selected component, the
+            \State Mutate $\varphi_{i,1} \dots, \varphi_{i,D-1}$ and $b_i$ with probability $\frac{1}{DN}$, independently of each other and other indices;
+            \State Mutation chooses $\sigma \in \{-1, 1\}$ uniformly at random and $l \sim \text{Harm}(r)$ and adds $\sigma l$ to the selected component, the
             result is then taken modulo $r$ for angles and modulo $r + 1$ for biases.
             \For {$i \in \{1, \ldots, N\}$}
                 \State Set bias $2b_i / r - 1$ for neuron $i$.
-                \For {$j \in \{1, \ldots, D\}$}
+                \For {$j \in \{1, \ldots, D-1\}$}
                     \State Set the $j$-th polar angle to $2\pi \varphi_{i,j} / r$ for neuron $i$.
                 \EndFor
             \EndFor
@@ -296,15 +296,15 @@ In particular, it can be seen that when fixing the bend angles to $\pi / 2$, the
     \State $t \gets 0$
     \State Select $x_0$ uniformly at random from $\{0, \ldots, r\}^{DN}$.
     \While{termination criterion not met}
-        \State Let $y = (\theta_1, \varphi_{1,1}, \ldots, \varphi_{1,D-1}, b_1, \ldots, \theta_N, \varphi_{N,1}, \ldots, \varphi_{N,N-1}, b_N) \gets x_t;$
+        \State Let $y = (\theta_1, \varphi_{1,1}, \ldots, \varphi_{1,D-1}, b_1, \ldots, \theta_N, \varphi_{N,1}, \ldots, \varphi_{N,D-1}, b_N) \gets x_t;$
         \ForAll{$i \in \{1, \ldots, N\}$}
-            \State Mutate $\varphi_{i,1}, \dots, \varphi_{i,D}$, $\theta_i$ and $b_i$ with probability $\frac{1}{(D+1) N}$, independently of each other and other indices;
+            \State Mutate $\varphi_{i,1}, \dots, \varphi_{i,D-1}$, $\theta_i$ and $b_i$ with probability $\frac{1}{(D+1) N}$, independently of each other and other indices;
             \State Mutation chooses $\sigma \in \{-1, 1\}$ uniformly at random and $l \sym \text{Harm}(r)$ and adds $\sigma l$ to the selected component, the
             result is then taken modulo $r$ for angles and modulo $r + 1$ for biases.
             \For {$i \in \{1, \ldots, N\}$}
                 \State Set bias $2b_i / r - 1$ for neuron $i$.
                 \State Set bend angle $\pi \theta_i / r$ for neuron $i$.
-                \For {$j \in \{1, \ldots, D\}$}
+                \For {$j \in \{1, \ldots, D-1\}$}
                     \State Set the $j$-th polar angle to $2\pi \varphi_{i,j} / r$ for neuron $i$.
                 \EndFor
             \EndFor

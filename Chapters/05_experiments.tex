@@ -160,7 +160,7 @@ resolutions where the problems could be solved and the number of iterations need
 \begin{figure}
     \centering
     \includegraphics[width=7cm]{Pictures/twoquarters-single}
-    \caption{Visualization of a solution with a fitness of $0.75$ after evolution of the $(1 + 1)$ NA algorithm with one neuron on the \textit{TwoQuarters} problem}
+    \caption{Visualization of a solution with a fitness of $0.75$ after evolution of the $(1 + 1)$ NA algorithm, with one neuron, on the \textit{TwoQuarters} problem}
     {The top-left quarter of the unit sphere is misclassified.}
     \label{fig:na_twoquarters_single_visual}
 \end{figure}
@@ -941,7 +941,7 @@ However, this value is still too low starting from three neurons. The one neuron
             height=6cm,
             title={Fitness over number of neurons},
             legend pos=south east,
-            xlabel={Maximum number of iterations},
+            xlabel={Number of neurons},
             ylabel={Average fitness},
             enlargelimits=false,
             xmin=1,
@@ -975,7 +975,7 @@ However, this value is still too low starting from three neurons. The one neuron
             height=6cm,
             legend pos=south east,
             title={Iterations over number of neurons},
-            xlabel={Maximum number of iterations},
+            xlabel={Number of neurons},
             ylabel={Average iterations},
             xmin=1,
             ymin=0,
@@ -999,7 +999,7 @@ However, this value is still too low starting from three neurons. The one neuron
             height=6cm,
             legend pos=south east,
             title={CPU time over number of neurons},
-            xlabel={Maximum number of iterations},
+            xlabel={Number of neurons},
             ylabel={Average CPU time (s)},
             xmin=1,
             ymin=0,
@@ -2049,6 +2049,7 @@ but both remained particularly low. For the $4$ and $5$ hidden neurons case, the
             enlargelimits=false,
             xmin=0,
             ymin=0, ymax=1,
+            xtick={0,1,...,5},
             ytick={0,0.2,...,1},
             xticklabel shift={.1cm},
             yticklabel shift={.1cm} ]
@@ -2073,6 +2074,7 @@ but both remained particularly low. For the $4$ and $5$ hidden neurons case, the
             ylabel={Average iterations},
             xmin=0,
             ymin=0,
+            xtick={0,1,...,5},
             enlargelimits=false,
             xticklabel shift={.1cm},
             yticklabel shift={.1cm} ]
@@ -2097,6 +2099,7 @@ but both remained particularly low. For the $4$ and $5$ hidden neurons case, the
             ylabel={Average CPU time (s)},
             xmin=0,
             ymin=0,
+            xtick={0,1,...,5},
             enlargelimits=false,
             xticklabel shift={.1cm},
             yticklabel shift={.1cm} ]
@@ -2135,6 +2138,7 @@ the number of iterations and CPU time were significantly higher, with the CPU ti
             enlargelimits=false,
             xmin=0,
             ymin=0, ymax=1,
+            xtick={0,1,...,6},
             ytick={0,0.2,...,1},
             xticklabel shift={.1cm},
             yticklabel shift={.1cm} ]
@@ -2159,6 +2163,7 @@ the number of iterations and CPU time were significantly higher, with the CPU ti
             ylabel={Average iterations},
             xmin=0,
             ymin=0,
+            xtick={0,1,...,6},
             enlargelimits=false,
             xticklabel shift={.1cm},
             yticklabel shift={.1cm} ]
@@ -2183,6 +2188,7 @@ the number of iterations and CPU time were significantly higher, with the CPU ti
             ylabel={Average CPU time (s)},
             xmin=0,
             ymin=0,
+            xtick={0,1,...,6},
             enlargelimits=false,
             xticklabel shift={.1cm},
             yticklabel shift={.1cm} ]
@@ -2224,6 +2230,7 @@ for the two other problems.
             enlargelimits=false,
             xmin=0,
             ymin=0, ymax=1,
+            xtick={0,1,...,6},
             ytick={0,0.2,...,1},
             xticklabel shift={.1cm},
             yticklabel shift={.1cm} ]
@@ -2273,6 +2280,7 @@ for the two other problems.
             ylabel={Average iterations},
             xmin=0,
             ymin=0,
+            xtick={0,1,...,6},
             enlargelimits=false,
             xticklabel shift={.1cm},
             yticklabel shift={.1cm} ]
@@ -2322,6 +2330,7 @@ for the two other problems.
             ylabel={Average CPU time (s)},
             xmin=0,
             ymin=0,
+            xtick={0,1,...,6},
             enlargelimits=false,
             xticklabel shift={.1cm},
             yticklabel shift={.1cm} ]
@@ -2384,6 +2393,7 @@ The number of iterations and CPU time increased with the number of hidden neuron
             enlargelimits=false,
             xmin=0,
             ymin=0, ymax=1,
+            xtick={0,1,...,3},
             ytick={0,0.2,...,1},
             xticklabel shift={.1cm},
             yticklabel shift={.1cm} ]
@@ -2408,6 +2418,7 @@ The number of iterations and CPU time increased with the number of hidden neuron
             ylabel={Average iterations},
             xmin=0,
             ymin=0,
+            xtick={0,1,...,3},
             enlargelimits=false,
             xticklabel shift={.1cm},
             yticklabel shift={.1cm} ]
@@ -2432,6 +2443,7 @@ The number of iterations and CPU time increased with the number of hidden neuron
             ylabel={Average CPU time (s)},
             xmin=0,
             ymin=0,
+            xtick={0,1,...,3},
             enlargelimits=false,
             xticklabel shift={.1cm},
             yticklabel shift={.1cm} ]
@@ -2602,7 +2614,7 @@ tested ones, which could be a significant advantage for some problems, with no p
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{Pictures/alg_choice}
-    \caption{Flow diagram for the neuroevolution algorithm decision based on the problem class}
+    \caption{Flow diagram for the neuroevolution algorithm decision process based on the problem class}
     \label{fig:flowchart}
 \end{figure}
 

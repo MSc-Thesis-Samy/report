@@ -27,16 +27,16 @@
 * [X] Activation functions figure in the background section
 * [X] Optional? Add sample HPC job script in the experiments section
 * [X] Diwscus python script in experiments workflow section
-* [ ] Example of networks evolved using NEAT in Results section
 * [X] Add configs in the appendix
 * [X] Flow diagram for algorithm selection
 * [X] Update future work saying to add a genetic programming and indirect encoding algorithm + irace + hard wired OR
-* [ ] Code cleanup (parameters in pole balancing configs, todos, error handling in main, etc)
+* [X] Code cleanup (parameters in pole balancing configs, todos, error handling in main, etc)
 * [X] Move eval in practice to framework section
 * [X] Shorter titles in list of figures and tables
-* [ ] Revised project plan
-* [ ] Inspirations in figures
 * [X] Update impl details
-* [ ] Check tables, plots and figureds
+* [X] Write the conclusion
+* [ ] Inspirations in figures
+* [X] Check tables, plots, listings and figureds
 * [ ] Check references
-* [ ] Write the conclusion
+* [ ] Code readme
+* [ ] Revised project plan
