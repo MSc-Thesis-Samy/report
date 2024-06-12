@@ -1,17 +1,18 @@
 \section*{Abstract}
 \addcontentsline{toc}{section}{Abstract}
 
-Neuroevolution is a method for optimizing the topology, weights or other hyperparameters of neural networks by means of evolutionary algorithms.
+Neuroevolution is a method for optimizing the topology, weights or other parameters of neural networks by means of evolutionary algorithms.
 This technique is more general than traditional white-box gradient-based approaches, and can therefore be applied to a wider range of
 problems. It has been studied in research for decades and has been successfully applied to problems such as artificial life,
 evolutionary robotics and continuous domains of reinforcement learning.
 In this thesis, we are interested in the development of a framework that implements neuroevolution algorithms, and that is used to evaluate these algorithms on a
-selection of benchmark problems. Algorithms and benchmarks were collected from the state of the art in applied and theoretical research in
-the field of neuroevolution. The framework, implemented in Rust, is invoked through a command-line interface, and allows for a visualization of key problem
-characteristics and the evolution process through a graphical user interface. The selected algorithms and benchmarks are presented in detail. Results collected
+selection of benchmark problems. Different algorithms and benchmarks were collected from the state of the art in applied and theoretical research in
+the field of neuroevolution. The framework, implemented in Rust, is invoked through a command-line interface, and allows for the visualization of key problem
+characteristics and the evolution process through a graphical user interface. The selected algorithms and benchmarks are presented in detail, and the results collected
 from the conducted experiments are analyzed, discussed and used to provide a series of guidelines for the choice of algorithms and parameters with respect
 to problem classes.
 The results from the different experiments indicate that there is not a single algorithm that is best for all problems, being in terms of solution quality or
 running time, but rather highlight the trade-off between these two metrics and the importance of choosing the right algorithm for the right problem.
-However, out of the tested $(1 + 1)$ NA, BNA, CMA-ES and NEAT algorithm, CMA-ES performed well on all problems and can be considered the most versatile and robust algorithm.
-NEAT performs best on the control problem, while the simple $(1 + 1)$ NA and BNA can find high quality solutions on the classification problems with a fast running time.
+However, out of the tested $(1 + 1)$ NA, BNA, CMA-ES and NEAT algorithm, CMA-ES performed well on all problems and can be considered the most robust algorithm.
+NEAT, which also evolves the network topologies in addition to the weights, performs best on the considered control problem, while the simpler but less versatile
+$(1 + 1)$ NA and BNA can find high quality solutions on the classification problems with a fast running time.

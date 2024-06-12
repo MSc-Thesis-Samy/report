@@ -1,13 +1,13 @@
 \chapter{Introduction}
 
-Neuroevolution is a subfield of artificial intelligence which consists in the evolution of ANNs (artificial neural networks).
+Neuroevolution is a subfield of artificial intelligence which consists in the evolution of artificial neural networks (ANNs).
 ANNs are traditionally trained using gradient-based methods, such as stochastic gradient descent or its extensions (e.g Adam) \cite{sgd,adam}.
 Over the years, these methods have been successfully applied to a variety of problems, such as image classification, speech recognition and natural language processing \cite{attention,cnn,speech}.
 Such problems generally allow for supervised learning, where ANNs are trained on a dataset of input-output pairs.
-However, there is a class of problems for which supervised learning is not applicable, and where instead of input-output pairs, only a measure of performance is available, and
-where such approaches are not applicable.
+However, there is a class of problems for which supervised learning is not applicable, and where instead of input-output pairs, only a measure of performance is available, which results
+in such approaches not being applicable.
 In addition, the performance of ANNs is also heavily impacted by their architectures \cite{layers}. However, the design of ANNs architecture is a complex and time-consuming task, which is
-topically done by hand, based on experience and trial-and-error.
+topically done by hand, based on experience, trial-and-error and prior knowledge of the problem at hand.
 
 Neuroevolution, on the other hand, as a more general approach, can, in particular, be applied to other classes of problems, as well as to the design of ANNs architectures.
 This method is based on the use of evolutionary algorithms, which are inspired by the process of natural selection. These algorithms maintain a population of individuals,
@@ -24,17 +24,16 @@ continuous control or game planning, have also have been proposed and applied in
 
 The focus of this thesis is the development of a framework that implements a selection of neuroevolution algorithms.
 The framework is used to evaluate and compare the algorithms on a selection of benchmarks.
-The framework is implemented in Rust \footnote{\url{https://www.rust-lang.org/}},
-It allows for the visualization of the problems and the solution process through a graphical user interface.
+It is implemented in Rust \footnote{\url{https://www.rust-lang.org/}}, and allows for the visualization of the problems and the solution process through a graphical user interface.
 The algorithms can be run and tested through a command line interface, in order to allow for the execution of experiments and the collection of results,
 based on passed-in parameters and configurations.
 
-Algorithms and benchmarks implemented in the framework were selected from the state-of-the art in the theoretical and applied research in the field of neuroevolution,
+The algorithms and benchmarks implemented in the framework were selected from the state-of-the art in the theoretical and applied research in the field of neuroevolution,
 with a particular focus on recent algorithms and becnhmarks proposed in $2023$ and $2024$ in the neuroevolution theory literature.
-In addition to these proposals, NEAT (NeuroEvolution of Augmenting Topologies) \cite{neat}, a classic algorithm in the field, and the use of evolution strategies with CMA-ES
-(Covariance Matrix Adaptation Evolution Strategy) for the evolution of weights \cite{cmaes}, achieving state-of-the-art results, were also considered.
-Regarding the benchmarks, in addition to the simple two-dimensional binary classification benchmarks from the considered theory literature \cite{na,bna} and the \textit{XOR} problem \cite{neat},
-the classic double pole balancing problem \cite{pole_balancing} and the \textit{Proben1 Cancer1} \cite{proben} classification problem were also implemented.
+In addition to these proposals, NeuroEvolution of Augmenting Topologies (NEAT) \cite{neat}, a classic algorithm in the field, and the use of evolution strategies with
+Covariance Matrix Adaptation Evolution Strategy (CMA-ES) for the evolution of weights \cite{cmaes}, achieving state-of-the-art results, were also considered.
+Regarding the benchmarks, in addition to the simple two-dimensional binary classification benchmarks from the considered theory literature \cite{na,bna} and the toy \textit{XOR}
+problem \cite{neat}, the classic double pole balancing problem \cite{pole_balancing} and the \textit{Proben1 Cancer1} \cite{proben} classification problem were also implemented.
 
 \subsection{Overview}
 
@@ -55,8 +54,7 @@ specifying the goals and requirements of the framework, followed by a walkthroug
 
 \Cref{chap:experiments} lays out the results collected from running experiments using the implemented framework.
 Results are presented for the selection of algorithms and benchmarks, and are discussed and compared in detail. Based on these results, a collection of
-observations, hypothesises and guidelines for algorithms and parameters selection, given the problem at hand, are presented. These observations are
-backed up by statistical tests compiled from additional experiments, which are also summarized in the chapter.
+observations, hypothesises and guidelines for algorithms and parameters selection, given the problem at hand, are presented.
 
 Finally, \Cref{chap:future_work} identifies the limitations of the project and discusses the potential lines of future work for refining and expanding on the results
 previously presented. The main work and contributions of this project are finally summed up in \Cref{chap:conclusion} which concludes the report and reflects on its

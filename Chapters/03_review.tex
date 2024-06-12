@@ -31,7 +31,7 @@ The search for papers was performed using Google Scholar and the DTU Findit data
 conducted on the topic. The keywords used for designing the search queries are:
 
 \begin{quote}
-    "Neuroevolution", "Neural Networks", "Evolution Algorithm", "Evaluation"
+    "Neuroevolution", "Neural Networks", "Evolution Algorithm", "Evaluation", "Benchmark", "Performance"
 \end{quote}
 
 \subsection{Study Selection}
@@ -56,7 +56,7 @@ And the following exclusion criteria were used:
     \item \textbf{EC3:} The study is a duplicate of a previously included study.
 \end{itemize}
 
-The cut-off date of 2002 is motivated by the release year of the \cite{neat} paper, proposing the NEAT algorithm, which is the most studied neuroevolution algorithm and which
+The cut-off date of 2002 is motivated by the release year of the paper proposing the NEAT algorithm \cite{neat}, which is the most studied neuroevolution algorithm and which
 is still the subject of many studies today.
 
 \section{Neuroevolution algorithms}
@@ -67,17 +67,17 @@ The following three main distinctions, which were mentioned in \Cref{chap:backgr
 
 \begin{itemize}
     \item \textbf{Conventional neuroevolution algorithms vs. TWEANNs} Conventional neuroevolution algorithms are those which only evolve the connection weights,
-        considering a fixed topology, while TWEANNs (Topology and Weight Evolving Artificial Neural Networks) \cite{neat} are those which also evolve the topology of the
+        considering a fixed topology, while Topology and Weight Evolving Artificial Neural Networks (TWEANNs) \cite{neat} are those which also evolve the topology of the
         neural network.
-    \item \textbf{The category of the evolutionary algorithm} such as genetic algorithms \cite{genetic_alg,genetic_alg_review}, evolutionary strategies \cite{es_intro},
+    \item \textbf{The category of the evolutionary algorithm} such as genetic algorithms \cite{genetic_alg,genetic_alg_review}, evolutionary strategies \cite{es_intro} or
         genetic programming \cite{cartesian_gp}.
     \item \textbf{The encoding strategy} This refers to the way the neural network is encoded as a genotype, \cite{neuroevolution_learning,neuroevolution_trends,neuroevolution_survey}.
         The most common encoding strategies are direct encoding, indirect encoding and generative encoding.
 \end{itemize}
 
 \Cref{tab:neuroevolution_algorithms} presents a classification of the neuroevolution algorithms which were identified during the review.
-Various algorithms were identified for each of the categorie, such as different evolution strategies, an approach relying on Cartesian genetic programming, an anglrotihm not evolving the
-weights, or an algorithm proposing an entirely new evolutionary method.
+Various algorithms were identified for each of the categorie, such as different evolution strategies, an approach relying on Cartesian genetic programming, an algorithm not evolving the
+weights of the networks, or an algorithm proposing an entirely new evolutionary method.
 
 \begin{table}[]
 \caption{Neuroevolution algorithms classification}
@@ -107,7 +107,7 @@ SUNA \cite{suna}              & Yes                         & Specific evolution
 The following algorithms were selected for the implementation in the framework:
 
 \begin{itemize}
-    \item The (1 + 1) NA algorithm and its variants
+    \item The (1 + 1) NA algorithm
     \item The Bias-Invariant (1+1) NA (BNA) algorithm
     \item The CMA-ES Evolutionary Strategy
     \item The NEAT algorithm
@@ -117,12 +117,11 @@ Given the duration of the project, the choice was made to limit the number of al
 each of them, thus various criteria were used for the selection of the algorithm, to allow for a good coverage of the different categories of algorithms and
 interesting comparisons between them.
 
-The (1 + 1) NA and bias-invariant (1+1) NA algorithms were selected as the two theory paper proposals this thesis is particularly interested in.
+The (1 + 1) NA and bias-invariant (1+1) NA algorithms were selected as the two theory paper from 2023 and 2024 proposals this thesis is particularly interested in.
 The CMA-ES algorithm, which is the representative of the evolutionary strategies category was selected because of its popularity in the modern neuroevolution literature
 and applications, and because of its status as a state-of-the-art algorithm for continuous optimization problems.
-Finally, the NEAT algorithm, the representative of the TWEANN category, was selected because of its status as the most well-known neuroevolution algorithm, making
+Finally, the NEAT algorithm, the representative of the TWEANNs category, was selected because of its status as the most well-known neuroevolution algorithm, making
 it a subject of the vast majority of the comparison studies in the literature, and as a baseline for the evaluation of new algorithms.
-
 The following sections present the selected algorithms in detail.
 
 \subsection{(1 + 1) NA}
@@ -148,7 +147,7 @@ $(r, \theta)$, where $r$ is the distance from the origin and $\theta$ is the ang
 be represented by its cartesian coordinates $(x_1, x_2, x_3)$ or by its spherical coordinates $(r, \theta, \phi)$, where $r$ is the distance from the
 origin, $\theta$ is the angle with the $x_1$ axis and $\phi$ is the angle with the $x_3$ axis.
 It is easy to convert between these two representations \cite{spherical}. In addition, the spherical representation uses one less parameter than the cartesian
-representation, and hence, allows for the reduction of the number of inputs to the neurons to $D$, as opposed to $D + 1$ when using the cartesian representation,
+representation, and hence, allows for the reduction of the number of inputs to the neurons to $D$, as opposed to $D + 1$ when using the cartesian representation
 where $D$ parameters are used for the normal vector and $1$ for the bias.
 
 % TODO coordinates figure
@@ -207,7 +206,7 @@ $(\phi_{1,1}, \dots, \phi_{1,D-1}, b_1, \dots, \phi_{N,1}, \dots, \phi_{N,D-1}, 
 In \cite{na}, the search space $[0 , \dots, n]^{N D}$ is considered, where $r$ is the resolution of the continuous $[0, 1]$ domain.
 This discretiisation allows for the values $\{0, 1/r, 2/r, \dots, 1\}$. Setting the parameters of ANNs is tipically a continous optimization problem,
 but rigurous runtime analysis is much less developed for continous optimization than for discrete optimization, which motivates this choice.
-Let $f : \{0 , \dots, r\}^{N D} \to [0, 1]$ be the fitness function which measures the performance of the ANN and is to be maximized.
+Let $f : \{0 , \dots, r\}^{N D} \to [0, 1]$ be the fitness function which measures the performance of the ANN and which is to be maximized.
 
 The (1 + 1) NA algorithm is given in \Cref{alg:na}.
 It maintains a single individual and mutates all angles and biases independently, based on a global search operator using the harmonic distribution
@@ -258,11 +257,9 @@ This allows for the construction of bended hyperplanes, resulting in solutions t
 The considered ANNs contain three layers, in which each of the neurons uses a ReLU activation function i.e they output $\max(0, \sum_{i=1}^k w_i x_i)$ for
 $k$ inputs from the previous layer.
 The weights between the first and second layer and between the second and third layer are fixed.
-The use of ReLU activation functions results in piecewise linear output. Both, the fixed weight values and Relu activation results in these networks computing a V-shaped area of positive classification.
+The use of ReLU activation functions results in piecewise linear output. Both, the fixed weight values and Relu activation result in these networks computing a V-shaped area of positive classification.
 Such topologies are considered as a single neuron, refered to as V-neuron, and which can be part of a standard ANN topology. For example, multiple V-neurons can be used in the hidden layer of the
 (1 + 1) NA ANNs \cite{na}, instead of the regular neurons, to compute the union of V-shaped areas of positive classification.
-
-% TODO ANN figure
 
 Therefore, these V-neurons can be described by $D + 1$ parameters:
 
@@ -359,7 +356,7 @@ and converting between a vector representation of the network, for the optimizat
 
 \subsection{Neuroevolution of Augmenting Topologies (NEAT)}
 
-The NEAT algorithm was introduced in \cite{neat}. It is a TWEANN (Topology and Weight Evolving Artificial Neural Network) algorithm, which evolves, simultaneously,  both
+The NEAT algorithm was introduced in \cite{neat}. It is a Topology and Weight Evolving Artificial Neural Network (TWEANNs) algorithm, which evolves, simultaneously,  both
 the topology and weights of neural networks. The main idea behind this algorithm is to start from a minimal topology, incrementally adding new neurons and connections to
 the networks, which allows for the evolution of complex neural networks, while keeping the computational cost low and justifying each new addition to the network topology.
 The following sections describe the main components of the algorithm.
@@ -367,6 +364,7 @@ The following sections describe the main components of the algorithm.
 \subsubsection{Genetic Encoding}
 
 NEAT uses a direct encoding of the neural networks. The goal of the encoding strategy is to allow crossover among different network topologies.
+An example of a genotype to phenotype mapping is shown in \Cref{fig:neat_genome}.
 Each genome contains two sets of genes, which specify the nodes and the connections in the network:
 
 \begin{itemize}
@@ -375,7 +373,6 @@ Each genome contains two sets of genes, which specify the nodes and the connecti
         disabled, and an innovation number.
 \end{itemize}
 
-An example of a genotype to phenotype mapping is shown in \Cref{fig:neat_genome}.
 
 \begin{figure}
     \centering
@@ -588,8 +585,8 @@ The hypersphere toy classification problems \cite{na,} presented in \Cref{subsec
 algorithms trained and tested on the same data.
 
 Although these problems are not common use-cases for neuroevolution, because of the availability of labeled data,
-they are particularly interesting for this study, by allowing to show how neuroevolution can be applied to these common tasks, testing
-the algorithms on larger state spaces, and potentially observing whether common behaviors which occur when training ANNs using gradient-based methods,
+they are particularly interesting for this study, in order to show how neuroevolution can be applied to these common tasks, test
+the algorithms on larger state spaces, and potentially observe whether common behaviors which occur when training ANNs using gradient-based methods,
 such as over-fitting or under-fitting, also apply to neuroevolution \cite{overfitting}.
 
 The \textit{Proben1} benchmarks, presented in \cite{proben}, introduce various standard benchmark datasets, including the \textit{Cancer 1} dataset, which
@@ -599,7 +596,8 @@ Each dataset entry contains $9$ input features, and a binary output,
 \subsection{Pole Balancing}
 
 The pole balancing problem, as described in \cite{pole_balancing}, is a classical benchmark in control theory, reinforcement learning and neuroevolution literature.
-It consists in controlling a cart, with one degree of freedom, moving along a one-dimensional track, by applying a horizontal force to it in order to balance a pole attached to it using a hinge.
+It consists in controlling a cart, with one degree of freedom, moving along a one-dimensional track, by applying a horizontal force to it in order to balance a pole attached to it using a hinge,
+while keeping the cart within the bounds of the track.
 Some of the reasons for the popularity of this benchmark problem are its simplicity, its relevance to real-world control problems and its unstable and non-linear dynamics.
 
 % TODO pole balancing figure
@@ -610,7 +608,7 @@ As the single pole variant has become too easy for current techniques, we consid
 
 The state of the system is described by the cart position $x$, the cart velocity $\dot{x}$, the pole angles $\theta_1$ and $\theta_2$ and the angular velocities $\dot{\theta}_1$ and $\dot{\theta}_2$.
 A visualisation of the problem is shown in \Cref{fig:pole_balancing}.
-This task is Markovian, as the state contains all the information needed to determine the future evolution of the system.
+This task is Markovian \cite{markov}, as the state contains all the information needed to determine the future evolution of the system.
 A more challenging variant of the problem consists in removing the velocity informations from the state, which requires the use of recurrent connections, which were not considered
 in this project.
 
