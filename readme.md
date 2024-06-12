@@ -40,5 +40,5 @@
 * [X] Check references
 * [X] Code readme
 * [ ] Revised project plan
-* [ ] Proofread
+* [X] Proofread
 * [ ] Sign the report

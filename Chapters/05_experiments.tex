@@ -1,10 +1,10 @@
-\chapter{Experiments}
+\chapter{Experiments and results}
 \label{chap:experiments}
 
 \section{Empirical performance testing}
 
 This section presents the methodology and results of the empirical performance testing of the selected algorithms on the selected benchmarks, using the framework which was designed and implemented for this thesis.
-The goal of this phase is to design and run experiments to evaluate the performance of the algorithms on the benchmarks, and based on the empirical results, which are backup-up by statistical tests, formulate
+The goal of this phase is to design and run experiments to evaluate the performance of the algorithms on the benchmarks, and based on the empirical results, formulate
 hypotheses on the relative performance of the algorithms given the problem class, and suggest guidelines for the choice of algorithms, as well as for the choice of parameters for these algorithms.
 
 In the following sections, results are presented for each algorithm on the selected benchmark problems they can be applied to, in chronological order of the experiments.
@@ -19,7 +19,7 @@ and the validity of the results.
 First of all, it is worth noting that the implementation of the different algorithms and benchmarks as parts of a same framework, is a key factor in ensuring the fairness of the comparison between the different
 algorithms and the validity of the results. Indeed, the different algorithms are implemented in the same language, are queried using a same API, and are run on the same hardware. However, this also means that
 errors or small changes in the implementation of the algorithms or benchmarks compared to the intended behaviors are possible, and could thus affect the results compared to the original descriptions or implementations,
-especially considering that the framework has not been reviewed by different coders as opposed to widely used open source implementation, which have been the subject of multiple code reviews.
+especially considering that the framework has not been reviewed by different coders.
 
 As one of the goal of the experiments is to evaluate different configurations of the algorithms, the ideal experiments would consist in testing all possible parameters of the algorithms on all possible benchmarks.
 However, this is obviously not feasible, as there are infinitely many possible configurations of the algorithms. Therefore, the experiments will be designed to test a subset of the possible configurations, which
@@ -108,7 +108,7 @@ in the \texttt{pgfplots} \footnote{\url{https://www.ctan.org/pkg/pgfplots}}  plo
 \label{sec:results}
 
 This section presents the results of the different experiments which were conducted to highlight properties of the algorithms, to observe the impact of different parameters on the performance,
-and evaluate the algorithms on the selected benchmarks. Experiments are discussed in the order they were conducted and the motivations are given for each of them.
+and to evaluate the algorithms on the selected benchmarks. Experiments are discussed in the order they were conducted and the motivations are given for each of them.
 The discussions in this section only consider one algorithm at a time, comparisons between the different algorithms is done in the next sections of the report.
 
 \subsection{Results of the $(1 + 1)$ NA algorithm}
@@ -145,10 +145,9 @@ This time, the algorithm is not always solving the problem, even for high-enough
 expanse of more iterations (and thus, more CPU time). As a matter of fact, for the \textit{Half} problem and a resolution of $800$, the algorithm reaches, on average, a fitness of
 $0.84$ and stops after $15$ iterations with $5$ stagnant iterations, while it reaches a fitness of $0.98$ after $69$ iterations with $80$ stagnant iterations.
 In addition, this stagnation criteria allows to stop the algorithm for the small resolutions of $2$ and $5$, while still letting the algorithm reach the maximal possible fitnesses in these
-two cases. Lastly, an interesting phenomenon can be observed on both problems, for stagnant iterations values of $60$ and $80$ arond resolutions of a $100$, the number of iterations
-is at its highest. This can also be observed in the results of the previous experiment, when ignoring the lower resolutions, and could possibly be explained by these resolutions being hgh enough
-to allow for setting the parameters to set the parameters to values which are close enough to the optimal ones, but not high enough to make drawing these values as liely as for higher resolutions.
-% TODO check and detail
+two cases. Lastly, an interesting phenomenon can be observed on both problems, for stagnant iterations values of $60$ and $80$ around resolutions of a $100$, the number of iterations
+is at its highest. This can also be observed in the results of the previous experiment, when ignoring the lower resolutions, and could possibly be explained by these resolutions being high enough
+to allow for setting the parameters to set the parameters to values which are close enough to the optimal ones, but not high enough to make drawing these values as likely as for higher resolutions.
 
 The more complex \textit{TwoQuarters} problem requires two neurons to be solved. With a single neuron, the best fitness that can be achieved is $0.75$, because at least a quarter of the unit sphere
 cannot be classified correctly with a single decision line. Such a solution is shown in \Cref{fig:na_twoquarters_single_visual}.
@@ -171,7 +170,7 @@ In the case of two neurons, the algorithm, which can theoretically solve the pro
 at a local optima with a fitness of $0.75$. The optimal solution and an example of a local optima are shown in \Cref{fig:na_twoquarters_visual}.
 It can be seen that the number of iterations taken by the algorithm in the case of two neurons is lower than for one neuron. However, the CPU time is higher, because of iterations being more
 computationally expensive, as the algorithm has to evolve two neurons instead of one.
-Furthermore, the average fitness, iterations and CPU time all seem to grow logarithmically with the maximum number of iterations.
+Furthermore, the average fitness, iterations and CPU time all appear to grow logarithmically with the maximum number of iterations.
 
 \begin{figure}
     \centering
@@ -866,7 +865,7 @@ The \textit{XOR} problem requires two neurons to be solved. The results of the $
 when the fitness was $2\%$ away from the maximal fitness of $1.0$ or the maximum number of $200$ stagnant iterations was reached, and the resolution was set to $400$.
 For one neuron, the maximum reachable fitness is $0.75$, while this value corresponds to a local optima in the case of two neurons. A solution and a local optima are shown in Figure \ref{fig:na_xor_visual}.
 As it was the case with the \textit{LocalOpt} and \textit{TwoQuarters} benchmarks, even though two neurons are enough to solve the problem, the algorithm often gets stuck in a local optima.
-The average fitness is $0.79$ for two neurons, and the number of iterations is $174$, which shows that the algorithm was able to converge to the optimal solution in some cases, but ended up in a local optimla
+The average fitness is $0.79$ for two neurons, and the number of iterations is $174$, which shows that the algorithm was able to converge to the optimal solution in some cases, but ended up in a local optima
 in most cases.
 
 \begin{figure}
@@ -902,7 +901,7 @@ in most cases.
 
 \subsubsection{Proben1 classification problem}
 
-The last problem on which the $(1 + 1)$ NA algorithm was tested is the \textit{Proben1 Cancer1} benchmark. This problem differrs from the previous ones, in the sense that the data which
+The last problem on which the $(1 + 1)$ NA algorithm was tested is the \textit{Proben1 Cancer1} benchmark. This problem differs from the previous ones, in the sense that the data which
 was used to evolve the algorithm is different from the data which was used to evaluate it. In addition, no optimal solution, which would allow us to set the number of neurons, is unknown in this case,
 and the input space is higher-dimensional, as it contains $9$ features. Hence, an interesting experiment consists in testing the algorithm with different number of neurons.
 The results are shown in Figure \ref{fig:na_proben1}. Fitness for both the train and test sets is shown.
@@ -1025,9 +1024,9 @@ However, this value is still too low starting from three neurons. The one neuron
 
 \subsection{Results of the BNA algorithm}
 
-The BNA algorithm can be applied to binary classification problems. As it is the case for the $(1 + 1)$ NA algorithm, the BNA algorithm was tested on the spere classification problems,
+The BNA algorithm can be applied to binary classification problems. As it is the case for the $(1 + 1)$ NA algorithm, the BNA algorithm was tested on the sphere classification problems,
 the \textit{XOR} problem and the \textit{Cancer1} classification problem. The parameters which can be tuned for this algorithm are the resolution and the number of V-neurons,
-Varying the resolution would simply highlight the same properties as the ones observed for the $(1 + 1)$ NA algorithm. Thus the focus will be on the number of V-neurons and the the termination
+Varying the resolution would simply highlight the same properties as the ones observed for the $(1 + 1)$ NA algorithm. Thus the focus will be on the number of V-neurons and the termination
 criteria for the algorithm. For the following experiments, the resolution was set to $400$.The cases of multiple V-neurons were considered, by using a boolean OR output function on the output of each of the
 V-neurons.
 
@@ -1149,7 +1148,7 @@ as it was the case for the $(1 + 1)$ NA algorithm, the results on the two proble
 The results for the \textit{TwoQuarters} benchmark are shown in \Cref{fig:bna_twoquarters} and the results for the \textit{LocalOpt} benchmark are shown in \Cref{fig:bna_localopt}.
 For both problems, the same observations can be made as for the $(1 + 1)$ NA algorithm. For the \textit{TwoQuarters} benchmark, with two V-neurons, the fitness converges to approximately $0.85$,
 while the algorithm quickly reaches the maximal fitness of $0.75$ in the case of one V-neuron. Regarding the \textit{LocalOpt} benchmark, it was able to find the optimal solution only once and also
-got stcuk in local optima, with an average fitness converging to $0.75$ for all three cases. Examples of local optima and optimal solutions for both problems are shown in \Cref{fig:bna_twoquarters_visual}
+got stuck in local optima, with an average fitness converging to $0.75$ for all three cases. Examples of local optima and optimal solutions for both problems are shown in \Cref{fig:bna_twoquarters_visual}
 and \Cref{fig:bna_localopt_visual}.
 
 \begin{figure}
@@ -1599,7 +1598,7 @@ The NEAT algorithm was first tested on the \textit{XOR} problem, as done in \cit
 at understanding the impact of some of the parameters were conducted on this benchmark. The results are presented and discussed in this section.
 
 Compared to the $(1 + 1)$ NA and BNA algorithms discussed previously, the NEAT algorithm is population-based.
-Thus, the first experiment consisted in testing different population sizes.The algorithm was evolved with a maximum number of $500$ generations. For the other parameters, the same values as in \cite{neat} were used.
+Thus, the first experiment consisted in testing different population sizes. The algorithm was evolved with a maximum number of $500$ generations. For the other parameters, the same values as in \cite{neat} were used.
 The results are presented in \Cref{fig:neat_xor}. The average fitness increases with the population size, while the number of iterations decreases as a consequence because of the maximum fitness tolerance termination
 criterion. However, the CPU time still increased with the population size, because of the increased duration of an iteration. For example, a population of $50$ individuals resulted in a fitness of $0.82$ in $2.3$ seconds
 on average, while a population of $1500$ individuals resulted in a fitness of $0.96$ in $66.6$ seconds on average.
@@ -1977,10 +1976,7 @@ The algorithm was tested on the \textit{Half}, \textit{Quarter} and \textit{TwoQ
 The tested configuration resulted in the algorithm being able to solve the \textit{Quarter} and \textit{Half} problems. However the CPU time was relatively high, especially for the \textit{Half} task where it was
 more than three times slower than for the \textit{Quarter} problem.
 For the more complex \textit{TwoQuarters}, it was unable to solve it even once and got the average fitness of $0.75$. Furthermore, it even got a lower average fitness on the \textit{LocalOpt} task of $0.65$, despite an
-average running time of $1134$ seconds. One could argue that these results are caused by a sub-optimal configuration of the algorithm, however, even though this one is certainly indeed not optimal, multiple configurations
-were manually tested and tuned and this one got the best results.
-
-% TODO Config in Appendix
+average running time of $1134$ seconds.
 
 \begin{table}
     \caption{Results of the NEAT algorithm on the unit-sphere classification problems.}
@@ -2006,8 +2002,6 @@ were manually tested and tuned and this one got the best results.
 Finally, the NEAT algorithm was tested on the \textit{Proben1 Cancer1} problem. The results are presented in \Cref{tab:neat_proben1}.
 The algorithm was able to solve the problem in all of the runs, in the particularly low number of 7 Iterations on average. However, the CPU time was high. As a matter of fact, it was
 higher than for the pole balancing problem, with an average of $35.8$ seconds, despite the lower number of iterations, but it is comparable to the results for the sphere classification problems.
-
-% TODO Config in Appendix
 
 \begin{table}
     \caption{Results of the NEAT algorithm on the \textit{Proben1 Cancer1} problem.}
@@ -2469,9 +2463,9 @@ This section presents a comparison of the performance of the algorithms on the d
 Then, based on this comparison, and the insights from the various experiments conducted and analyzed in \Cref{sec:results}, guidelines are proposed for the selection of the algorithm
 based on the problem at hand, and for the selection of the parameters for the algorithms.
 
-The comparison is based on the fitness and CPU time metrics, as the number of iterations/generations is not directly comparable between the different algorithms.
+The comparison is based on the fitness and CPU time metrics, as the number of iterations is not directly comparable between the different algorithms.
 Furthermore, for each of the algorithm, the most efficient configuration were used to represent it in the comparison, where the efficiency is defined as a trade-off between the fitness
-and the CPU time, with preference given to the fitness. For the NEAT and CMA-ES algorithms, the configurations can be found in \Cref{app:configurations}.
+and the CPU time, with priority given to the fitness. For the NEAT and CMA-ES algorithms, the configurations can be found in \Cref{app:configurations}.
 
 \subsection{Unit-sphere classification problems}
 
@@ -2517,7 +2511,7 @@ Thus, for this problem, the CMA-ES algorithm is the best choice, being comparabl
     \centering
     \begin{tabular}{ |c|c|c| }
         \hline
-        Algoeithm & Fitness & CPU time (s) \\
+        Algorithm & Fitness & CPU time (s) \\
         \hline
         (1 + 1) NA & 0.83 & 0.01 \\
         \hline
@@ -2543,7 +2537,7 @@ Thus, the CMA-ES algorithm is the best choices for this problem, being the faste
     \centering
     \begin{tabular}{ |c|c|c| }
         \hline
-        Algoeithm & Fitness & CPU time (s) \\
+        Algorithm & Fitness & CPU time (s) \\
         \hline
         (1 + 1) NA & 0.96 & 72 \\
         \hline
@@ -2568,7 +2562,7 @@ seconds compared to $300$ seconds for the CMA-ES algorithm.
     \centering
     \begin{tabular}{ |c|c|c| }
         \hline
-        Algoeithm & Fitness & CPU time (s) \\
+        Algorithm & Fitness & CPU time (s) \\
         \hline
         NEAT & 1.0 & 6.4 \\
         \hline
@@ -2591,25 +2585,25 @@ network architectures. For the \textit{XOR} and unit-sphere classification probl
 The (1 + 1) NA and BNA algorithms performed better on the unit-sphere problems, while CMA-ES performed better on the \textit{XOR} problem.
 However, further experiments should be conducted to explain this difference, such as testing CMA-ES on the unit-sphere classification problems using Cartesian coordinates instead of polar coordinates,
 or allowing for a longer stagnation before the algorithm stops.
-For example, this first experiment was conducted in \cite{na} but it did not result in an improvement of the performance of the algorithm.
+As a matter of fact, this first experiment was conducted in \cite{na} but it did not result in an improvement of the performance of the algorithm.
 Moreover, the fastest CPU time achieved by CMA-ES on the more realistic \textit{Proben1 Cancer1} problem could also translate to other datasets, and make this algorithm the best option for
 these types of problems. NEAT also performed significantly better on this problem. But as highlighted in \Cref{sec:results}, all algorithms were surprisingly able to reach particularly high fitness
 values on this problem, with a low number of neurons and iterations. More complex datasets could be tested to further validate these results.
 Regarding the control problems, NEAT was the best performing algorithm on the double pole balancing problem, both in terms of solution quality and CPU time. Once again, it could be interesting to
 experiment with different parameters for the CMA-ES algorithm itself.
 
-Furthermore, in addition to the versatility of the algorithms and their performance, other criteria should be consiered when selecting an algorithm. Indeed the ease of use of the algorithm,
+Furthermore, in addition to the versatility of the algorithms and their performance, other criteria should be considered when selecting an algorithm. Indeed the ease of use of the algorithm,
 impacted by its number of tunable parameters and its implementation complexity, are important factors to consider. The $(1 + 1)$ NA and BNA algorithms are particularly simple, with a couple
 of parameters to tune. The widely used CMA-ES algorithm is also relatively simple to use thanks to the various libraries available and its default parameters allowing for a direct
 application to problems. However it requires the manual selection of the network topology. On the other hand, NEAT is more complex, with a large number of parameters to tune, which have a major
 impact on the performance of the algorithm, but it also takes care of evolving the network topologies.
 
-Altogether, the different experiments did not lead to a single algorithm standing out as superior to the others on all aspects and problems, but rather tey highlighted the trade-off between the
+Altogether, the different experiments did not lead to a single algorithm standing out as superior to the others on all aspects and problems, but rather they highlighted the trade-off between the
 solution quality, the CPU time and the ease of use and versatility of the different algorithms. The CMA-ES algorithm appears as a versatile and as the most reliable algorithm, with good performance
-on all of the tested problems, coupled with its ease of use. The even simpler $(1 + 1)$ NA and BNA algorithms are also good choices for simple binary classification problems, while NEAT appears as a good
-option, being particularly versatile and performing well, in particular on the control problem, after a careful selection of the parameters. It also is the only algorithm evolving the network topology among the
-tested ones, which could be a significant advantage for some problems, with no prior knowledge to guide the choice of network structures.
-\Cref{fig:flowchart} shows a flow diagram representing the proposed strategy for the selection of the neuroevolution algorithm given the problem class.
+on all of the tested problems, coupled with its ease of use. The even simpler $(1 + 1)$ NA and BNA algorithms are also good choices for simple binary classification problems, while NEAT,
+being particularly versatile and performing well, also appears as a good option, after a careful selection of the parameters, in particular on the control problem,
+It also is the only algorithm evolving the network topology among the tested ones, which could be a significant advantage for some problems, with no prior knowledge to guide the choice of
+network structures. \Cref{fig:flowchart} shows a flow diagram representing the proposed strategy for the selection of the neuroevolution algorithm given the problem class.
 
 \begin{figure}
     \centering
@@ -2626,16 +2620,18 @@ The parameters of the algorithms have a significant impact on their performance.
 fine-grained tuning. The number of (V-)neurons however requires a more careful selection. Indeed, it was observed, on the \textit{TwoQuarters} and \textit{LocalOpt} problems for instance, that
 even in the case where enough neurons are evolved to be able to find a solution, the algorithms would end up stuck at local-optima solutions, which could be reached using fewer neurons, with a
 lower CPU time. Furthermore, it was also observed during manual experiments with the algorithms, that even though increasing the number of iterations or stagnation before stopping the algorithm,
-allowed for an increase in fitness, as also shown in various plots in \Cref{sec:results}, the initial parameter values seemed to play a major role in the quality of the solution. Indeeed, the final
+allowed for an increase in fitness, as also shown in various plots in \Cref{sec:results}, the initial parameter values seemed to play a major role in the quality of the solution. Indeed, the final
 solution would in most cases be relatively close to the initial one and once a local optima was reached the algorithm would get stuck and be unable to leave it. These two phenomena can be explained by the greedy nature of
 these non-population based algorithms, not allowing for a proper exploration of the search space, and more importantly, by the theoretical results presented in \cite{na,bna}. Therefore, an interesting strategy for
 these two algorithms could be to set the number of neurons and iterations to low values, take advantage of their simplicity and fast running times, and run the algorithms multiple times.
 
 \paragraph{NEAT algorithm:} This algorithm has a large number of parameters to tune. For instance, the weights and similarity threshold, which were fond
 to have the most significant impact on the performance of the algorithm.
-They should be set to allow for more than a single species to evolve, while preventing the explosion of the number of species. Similarly, the population size should also be
-carefully selected, lower values result in a faster running but more complex problems require a large population size. Howerver, apart from these parameters and the number of generations,
-the other parameters were left untouched from the values given in \cite{neat} and still allowed for good performance on the tested problems.
+They should be set to allow for more than a single species to evolve, while preventing the explosion of the number of species. This could potentially be automated or done manually, as it was the
+case in the experiments, by running the algorithm with different similarity threshold while observing the evolution of the number of species throughout the generations, and making
+use of prior knowledge on the problem, if available, for setting the similarity weights.
+Similarly, the population size should also be carefully selected, lower values result in a faster running but more complex problems require a large population size. However, apart from these parameters and the number
+of generations, the other parameters were left untouched from the values given in \cite{neat} and still allowed for good performance on the tested problems.
 
 \paragraph{CMA-ES algorithm:} This algorithm also has a large number of parameters to tune, but the default values implemented by the different libraries are already well suited for most
 problems. Hence, the focus can be put on the network topology as a starting point, before further fine-tuning the CMA-ES parameters if needed. Regarding the network topologies, fully

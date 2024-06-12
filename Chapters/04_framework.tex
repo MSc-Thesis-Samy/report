@@ -1,11 +1,11 @@
 \chapter{The framework}
 \label{chap:framework}
 
-This chapter presents the design and implementation of the framewor which was developed as part of this thesis.
-It lists the requirements of the framework, goes through its development lifecycle and presents the architecture of the framework.
+This chapter presents the design and implementation of the framework which was developed as part of this thesis.
+It lists the requirements of the framework, goes through its development life cycle and presents the architecture of the framework.
 
 This framework, which is the main contribution of this thesis, allows for a fair comparison of the considered algorithms by having them implemented in a common environment
-and language, in order to avoid performacne differences induced by the programming language, and by having them run on the exact same benchmark problem implementations and
+and language, in order to avoid performance differences induced by the programming language, and by having them run on the exact same benchmark problem implementations and
 settings.
 
 The code for the framework is available at \url{https://github.com/MSc-Thesis-Samy/neuroevolution-framework} and includes a README file with instructions on how to use it.
@@ -97,7 +97,7 @@ In Rust, packages are referred to as crates.
 
 \subsubsection{Attributes}
 
-Attributes are metadata applied to some module, crate or object. They are, for example, used to enable compiler features or mark functions as unit tests.
+Attributes are metadata applied to some module, crate or object. They are, for example, used to enable compiler features or mark functions as unit tests,
 or to define the behavior of the code. They are defined using the \texttt{\#} symbol and are placed before the object they are associated with.
 
 \subsubsection{Testing}
@@ -109,7 +109,7 @@ when conditions are not met.
 
 \subsubsection{Concurrency}
 
-Concurent programming refers to different parts of a program executing independently of each other, while parallel programming refers to different parts
+Concurrent programming refers to different parts of a program executing independently of each other, while parallel programming refers to different parts
 of a program executing in parallel, at the same time. For simplicity, in this section, "concurrency" should be understood as "concurrency and/or parallelism".
 These concepts have become particularly important in the context of modern computing, where multi-core processors are the norm. However, writing concurrent
 programs can be difficult, as it can be error-prone, hard to debug and reason about. Rust aims at addressing these issues by making it use of its main feature:
@@ -163,7 +163,7 @@ The \texttt{Algorithm} enum and the \texttt{NeuroevolutionAlgorithm} trait are d
 Each of the different algorithm structs are defined in their own file, such as \texttt{neat.rs} or \texttt{vnetwork.rs}.
 
 For the CMA-ES algorithm, the \texttt{cmaes} crate \footnote{\url{https://docs.rs/cmaes/latest/cmaes/}}  is used. An external library was used instead of implementing
-the algorithm from scratch in the framework because of the popularity of CMA-ES, which led to the devlopment of high quality and trusted libraries for different programming
+the algorithm from scratch in the framework because of the popularity of CMA-ES, which led to the development of high quality and trusted libraries for different programming
 languages, and because the focus of the thesis regarding this algorithm is not on the CMA-ES algorithm itself, as its default parameters can already be applied to problems, but
 on the topology of the used networks.
 
@@ -201,7 +201,7 @@ the fitness is computed on the testing set, as opposed to the training set in th
 
 \paragraph{Classification problems} For the sphere classification and dataset classification tasks, the fitness is computed using the \texttt{classification}
 function from the \texttt{benchmarks.rs} file, which computes $\frac{n - \text{MAE}}{n}$, where $n$ is the number of points and MAE is the mean absolute error
-\footnote{\url{https://en.wikipedia.org/wiki/Mean_absolute_error}} between the output of the algorithm and the expected output. For the bna and (1 + 1) NA algorithm, which
+\footnote{\url{https://en.wikipedia.org/wiki/Mean_absolute_error}} between the output of the algorithm and the expected output. For the BNA and (1 + 1) NA algorithm, which
 output boolean values, this is equivalent to computing the accuracy (i.e, the number of correct predictions divided by the number of total predictions), while also
 allowing for the evaluation of the CMA-ES and NEAT method, outputting probables when using the sigmoid activation on the output neuron.
 
@@ -213,7 +213,7 @@ updates the state, using the scaled algorithm output as the applied force, and c
 
 Unit-tests were implemented across the core component to test the behavior of the algorithms and benchmarks.
 These tests were implemented in parallel with the functionalities to avoid and identify potential bugs early in the development process before
-building up with more functionalities. In addition, they were ran at each new push to github using a workflow responsible for compiling the project,
+building up with more functionalities. In addition, they were ran at each new push to Github using a workflow responsible for compiling the project,
 targeting linux, and running all the tests. This is to ensure that new changes do not break any past working functionality.
 
 In fact, the BNA and (1 + 1) NA problems were tested using the sphere classification problems, where optimal solutions are known. These tests
@@ -328,7 +328,7 @@ This trait defines two methods: \texttt{update}, which is used for updating the 
 These two methods are called by the game loop, which is triggered in the \texttt{bin/main.rs} file if the \texttt{gui} flag is set when invoking the program.
 
 This game abstraction is particularly suited for the implementation of visualization in the framework.
-The \texttt{State} struct defined in \texttt{gui.rs} holds an instance of \texttt{Algorithm}, an instance of \texttt{Benchmark}, and two additioal members keeping track of
+The \texttt{State} struct defined in \texttt{gui.rs} holds an instance of \texttt{Algorithm}, an instance of \texttt{Benchmark}, and two additional members keeping track of
 the number of iterations. An instance of this struct is created in the \texttt{bin/main.rs} file using the arguments passed in to the command line interface.
 The \texttt{update} method updates the \texttt{algorithm} by running an optimization step, and the \texttt{draw} renders the different visualizations, based on
 the \texttt{problem} and \texttt{algorithm} members of the \texttt{State} struct.

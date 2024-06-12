@@ -9,7 +9,7 @@ This selection consists in the algorithms and benchmarks which are presented in 
 \section{Methodology}
 
 Given the large amount of literature on this well-established field, the review was conducted in a systematic manner, following the guidelines of \cite{snowballing,systematic_review}.
-Indeed, using a rigid methodology is cruucial in order to ensure that the review is impartial and precise.
+Indeed, using a rigid methodology is crucial in order to ensure that the review is impartial and precise.
 
 \subsection{Research Questions}
 
@@ -27,7 +27,7 @@ with the selection process.
 
 \subsection{Search Strategy}
 
-The search for papers was performed using Google Scholar and the DTU Findit database, which should provide an accurate representation fo the research that has been
+The search for papers was performed using Google Scholar and the DTU Findit database, which should provide an accurate representation of the research that has been
 conducted on the topic. The keywords used for designing the search queries are:
 
 \begin{quote}
@@ -76,7 +76,7 @@ The following three main distinctions, which were mentioned in \Cref{chap:backgr
 \end{itemize}
 
 \Cref{tab:neuroevolution_algorithms} presents a classification of the neuroevolution algorithms which were identified during the review.
-Various algorithms were identified for each of the categorie, such as different evolution strategies, an approach relying on Cartesian genetic programming, an algorithm not evolving the
+Various algorithms were identified for each of the categories, such as different evolution strategies, an approach relying on Cartesian genetic programming, an algorithm not evolving the
 weights of the networks, or an algorithm proposing an entirely new evolutionary method.
 
 \begin{table}[]
@@ -138,19 +138,17 @@ Let $x = (x_1, \ldots, x_D) \in \mathds{R}^D$ be the input of the neuron. The ne
 otherwise.
 This can be interpreted geometrically as the neuron outputting $1$ if the input vector $x$ is above or on the hyperplane with normal vector
 $w = (w_1, \ldots, w_D)$ and bias $t$.
-j
+
 Furthermore, an alternative representation of the decision hyperplane can be used by considering spherical coordinates.
 The decision hyperplane is described by its normal vector, which is characterized by by $D - 1$ angles, and by the bias, which corresponds to the distance from the origin
 measured in the opposite direction of that of the normal vector.
-For example, for $D = 2$, the normal vector can be represented by its cartesian coordinates $(x_1, x_2)$ or by its polar coordinates
+For example, for $D = 2$, the normal vector can be represented by its Cartesian coordinates $(x_1, x_2)$ or by its polar coordinates
 $(r, \theta)$, where $r$ is the distance from the origin and $\theta$ is the angle with the $x_1$ axis. Similarly, for $D = 3$, the normal vector can
-be represented by its cartesian coordinates $(x_1, x_2, x_3)$ or by its spherical coordinates $(r, \theta, \phi)$, where $r$ is the distance from the
+be represented by its Cartesian coordinates $(x_1, x_2, x_3)$ or by its spherical coordinates $(r, \theta, \phi)$, where $r$ is the distance from the
 origin, $\theta$ is the angle with the $x_1$ axis and $\phi$ is the angle with the $x_3$ axis.
-It is easy to convert between these two representations \cite{spherical}. In addition, the spherical representation uses one less parameter than the cartesian
-representation, and hence, allows for the reduction of the number of inputs to the neurons to $D$, as opposed to $D + 1$ when using the cartesian representation
+It is easy to convert between these two representations \cite{spherical}. In addition, the spherical representation uses one less parameter than the Cartesian
+representation, and hence, allows for the reduction of the number of inputs to the neurons to $D$, as opposed to $D + 1$ when using the Cartesian representation
 where $D$ parameters are used for the normal vector and $1$ for the bias.
-
-% TODO coordinates figure
 
 The ANNs which are considered in the study contain three layers: the input layer, a hidden layer with $N > 1$ neurons and an output layer with a single neuron.
 Each of the hidden neurons are connected to the $D$ inputs and output a binary value. The output neuron is connected to the $N$ hidden neurons and
@@ -204,7 +202,7 @@ Geometrically, these ANNs output the union of a number of $N$-dimensional hyperp
 Let's consider an ANN with $N$ neurons in the hidden layer and $D$ inputs, with parameters
 $(\phi_{1,1}, \dots, \phi_{1,D-1}, b_1, \dots, \phi_{N,1}, \dots, \phi_{N,D-1}, b_N$.
 In \cite{na}, the search space $[0 , \dots, n]^{N D}$ is considered, where $r$ is the resolution of the continuous $[0, 1]$ domain.
-This discretiisation allows for the values $\{0, 1/r, 2/r, \dots, 1\}$. Setting the parameters of ANNs is tipically a continous optimization problem,
+This discretiisation allows for the values $\{0, 1/r, 2/r, \dots, 1\}$. Setting the parameters of ANNs is typically a continuous optimization problem,
 but rigurous runtime analysis is much less developed for continous optimization than for discrete optimization, which motivates this choice.
 Let $f : \{0 , \dots, r\}^{N D} \to [0, 1]$ be the fitness function which measures the performance of the ANN and which is to be maximized.
 
@@ -503,7 +501,7 @@ The double pole balancing problem was selected as a classic benchmark in the neu
 control problems. The unit-sphere classification problems were selected as classification toy problems, introduced in the theory paper \cite{na} and used to test the (1 + 1) NA and BNA algorithms.
 Moreover, the XOR problem was selected as another classic toy classification problem, which is particularly simple, and useful for testing the ability of the algorithms to solve non-linear problems.
 Lastly, the \textit{Proben1 Cancer1} dataset classification problem was selected as a more realistic classification problem, making use of a training and testing dataset, and consisting
-in a higher-dimmmensional input space of $9$ features, as opposed to the $2$ features of the unit-sphere classification problems and XOR problem.
+in a higher-dimensional input space of $9$ features, as opposed to the $2$ features of the unit-sphere classification problems and XOR problem.
 
 The following sections present the different benchmarks which were selected for the implementation in the framework.
 
@@ -661,9 +659,9 @@ The evaluated algorithms outputs are mapped to the magnitude of the force $F \in
 \section{Related Work}
 
 Various works evaluate the performance of neuroevolution algorithms on different benchmarks, and compare them to other algorithms.
-First of all, all of the selected algorithms were evaluated on a selection of benchmarks in thei original papers.
+First of all, all of the selected algorithms were evaluated on a selection of benchmarks in their original papers.
 Both the (1 + 1) NA and BNA algorithms were evaluated on the unit-sphere classification problems \cite{na, bna}, and NEAT was evaluated on the XOR and pole balancing problems \cite{neat}.
-Moreover, BNA is compared to (1 + 1) NA on the unit-sphere classification problems in \cite{bna}, which was also compared to the use of the CMA-ES algorithm on the descibed ANN architecture in
+Moreover, BNA is compared to (1 + 1) NA on the unit-sphere classification problems in \cite{bna}, which was also compared to the use of the CMA-ES algorithm on the described ANN architecture in
 \cite{na}. However, both studies did not compare these algorithms to other neuroevolution algorithms, and as these theory algorithms are not used in practice, they are not the subject of
-coparison to other neuroevolution algorithms in other studies. This is a research gap which this study aims to address.
+comparison to other neuroevolution algorithms in other studies. This is a research gap which this study aims to address.
 Regarding NEAT and CMA-ES, both algorithms were re-evaluated and compared on the double pole balancing problem in \cite{neuroevolution_es_rl}, and, among other problems, in \cite{robust}.
