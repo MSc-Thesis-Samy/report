@@ -2,13 +2,13 @@
 \label{chap:framework}
 
 This chapter presents the design and implementation of the framewor which was developed as part of this thesis.
-It list the requirements of the framework, goes through its development lifecycle and presents the architecture of the framework.
+It lists the requirements of the framework, goes through its development lifecycle and presents the architecture of the framework.
 
 This framework, which is the main contribution of this thesis, allows for a fair comparison of the considered algorithms by having them implemented in a common environment
 and language, in order to avoid performacne differences induced by the programming language, and by having them run on the exact same benchmark problem implementations and
 settings.
 
-The code for the framework is available at \url{https://github.com/MSc-Thesis-Samy/code} and includes a README file with instructions on how to use it.
+The code for the framework is available at \url{https://github.com/MSc-Thesis-Samy/neuroevolution-framework} and includes a README file with instructions on how to use it.
 
 \section{Requirements}
 
@@ -20,7 +20,7 @@ Tests are specified through a command line interface, they consist in an algorit
 The framework collects the results of the tests as well as the list of passed-in parameters, algorithm and problem.
 These tests can either be run individually or in batch mode, where the framework runs a set of tests in parallel, and collects statistics on these runs.
 
-Furthermore, the framework also allows for the visualization of the problem, solution process and network structure through a graphical user interface.
+Furthermore, the framework also allows for the visualization of the problem and solution process through a graphical user interface.
 
 \subsection{Non-functional requirements}
 
@@ -28,19 +28,19 @@ Non-functional requirements are the requirements that specify the quality of the
 Apart from the functional requirements that specify the features expected of the framework, a number of non-functional requirements have also been identified.
 
 \begin{itemize}
-    \item Usability and user experience: the framework should be easy to use and provide a good user experience.
-    \item Documentation: The framework should be well documented, providing a clear and concise guide on how to use it.
-    \item Error handling: All errors should be handled gracefully as to not result in runtime errors.
-    \item Performance: The framework should allow for the execution of tests in parallel, making use of multiple CPU cores.
-    \item:Extensibility: The framework should be easily extensible, allowing for the addition of algorithms and benchmarks without any
+    \item \textbf{Usability and user experience:} the framework should be easy to use and provide a good user experience.
+    \item \textbf{Documentation:} The framework should be well documented, providing a clear and concise guide on how to use it.
+    \item \textbf{Error handling:} All errors should be handled gracefully as to not result in runtime errors.
+    \item \textbf{Performance:} The framework should allow for the execution of tests in parallel, making use of multiple CPU cores.
+    \item:\textbf{Extensibility:} The framework should be easily extensible, allowing for the addition of algorithms and benchmarks without any
     major changes to the existing codebase.
-    \item Support: The framework should be able to run on the three major operating systems: Windows, Linux and MacOS.
+\item \textbf{Support:} The framework should be able to run on the three major operating systems: Windows, Linux and MacOS.
 \end{itemize}
 
 \section{Architecture}
 
 The framework is implemented in Rust. This general-purpose programming language, originally intended to serve as an alternative for system languages such as C and
-C++, offers a good balance between performance provided by such low-level languages and the safety and ease of use of higher-level languages such as Python.
+C++, it offers a good balance between performance provided by such low-level languages and the safety and ease of use of higher-level languages such as Python.
 Furthermore, various libraries (referred to as Rust crates) which could be used when implementing aspects of the framework, such as designing the command-line interfaces
 and graphical-user interfaces, or running CMA\_ES are available in Rust.
 Lastly, the language can target a range of platforms, including Windows, Linux and MacOS.
@@ -48,14 +48,13 @@ Lastly, the language can target a range of platforms, including Windows, Linux a
 The framework is divided into three main components:
 
 \begin{itemize}
-    \item The core: This component is responsible for the execution of the tests and the collection of results. It contains the algorithms and benchmark implementations.
-    \item The command-line interface: This component allows the user to specify the tests to be run, as well as the parameters for these tests.
-    \item The graphical user interface: This component allows the user to visualize the problem, solution process and network structure, as well as the test results.
+    \item \textbf{The core:} This component is responsible for the execution of the tests and the collection of results. It contains the algorithms and benchmark implementations.
+    \item \textbf{The command-line interface:} This component allows the user to specify the tests to be run, as well as the parameters for these tests.
+    \item \textbf{The graphical user interface:} This component allows the user to visualize the problem, solution process and network structure, as well as the test results.
 \end{itemize}
 
 The core is used by both the command line interface and the graphical user interface. And the graphical user interface is used by the command line interface.
 Indeed, the UI allows for the visualization of the solution process, but interaction with the framework is done when invoking it through the command line interface.
-
 The dependency graph of the framework is shown in \Cref{fig:dependency_graph}.
 
 \begin{figure}
@@ -67,7 +66,7 @@ The dependency graph of the framework is shown in \Cref{fig:dependency_graph}.
 
 \subsection{Background on Rust features}
 
-This section provides a brief overview of the features of the Rust programming language before going into the details of the framework's implementation.
+This section provides a brief overview of some of the features of the Rust programming language before going into the details of the framework's implementation.
 
 \subsubsection{Object-oriented capabilities}
 
@@ -115,13 +114,13 @@ of a program executing in parallel, at the same time. For simplicity, in this se
 These concepts have become particularly important in the context of modern computing, where multi-core processors are the norm. However, writing concurrent
 programs can be difficult, as it can be error-prone, hard to debug and reason about. Rust aims at addressing these issues by making it use of its main feature:
 the borrowing and ownership system, which allows many concurrency issues to be caught at compile time, rather than at runtime, as it is the case in other languages.
-In Rust, concurrency is achieved through the use of threads, which are lightweight processes that can run concurrently. The standard library provides
-various methods for creating and managing threads. However, in this project, the \texttt{rayon} crate is used instead. It is a data parallelism library
-which allows for a particularly easy way to parallelize code, by providing parallel iterators and parallel maps, and abstracting away the details of
-thread creation and management, guaranteeing data-race free execution and benefiting from parallelism when possible.
+Concurrency is achieved through the use of threads, which are lightweight processes that can run concurrently. The Rust standard library provides
+various methods for creating and managing threads. However, in this project, the \texttt{rayon} \footnote{\url{https://docs.rs/rayon/latest/rayon/}}
+crate is used instead. It is a data parallelism library which allows for a particularly easy way to parallelize code, by providing parallel iterators and parallel
+maps, and abstracting away the details of thread creation and management, guaranteeing data-race free execution and benefiting from parallelism when possible.
 
-For example, \Cref{lst:sum_of_squares} shows how a function \texttt{sum\_of\_squares}, which computes the sum of the squares of the elements of an array.
-By simply using the \texttt{par\_iter} method from the \texttt{rayon} crate, instead of the \texttt{iter} method, the function can be parallelized, as demonstrated
+For example, \Cref{lst:sum_of_squares} shows how a function \texttt{sum\_of\_squares}, which computes the sum of the squares of the elements of an array
+can be parallelized by simply using the \texttt{par\_iter} method from the \texttt{rayon} crate, instead of the \texttt{iter} method as demonstrated
 by the \texttt{sum\_of\_squares\_parallel} function.
 
 \begin{lstlisting}[label=lst:sum_of_squares,caption=Sum of squares,float,frame=tb]
@@ -150,11 +149,11 @@ The algorithm structs and the \texttt{Algorithm} enum implement the \texttt{Neur
 These methods are:
 
 \begin{itemize}
-    \item \texttt{evaluate}: This method takes as input a vector of floats and returns the output of the algorithm on this input.
-    \item \texttt{optimization\_step}: This method takes as input a problem and performs an optimization step on the algorithm.
-    \item \texttt{optimize}: This method takes as input a problem and a number of iterations, and performs successive optimization steps on the algorithm.
+    \item \texttt{evaluate} which takes as input a vector of floats and returns the output of the algorithm on this input.
+    \item \texttt{optimization\_step} which takes as input a problem and performs an optimization step on the algorithm.
+    \item \texttt{optimize} which takes as input a problem and a number of iterations, and performs successive optimization steps on the algorithm.
         It is implemented as a default method, which calls the \texttt{optimization\_step} method in a loop.
-    \item \texttt{optimize\_with\_early\_stopping}: This method takes as input a problem, a number of maximum iterations, a tolerance value and an optional number of
+    \item \texttt{optimize\_with\_early\_stopping} which takes as input a problem, a number of maximum iterations, a tolerance value and an optional number of
         stagnation iterations. It performs optimization steps on the algorithm, stopping when the maximum number of iterations is reached, when the fitness value
         is close enough to the optimal value (based on the passed-in tolerance) or when the fitness value has not improved for a number of iterations (based on the
         passed-in stagnation iterations). It is also implemented as a default method at the trait level.
@@ -171,14 +170,14 @@ on the topology of the used networks.
 As described in \Cref{chap:review}, the computation of outputs for these two algorithms consist in checking whether or
 not the input is above hyperplanes in the case of (1 + 1) NA, or in cones in the case of BNA. The following two paragraphs described how this is done in the framework.
 
-\paragraph{Computation for (1 + 1) NA in practice: }
+\paragraph{Output computation for (1 + 1) NA in practice: }
 The ANNs which are evolved using the (1 + 1) NA algorithm output the union of $N$-dimensional hyperplanes. To check whether or not the input is above the
-hyperplane described by one of the neurons, the normal vector $\overrightarrow{n}$ to the hyperplane is computed using the angles and a norm of $1$.
-For an input vector $\overrightarrow{x}$, the dot product $(\overrightarrow{x} - \lvert b \rvert \overrightarrow{n}) \cdot \overrightarrow{n}$ is computed, where
-$b$ is the bias of the neuron. If $b \geq 0$, the output of the neuron is $1$ if the dot product is positive and $0$ otherwise. If $b < 0$,
+hyperplane described by the i-th neuron, the normal vector $\overrightarrow{n}$ to the hyperplane is computed using the angles $\varphi_{i,1}, \dots, \varphi_{i,D-1}$
+and a norm of $1$. For an input vector $\overrightarrow{x}$, the dot product $(\overrightarrow{x} - \lvert b \rvert \overrightarrow{n}) \cdot \overrightarrow{n}$ is
+computed, where $b$ is the bias of the neuron. If $b \geq 0$, the output of the neuron is $1$ if the dot product is positive and $0$ otherwise. If $b < 0$,
 the output of the neuron is $1$ if the dot product is negative and $0$ otherwise.
 
-\paragraph{Computation for BNA in practice: }
+\paragraph{Output computation for BNA in practice: }
 V-neurons output whether or not the input is in the cone described by the neuron. The vector $\overrightarrow{\varphi}$ is computed using the angles $\varphi_1, \ldots, \varphi_{D-1}$
 and a norm of $1$. Given an input vector $\overrightarrow{x}$, the dot product $(\overrightarrow{x} - \lvert b \rvert \overrightarrow{\varphi}) \cdot \overrightarrow{\varphi}$ is computed.
 The angle $\alpha$ between the input vector and the normal vector can then be computed as
@@ -201,9 +200,9 @@ It also defines a \texttt{test} method, which generally behaves the same as the 
 the fitness is computed on the testing set, as opposed to the training set in the \texttt{evaluate} method.
 
 \paragraph{Classification problems} For the sphere classification and dataset classification tasks, the fitness is computed using the \texttt{classification}
-function from the \texttt{benchmarks.rs} file, which computes the $MAE$ (Mean Absolute Error) \footnote{\url{https://en.wikipedia.org/wiki/Mean_absolute_error}}
-For the bna and (1 + 1) NA algorithm, which output boolean
-values, this is equivalent to computing the accuracy (i.e, the number of correct predictions divided by the number of total predictions), while also
+function from the \texttt{benchmarks.rs} file, which computes $\frac{n - \text{MAE}}{n}$, where $n$ is the number of points and MAE is the mean absolute error
+\footnote{\url{https://en.wikipedia.org/wiki/Mean_absolute_error}} between the output of the algorithm and the expected output. For the bna and (1 + 1) NA algorithm, which
+output boolean values, this is equivalent to computing the accuracy (i.e, the number of correct predictions divided by the number of total predictions), while also
 allowing for the evaluation of the CMA-ES and NEAT method, outputting probables when using the sigmoid activation on the output neuron.
 
 \paragraph{Pole Balancing} The logic for the pole balancing simulation is implemented in the  \\ \texttt{pole\_balancing.rs} file, where the state is defined, along with methods
@@ -217,13 +216,13 @@ These tests were implemented in parallel with the functionalities to avoid and i
 building up with more functionalities. In addition, they were ran at each new push to github using a workflow responsible for compiling the project,
 targeting linux, and running all the tests. This is to ensure that new changes do not break any past working functionality.
 
-In fact, the bna and $(1 + 1)$ NA problems were tested using the sphere classification problems, where optimal solutions are known. These tests
+In fact, the BNA and (1 + 1) NA problems were tested using the sphere classification problems, where optimal solutions are known. These tests
 consist in checking whether one of these algorithms, with parameters corresponding to an optimal solution, does indeed lead to a maximum fitness value
 of $1.0$. These tests are defined in the \texttt{benchmarks.rs} file. For example, the \texttt{test\_half\_network} function checks that a decision line
-corresponding to the x-axis for the continuous $(1 + 1)$ NA algorithm gives a fitness of $1.0$. For the BNA algorithm, where there are infinitely many
+corresponding to the x-axis for the $(1 + 1)$ NA algorithm gives a fitness of $1.0$. For the BNA algorithm, where there are infinitely many
 solutions to the sphere classification problems, different solutions were checked.
 
-Furthermore, two additional tests in the \texttt{benchmarks.rs} file are responsible for checking that the data is loaded properly from the \textit{cancer}
+Furthermore, two additional tests in the \texttt{benchmarks.rs} file are responsible for checking that the data is loaded properly from the \texttt{cancer1.txt}
 text file. Tests in the \texttt{pole\_balancing.rs} file test the physics of the simulation implementation, for example verifying that a pole at the lowest
 position, with no external force, does not lead to any movement of the cart or the pole.
 
@@ -233,10 +232,10 @@ behavior of functions such as the crossover or initialization, using examples fr
 
 \subsection{Command-line interface}
 
-The command lien interface is implemented using the \texttt{clap} crate, which is a widely used command line argument parser in Rust.
-It allows for the execution of tests, by providing the algorithm, the problem and additional parameters. These additional parameters are optional and have
-default values, they are used to specify parameters for the algorithms, such as the number of neurons, parameters for the optimization, such as the number of
-iterations, and toggling the visualization of the solution process and network structure.
+The command lien interface is implemented using the \texttt{clap} \footnote{\url{https://docs.rs/clap/latest/clap/}} crate, which is a widely used command
+line argument parser in Rust. It allows for the execution of tests, by providing the algorithm, the problem and additional parameters. These additional parameters
+are optional and have default values, they are used to specify parameters for the algorithms, such as the number of neurons, parameters for the optimization,
+such as the number of iterations, and toggling the visualization of the solution process and problem.
 
 Arguments can be of three different types:
 
@@ -247,13 +246,12 @@ Arguments can be of three different types:
 \end{itemize}
 
 The \texttt{Cli} struct is defined in the \texttt{cli.rs} file, it contains members for each of the command line arguments and derives the \texttt{Parser} trait.
-The argument name is set to the member name, a short name,help message, default value and the argument type are specifies in an attribute on the member.
+The argument name is set to the member name, a short name, help message, default value and the argument type are specifies in an attribute on the member.
 
 The arguments are parsed in the \texttt{bin/main.rs} file, which is the entry point of the program.
-
-In order to ensure that the passed-in arguments are valid, the rust type system is leveraged, specifying appropriate data types for each of the argument.
+In order to ensure that the passed-in arguments are valid, the rust type system is leveraged, by specifying appropriate data types for each of the argument.
 For example, the iteration number is set to an unsigned integer \texttt{u32}, while the algoithm and benchmarks are set to two enums, \texttt{AlgorithmType} and
-\texttt{Problem}, with variants for each possible option.
+\texttt{Problem}, with variants for each possible option, passing in a string which does not correspond to any of the variants will result in an error when parsing.
 
 The command line interface is shown in \Cref{verb:cli}. Parameters for the BNA and $(1 + 1)$ NA algorithms are passed in as named arguments. For NEAT and CMA-ES, where more
 parameters can be specified, the path to \texttt{.toml} configuration files are passed-in instead. Examples of such configuration files are shown in \ref{verb:cmaes_config}
@@ -330,11 +328,10 @@ This trait defines two methods: \texttt{update}, which is used for updating the 
 These two methods are called by the game loop, which is triggered in the \texttt{bin/main.rs} file if the \texttt{gui} flag is set when invoking the program.
 
 This game abstraction is particularly suited for the implementation of visualization in the framework.
-The \texttt{State} struct defined in \texttt{gui.rs} holds an \texttt{algorithm}, a \texttt{problem}, and two additioal members keeping track of the number of iterations.
-An instance of this struct is created in the \texttt{bin/main.rs} file using the arguments passed in the command line interface.
+The \texttt{State} struct defined in \texttt{gui.rs} holds an instance of \texttt{Algorithm}, an instance of \texttt{Benchmark}, and two additioal members keeping track of
+the number of iterations. An instance of this struct is created in the \texttt{bin/main.rs} file using the arguments passed in to the command line interface.
 The \texttt{update} method updates the \texttt{algorithm} by running an optimization step, and the \texttt{draw} renders the different visualizations, based on
-the \texttt{problem} and \texttt{algorithm} members.
-
+the \texttt{problem} and \texttt{algorithm} members of the \texttt{State} struct.
 The number of iterations and the best fitness value are shown in the top left corner of the window.
 
 \subsubsection{Classification problems}
@@ -350,7 +347,7 @@ No visualization is shown for the higher dimension \textit{Proben1 Cancer1} prob
 
 The visualization of the pole balancing problem consists in drawing the cart and pole, and updating their position based on the state of the simulation.
 It is implemented in the \texttt{pole\_balancing\_gui.rs} file. Compared to the classification problems, where the visualization is updated as the algorithm is evolved in the \texttt{update} method,
-the pole balancing visualization does not update the passed-in algorithm, but rather updates the simulation state based on the output of the algorithm.
+the pole balancing visualization does not update the passed-in algorithm, but rather updates the simulation state based on the output of the algorithm, which was evolved prior to the visualization.
 
 Screenshots of the GUI for different problems and algorithms are shown in \Cref{fig:gui_screenshots}.
 
